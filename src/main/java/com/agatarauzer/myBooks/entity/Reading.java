@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,7 +43,9 @@ public class Reading {
 	private int readedPages;
 	
 	@Column(name="rate")
-	private Rate rate;
+	@Min(value=1)
+	@Max(value=5)
+	private int rate;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="id")

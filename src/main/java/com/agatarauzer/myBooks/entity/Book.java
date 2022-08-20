@@ -1,7 +1,6 @@
 package com.agatarauzer.myBooks.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,10 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,17 +29,15 @@ public class Book {
 	@Column(name="book_id")
 	private Long id;
 	
+	@NotNull
 	@Column(name="title")
 	private String title;
 	
 	@Column(name="ISBN")
 	private int ISBN;
 	
-	@ManyToMany
-	@JoinTable(name="book_author",
-				joinColumns=@JoinColumn(name="book_id"),
-				inverseJoinColumns=@JoinColumn(name="author_id") )
-	private List<Author> authors;
+	@Column(name="author")
+	private String author;
 	
 	@Column(name="language")
 	private String language;

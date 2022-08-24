@@ -2,6 +2,7 @@ package com.agatarauzer.myBooks.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,11 +41,11 @@ public class User {
 	private String email;
 	
 	@OneToMany
-	@JoinColumn(name="book_id")
+	@JoinColumn(name="my_book_id")
 	private List<Book> myBooks;
 	
-	@OneToMany
-	@JoinColumn(name="book_id")
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="wishlist_book_id")
 	private List<Book> wishlist;
 	
 }

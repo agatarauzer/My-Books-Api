@@ -48,7 +48,7 @@ public class Reading {
 	private int rate;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinColumn(name="id")
+	@JoinColumn(name="rental_id")
 	private Rental rental;
 	
 	@Column(name="notes")

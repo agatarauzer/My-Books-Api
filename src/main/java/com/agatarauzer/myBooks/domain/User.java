@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.entity;
+package com.agatarauzer.myBooks.domain;
 
 import java.util.List;
 

@@ -9,23 +9,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GoogleBookDto {
 	
+	@JsonProperty("id")
+	private String googleBookId;
+	
 	@JsonProperty("title")
 	private String title;
 	
+	@JsonProperty("subtitle")
+	private String subtitle;
+	
 	@JsonProperty("authors")
-	private List<String> author;
+	private List<String> authors;
+	
+	@JsonProperty("publisher")
+	private String publisher;
 	
 	@JsonProperty("publishedDate")
-	private String publishingYear;
+	private String publishingDate;
 	
-	@JsonProperty("ISBN_13")
-	private String ISBN;
+	@JsonProperty("description")
+	private String description;
+	
+	@JsonProperty("industryIdentifiers")
+	private List<IsbnDto> ISBNs;
 	
 	@JsonProperty("pageCount")
 	private int pages;
@@ -33,7 +46,11 @@ public class GoogleBookDto {
 	@JsonProperty("language")
 	private String language;
 	
-	@JsonProperty("publisher")
-	private String publisher;
+	@JsonProperty("imageLink")
+	private ImageLinkDto imageLink;
 	
 }
+
+
+
+

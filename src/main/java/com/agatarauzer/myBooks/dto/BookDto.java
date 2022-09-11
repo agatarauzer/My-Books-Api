@@ -3,15 +3,6 @@ package com.agatarauzer.myBooks.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
-
 import com.agatarauzer.myBooks.domain.Reading;
 import com.agatarauzer.myBooks.domain.Version;
 
@@ -28,19 +19,21 @@ public class BookDto {
 	
 	private String title;
 	
-	private List<String> author;
+	private String authors;
 	
 	private String ISBN;
 	
 	private String publisher;
 	
-	private String publishingYear;
+	private String publishingDate;
 	
-	private String description;
+	private String language;
 	
 	private int pages;
 	
-	private String language;
+	private String description;
+	
+	private String imageLink;
 	
 	private Double price;
 	

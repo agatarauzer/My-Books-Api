@@ -1,7 +1,6 @@
 package com.agatarauzer.myBooks.domain;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,27 +34,29 @@ public class Book {
 	@Column(name="title")
 	private String title;
 	
-	@Column(name="author")
-	private List<String> author;
+	@Column(name="authors")
+	private String authors;
 	
-	//ISBN with 13 digits
-	@Column(name="ISBN")
+	@Column(name="ISBNs_numbers")
 	private String ISBN;
 	
 	@Column(name="publisher")
 	private String publisher;
 	
-	@Column(name="publishing_year")
-	private String publishingYear ;
+	@Column(name="publishing_date")
+	private String publishingDate;
 	
-	@Column(name="description")
-	private String description;
+	@Column(name="language")
+	private String language;
 	
 	@Column(name="pages")
 	private int pages;
 	
-	@Column(name="language")
-	private String language;
+	@Column(name="description")
+	private String description;
+	
+	@Column(name="image_link")
+	private String imageLink;
 	
 	@Column(name="price")
 	private Double price;
@@ -71,15 +72,16 @@ public class Book {
 	private Reading readingDetails;
 	
 	
-	public Book(String title, List<String> author, String ISBN, String publisher, 
-			String publishingYear, String language, int pages) {
+	public Book(String title, String authors, String ISBN, String publisher, 
+			String publishingDate, String language, int pages, String description, String imageLink) {
 		this.title = title;
-		this.author = author;
+		this.authors = authors;
 		this.ISBN = ISBN;
 		this.publisher = publisher;
-		this.publishingYear = publishingYear;
+		this.publishingDate = publishingDate;
 		this.language = language;
 		this.pages = pages;
+		this.imageLink = imageLink;
 	}
 }
 

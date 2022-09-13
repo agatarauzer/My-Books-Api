@@ -31,10 +31,8 @@ public class MyBooksApplication {
 	                    .authorizeRequests()
 	                    .antMatchers(HttpMethod.GET, "/myBooks/search").permitAll()
 	                    .antMatchers(HttpMethod.GET, "/myBooks/books").permitAll()
+	                    .antMatchers(HttpMethod.POST, "/myBooks/book").permitAll()
 	                    .anyRequest().authenticated();
 	        }
 	    }
-	    
-	   
-
 }

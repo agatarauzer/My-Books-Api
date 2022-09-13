@@ -1,7 +1,9 @@
 package com.agatarauzer.myBooks.client;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.config.GoogleBooksApiConfig;
-import com.agatarauzer.myBooks.dto.GoogleBookBasicDto;
-import com.agatarauzer.myBooks.dto.GoogleBookDto;
+import com.agatarauzer.myBooks.dto.GoogleBookForUserDto;
 import com.agatarauzer.myBooks.dto.GoogleBooksSearchResultDto;
+import com.agatarauzer.myBooks.mapper.GoogleBookMapper;
+
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 
 @Component
 public class GoogleBooksClient {
@@ -24,25 +28,33 @@ public class GoogleBooksClient {
 	@Autowired 
 	private GoogleBooksApiConfig googleBooksApiConfig;
 	
+	@Autowired
+	private GoogleBookMapper googleBookMapper;
 	
-	public List<GoogleBookBasicDto> getBooksFromSearch(String phrase) throws RestClientException {
+	
+	public List<GoogleBookForUserDto> getBooksFromSearch(String phrase) {
 		
-		GoogleBooksSearchResultDto searchResult = restTemplate.getForObject(buildUrlToGetSearchResults(phrase), GoogleBooksSearchResultDto.class);
-
-		if (searchResult.equals(null)) {
-			throw new RestClientException("Phrase not found.");
+		try {
+			GoogleBooksSearchResultDto searchResult = restTemplate.getForObject(buildUrlToGetSearchResults(phrase), GoogleBooksSearchResultDto.class);
+			
+			return Optional.ofNullable(searchResult.getBooks().stream()
+							.map(c -> c.getGoogleBookDetails())
+							.map(c -> googleBookMapper.mapToGoogleBookForUserDto(c))
+							.collect(Collectors.toList())).orElse(Collections.emptyList());
 		}
-		
-		return searchResult.getBooks();	
+		catch (RestClientException exc) {
+			LOGGER.error(exc.getMessage(), exc);
+			return Collections.emptyList();
+			
+		}
 	}
 	
 	
-	private URI buildUrlToGetSearchResults(String phrase) {
+	private URI buildUrlToGetSearchResults(String phrase) { 
 		
-		String validPhrase = phrase.trim().replaceAll(" ", "+").toString();
+		//String validPhrase = phrase.trim().replaceAll(" ", "+").toString();
 		
-		return UriComponentsBuilder.fromHttpUrl(googleBooksApiConfig.getGoogleBooksApiEndpoint() +
-				"?q=" + validPhrase)
+		return UriComponentsBuilder.fromHttpUrl(googleBooksApiConfig.getGoogleBooksApiEndpoint() + "?q=" + phrase)
 				.queryParam("key", googleBooksApiConfig.getGoogleBooksAppKey())
 				.build().encode().toUri();
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +14,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 
 @Data
@@ -40,12 +43,25 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
+	@NotNull
+	@Column(name="login")
+	private String login;
+	
+	@NotNull
+	@Column(name="password")
+	private String password;
+	
 	@OneToMany
-	@JoinColumn(name="my_book_id")
-	private List<Book> myBooks;
+	@JoinColumn(name="user_id")
+	private List<Book> books;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="wishlist_book_id")
-	private List<Book> wishlist;
-	
+	public User(Long id, String firstName, String lastName, String email, 
+			String login, String password) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.login = login;
+		this.password = password;
+	}
 }

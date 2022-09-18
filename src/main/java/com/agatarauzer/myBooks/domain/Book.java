@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,11 +68,14 @@ public class Book {
 	@Column(name="version")
 	private Version version;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="reading_id")
-	private Reading readingDetails;
+	private Reading reading;
 	
-	
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="rental_id")
+	private Rental rental;
+ 
 	public Book(String title, String authors, String ISBN, String publisher, 
 			String publishingDate, String language, int pages, String description, String imageLink) {
 		this.title = title;

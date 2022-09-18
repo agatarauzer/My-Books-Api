@@ -3,66 +3,63 @@ package com.agatarauzer.myBooks.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.dto.BookDto;
+import com.agatarauzer.myBooks.dto.ReadingDto;
+import com.agatarauzer.myBooks.dto.RentalDto;
 
 @Service
 public class BookMapper {
+
+	@Autowired
+	private ReadingMapper readingMapper;
 	
+	@Autowired
+	private RentalMapper rentalMapper;
 	
 	public Book mapToBook(BookDto bookDto) {
-		
 		return new Book(bookDto.getId(),
 						bookDto.getTitle(),
-						bookDto.getAuthor(),
+						bookDto.getAuthors(),
 						bookDto.getISBN(),
 						bookDto.getPublisher(),
-						bookDto.getPublishingYear(),
-						bookDto.getDescription(),
-						bookDto.getPages(),
+						bookDto.getPublishingDate(),
 						bookDto.getLanguage(),
+						bookDto.getPages(),
+						bookDto.getDescription(),
+						bookDto.getImageLink(),
 						bookDto.getPrice(),
 						bookDto.getPurchaseDate(),
 						bookDto.getVersion(),
-						bookDto.getReadingDetails());
+						readingMapper.mapToReading(bookDto.getReading()),
+						rentalMapper.mapToRental(bookDto.getRental()));			
 	}
 	
 	public BookDto mapToBookDto(Book book) {
-		
 		return new BookDto(book.getId(),
-				book.getTitle(),
-				book.getAuthor(),
-				book.getISBN(),
-				book.getPublisher(),
-				book.getPublishingYear(),
-				book.getDescription(),
-				book.getPages(),
-				book.getLanguage(),
-				book.getPrice(),
-				book.getPurchaseDate(),
-				book.getVersion(),
-				book.getReadingDetails());
+						book.getTitle(),
+						book.getAuthors(),
+						book.getISBN(),
+						book.getPublisher(),
+						book.getPublishingDate(),
+						book.getLanguage(),
+						book.getPages(),
+						book.getDescription(),
+						book.getImageLink(),
+						book.getPrice(),
+						book.getPurchaseDate(),
+						book.getVersion(),
+						readingMapper.mapToReadingDto(book.getReading()),
+						rentalMapper.mapToRentalDto(book.getRental()));
 	}
 	
 	
 	public List<BookDto> mapToListBookDto(List<Book> books) {
-		
 		return books.stream()
-				.map(c -> new BookDto(c.getId(), c.getTitle(),
-						c.getAuthor(),
-						c.getISBN(),
-						c.getPublisher(),
-						c.getPublishingYear(),
-						c.getDescription(),
-						c.getPages(),
-						c.getLanguage(),
-						c.getPrice(),
-						c.getPurchaseDate(),
-						c.getVersion(),
-						c.getReadingDetails()))
+				.map(c -> mapToBookDto(c))
 				.collect(Collectors.toList());
-		
 	}
 }

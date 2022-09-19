@@ -27,5 +27,4 @@ public class ReadingMapper {
 				readingDto.getRate(),
 				readingDto.getNotes());
 	}
-
 }

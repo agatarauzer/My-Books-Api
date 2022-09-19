@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.dto;
+package com.agatarauzer.myBooks.dto.GoogleBooks;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,15 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GoogleBookBasicDto {
+public class ImageLinkDto {
 	
-	@JsonProperty("id")
-	private String googleBookId;
-	
-	@JsonProperty("selfLink")
+	@JsonProperty("smallThumbnail")
 	private String link;
 	
-	@JsonProperty("volumeInfo")
-	private GoogleBookDto googleBookDetails;
-	
 }
+

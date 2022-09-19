@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.dto;
+package com.agatarauzer.myBooks.dto.GoogleBooks;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

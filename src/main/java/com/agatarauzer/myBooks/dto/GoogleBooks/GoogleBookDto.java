@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.dto;
+package com.agatarauzer.myBooks.dto.GoogleBooks;
 
 import java.util.List;
 
@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GoogleBookDto {
 	
-	@JsonProperty("id")
-	private String googleBookId;
 	
 	@JsonProperty("title")
 	private String title;
@@ -46,11 +44,6 @@ public class GoogleBookDto {
 	@JsonProperty("language")
 	private String language;
 	
-	@JsonProperty("imageLink")
+	@JsonProperty("imageLinks")
 	private ImageLinkDto imageLink;
-	
 }
-
-
-
-

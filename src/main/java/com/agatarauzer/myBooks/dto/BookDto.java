@@ -2,8 +2,7 @@ package com.agatarauzer.myBooks.dto;
 
 import java.time.LocalDate;
 
-import com.agatarauzer.myBooks.domain.Reading;
-import com.agatarauzer.myBooks.domain.Rental;
+import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.Version;
 
 import lombok.AllArgsConstructor;
@@ -41,9 +40,11 @@ public class BookDto {
 	
 	private Version version;
 	
-	private ReadingDto reading;
+	//private ReadingDto reading;
 	
-	private RentalDto rental;
+	//private RentalDto rental;
+	
+	//private UserDto user;
 }
 
 

@@ -5,14 +5,16 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="book")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
 	
 	@Id
@@ -68,14 +71,18 @@ public class Book {
 	@Column(name="version")
 	private Version version;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="reading_id")
+	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	private Reading reading;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="rental_id")
+	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	private Rental rental;
- 
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@JsonIgnoreProperties("books")
+	private User user;
+	
+	
 	public Book(String title, String authors, String ISBN, String publisher, 
 			String publishingDate, String language, int pages, String description, String imageLink) {
 		this.title = title;
@@ -86,6 +93,24 @@ public class Book {
 		this.language = language;
 		this.pages = pages;
 		this.imageLink = imageLink;
+	}
+
+	public Book(Long id, String title, String authors, String ISBN, String publisher, String publishingDate,
+			String language, int pages, String description, String imageLink, Double price, LocalDate purchaseDate,
+			Version version) {
+		this.id = id;
+		this.title = title;
+		this.authors = authors;
+		this.ISBN = ISBN;
+		this.publisher = publisher;
+		this.publishingDate = publishingDate;
+		this.language = language;
+		this.pages = pages;
+		this.description = description;
+		this.imageLink = imageLink;
+		this.price = price;
+		this.purchaseDate = purchaseDate;
+		this.version = version;
 	}
 }
 

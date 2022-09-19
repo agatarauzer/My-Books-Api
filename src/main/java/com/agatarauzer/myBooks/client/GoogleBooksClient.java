@@ -13,8 +13,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.config.GoogleBooksApiConfig;
-import com.agatarauzer.myBooks.dto.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.dto.GoogleBooksSearchResultDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
 import com.agatarauzer.myBooks.mapper.GoogleBookMapper;
 
 import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;

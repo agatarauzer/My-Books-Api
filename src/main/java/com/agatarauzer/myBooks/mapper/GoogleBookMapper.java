@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
-import com.agatarauzer.myBooks.dto.GoogleBookDto;
-import com.agatarauzer.myBooks.dto.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.dto.ImageLinkDto;
-import com.agatarauzer.myBooks.dto.IsbnDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.ImageLinkDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.IsbnDto;
 
 
 @Service
@@ -39,8 +39,8 @@ public class GoogleBookMapper {
 		//retrieve list of isbns numbers
 		String ISBNs = "";
 		List<IsbnDto> ISBNDtos = googleBookDto.getISBNs();
-		if (ISBNDtos == null) {
-			ISBNs = null;
+		if (ISBNDtos.isEmpty()) {
+			ISBNs = "empty";
 		}
 		else {
 			ISBNs = ISBNDtos.stream().map(c -> c.getIdentifier()).collect(Collectors.joining(", "));	
@@ -68,7 +68,6 @@ public class GoogleBookMapper {
 	}
 	
 	public Book mapToBook(GoogleBookForUserDto googleBookForUserDto) {
-		
 		return new Book(googleBookForUserDto.getTitle(),
 						googleBookForUserDto.getAuthors(),
 						googleBookForUserDto.getISBNs(),

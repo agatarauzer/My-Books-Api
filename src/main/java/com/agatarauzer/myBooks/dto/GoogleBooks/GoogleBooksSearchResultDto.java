@@ -1,4 +1,6 @@
-package com.agatarauzer.myBooks.dto;
+package com.agatarauzer.myBooks.dto.GoogleBooks;
+
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,9 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GoogleBookDescriptionDto {
+public class GoogleBooksSearchResultDto {
 	
-	@JsonProperty("textSnippet")
-	private String description;
-	
+	@JsonProperty("items")
+    private List<GoogleBookBasicDto> books;
+
+    @JsonProperty("totalItems")
+    private int totalResults;
+ 
 }

@@ -1,6 +1,9 @@
 package com.agatarauzer.myBooks.mapper;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.User;
@@ -25,6 +28,12 @@ public class UserMapper {
 				userDto.getEmail(),
 				userDto.getLogin(),
 				userDto.getPassword());
+	}
+	
+	public List<UserDto> mapToUserDtoList(List<User> users) {
+		return users.stream()
+				.map(u -> mapToUserDto(u))
+				.collect(Collectors.toList());
 	}
 }
 

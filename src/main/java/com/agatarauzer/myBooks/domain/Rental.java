@@ -7,15 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name="rental_details")
 public class Rental {
@@ -36,4 +36,16 @@ public class Rental {
 	
 	@Column(name="end_date")
 	private LocalDate end;
+	
+	@OneToOne
+	@JoinColumn(name="rental")
+	private Book book;
+
+	public Rental(Long id, RentalStatus status, String name, LocalDate start, LocalDate end) {
+		this.id = id;
+		this.status = status;
+		this.name = name;
+		this.start = start;
+		this.end = end;
+	}
 }

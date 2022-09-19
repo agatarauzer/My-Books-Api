@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.dto.BookDto;
-import com.agatarauzer.myBooks.dto.ReadingDto;
-import com.agatarauzer.myBooks.dto.RentalDto;
 
 @Service
 public class BookMapper {
@@ -19,6 +17,11 @@ public class BookMapper {
 	
 	@Autowired
 	private RentalMapper rentalMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
+	
+	
 	
 	public Book mapToBook(BookDto bookDto) {
 		return new Book(bookDto.getId(),
@@ -33,9 +36,10 @@ public class BookMapper {
 						bookDto.getImageLink(),
 						bookDto.getPrice(),
 						bookDto.getPurchaseDate(),
-						bookDto.getVersion(),
-						readingMapper.mapToReading(bookDto.getReading()),
-						rentalMapper.mapToRental(bookDto.getRental()));			
+						bookDto.getVersion());
+						//readingMapper.mapToReading(bookDto.getReading()),
+						//rentalMapper.mapToRental(bookDto.getRental()),
+						//userMapper.mapToUser(bookDto.getUser()));			
 	}
 	
 	public BookDto mapToBookDto(Book book) {
@@ -51,9 +55,10 @@ public class BookMapper {
 						book.getImageLink(),
 						book.getPrice(),
 						book.getPurchaseDate(),
-						book.getVersion(),
-						readingMapper.mapToReadingDto(book.getReading()),
-						rentalMapper.mapToRentalDto(book.getRental()));
+						book.getVersion());
+						//readingMapper.mapToReadingDto(book.getReading()),
+						//rentalMapper.mapToRentalDto(book.getRental()),
+						//userMapper.mapToUserDto(book.getUser()));
 	}
 	
 	

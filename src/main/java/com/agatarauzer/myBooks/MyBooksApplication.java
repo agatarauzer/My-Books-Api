@@ -4,12 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.agatarauzer.myBooks.service.JWTAuthorizationFilter;
+//import com.agatarauzer.myBooks.service.JWTAuthorizationFilter;
 
 @SpringBootApplication
 public class MyBooksApplication {
@@ -19,7 +19,7 @@ public class MyBooksApplication {
 
 	}
 	
-	
+	/*
 	 @EnableWebSecurity
 	 @Configuration
 	 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,10 +29,13 @@ public class MyBooksApplication {
 	            http.csrf().disable()
 	                    .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 	                    .authorizeRequests()
-	                    .antMatchers(HttpMethod.GET, "/myBooks/search").permitAll()
-	                    .antMatchers(HttpMethod.GET, "/myBooks/books").permitAll()
-	                    .antMatchers(HttpMethod.POST, "/myBooks/book").permitAll()
+	                    .antMatchers(HttpMethod.GET, "v1/search").permitAll()
+	                    .antMatchers(HttpMethod.GET, "v1/books").permitAll()
+	                    .antMatchers(HttpMethod.POST, "v1/book").permitAll()
+	                    .antMatchers(HttpMethod.POST, "v1/user").permitAll()
 	                    .anyRequest().authenticated();
 	        }
 	    }
+	    
+	    */
 }

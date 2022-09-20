@@ -43,74 +43,66 @@ public class BookController {
 	
 	@GetMapping("/all/{userId}")
 	public List<BookDto> getUserBooks(@PathVariable Long userId) {
-		
 		List<Book> books = bookService.findBooksByUser(userId);
 		return bookMapper.mapToListBookDto(books);
 	}
 	
 	@GetMapping("/{bookId}")
 	public BookDto getBookById(@PathVariable Long id) {
-		
 		Book book = bookService.findBookById(id);
 		if (book == null) {
 			throw new BookNotFoundException("Book id not found - " + id);
 		}
+		
 		return bookMapper.mapToBookDto(book);
 	}
 	
 	@PostMapping("/search/{userId}")
 	public BookDto addBookFromSearch(@PathVariable Long userId, @RequestBody GoogleBookForUserDto googleBook) {
-		
 		User user = userService.findUserById(userId);
 		if (user == null) {
 			throw new UserNotFoundException("User id not found: " + userId);
 		}
-		
 		Book book = googleBookMapper.mapToBook(googleBook);
 		book.setId((long)0);
-		
 		book.setUser(user);
-		bookService.save(book);
+		bookService.saveBook(book);
 		
 		return bookMapper.mapToBookDto(book);
 	}
 	
 	@PostMapping("/{userId}")
 	public BookDto addBook (@PathVariable Long userId, @RequestBody BookDto bookDto) {
-		
 		User user = userService.findUserById(userId);
 		if (user == null) {
 			throw new UserNotFoundException("User id not found: " + userId);
 		}
-		
 		Book book = bookMapper.mapToBook(bookDto);
 		book.setId((long)0);
-		
 		book.setUser(user);
-		bookService.save(book);
+		bookService.saveBook(book);
 		
 		return bookDto;
 	}
 	
 	@PutMapping("/{bookId}")
 	public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
-		
 		Book book = bookMapper.mapToBook(bookDto);
 		if (book == null) {
 			throw new BookNotFoundException("Book id not found - " + id);
 		}
-		bookService.save(book);
+		bookService.saveBook(book);
+		
 		return bookDto;
 	}
 	
 	@DeleteMapping("/{bookId}")
 	public String deleteBook(@PathVariable Long id) {
-		
 		Book book = bookService.findBookById(id);
 		if (book == null) {
 			throw new BookNotFoundException("Book id not found - " + id);
 		}
-		bookService.deleteById(id);
+		bookService.deleteBookById(id);
 		
 		return "Deleted book: " + id;
 	}

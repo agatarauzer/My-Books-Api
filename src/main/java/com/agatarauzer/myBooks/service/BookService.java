@@ -15,7 +15,6 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepository;
 	
-	
 	public List<Book> findAll() {
 		return bookRepository.findAll();
 	}
@@ -25,7 +24,7 @@ public class BookService {
 	}
 	
 	public List<Book> findBooksByUser(Long id) {
-		return bookRepository.findBooksByUserId(id);
+		return bookRepository.findByUserId(id);
 	}
 	
 	public Book saveBook(Book book) {

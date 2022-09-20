@@ -27,7 +27,6 @@ import com.agatarauzer.myBooks.service.UserService;
 @RequestMapping("/v1/books")
 public class BookController {
 	
-	
 	@Autowired
 	private UserService userService;
 	
@@ -41,7 +40,7 @@ public class BookController {
 	private GoogleBookMapper googleBookMapper;
 	
 	
-	@GetMapping("/all/{userId}")
+	@GetMapping("/users/{userId}")
 	public List<BookDto> getUserBooks(@PathVariable Long userId) {
 		List<Book> books = bookService.findBooksByUser(userId);
 		return bookMapper.mapToListBookDto(books);
@@ -53,7 +52,6 @@ public class BookController {
 		if (book == null) {
 			throw new BookNotFoundException("Book id not found - " + id);
 		}
-		
 		return bookMapper.mapToBookDto(book);
 	}
 	
@@ -67,7 +65,6 @@ public class BookController {
 		book.setId((long)0);
 		book.setUser(user);
 		bookService.saveBook(book);
-		
 		return bookMapper.mapToBookDto(book);
 	}
 	
@@ -81,29 +78,26 @@ public class BookController {
 		book.setId((long)0);
 		book.setUser(user);
 		bookService.saveBook(book);
-		
 		return bookDto;
 	}
 	
 	@PutMapping("/{bookId}")
-	public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+	public BookDto updateBook(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);
 		if (book == null) {
-			throw new BookNotFoundException("Book id not found - " + id);
+			throw new BookNotFoundException("Book id not found - " + bookId);
 		}
-		bookService.saveBook(book);
-		
+		bookService.updateBook(bookId, book);
 		return bookDto;
 	}
 	
 	@DeleteMapping("/{bookId}")
-	public String deleteBook(@PathVariable Long id) {
-		Book book = bookService.findBookById(id);
+	public String deleteBook(@PathVariable Long bookId) {
+		Book book = bookService.findBookById(bookId);
 		if (book == null) {
-			throw new BookNotFoundException("Book id not found - " + id);
+			throw new BookNotFoundException("Book id not found - " + bookId);
 		}
-		bookService.deleteBookById(id);
-		
-		return "Deleted book: " + id;
+		bookService.deleteBookById(bookId);
+		return "Deleted book: " + bookId;
 	}
 }

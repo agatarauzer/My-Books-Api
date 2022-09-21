@@ -7,5 +7,6 @@ import com.agatarauzer.myBooks.domain.Rental;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Long> {
-
+	
+	public Rental findByBookId(Long bookId);
 }

@@ -12,14 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class RentalDto {
-	
 	private Long id;
-	
 	private RentalStatus status;
-	
 	private String name;
-	
-	private LocalDate start;
-	
-	private LocalDate end;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private String notes;
 }

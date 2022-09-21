@@ -32,20 +32,24 @@ public class Rental {
 	private String name;
 	
 	@Column(name="start_date")
-	private LocalDate start;
+	private LocalDate startDate;
 	
 	@Column(name="end_date")
-	private LocalDate end;
+	private LocalDate endDate;
+	
+	@Column(name="notes")
+	private String notes;
 	
 	@OneToOne
 	@JoinColumn(name="rental")
 	private Book book;
 
-	public Rental(Long id, RentalStatus status, String name, LocalDate start, LocalDate end) {
+	public Rental(Long id, RentalStatus status, String name, LocalDate startDate, LocalDate endDate, String notes) {
 		this.id = id;
 		this.status = status;
 		this.name = name;
-		this.start = start;
-		this.end = end;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.notes = notes;
 	}
 }

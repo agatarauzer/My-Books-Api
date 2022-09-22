@@ -8,7 +8,5 @@ import com.agatarauzer.myBooks.domain.Reading;
 @Repository
 public interface ReadingRepository extends JpaRepository<Reading, Long> {
 	
-	
-	
-
+	public Reading findByBookId(Long book_id);
 }

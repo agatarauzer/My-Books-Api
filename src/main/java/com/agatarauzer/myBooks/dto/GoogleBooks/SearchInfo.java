@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 
-
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ImageLinkDto {
+public class SearchInfo {
 	
-	@JsonProperty("smallThumbnail")
-	private String link;
+	@JsonProperty("textSnippet")
+	private String textSnippet;
 }
-

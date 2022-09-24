@@ -15,6 +15,5 @@ public class IsbnDto {
 	
 	@JsonProperty("identifier")
 	private String identifier;
-
 }
 

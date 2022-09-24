@@ -1,66 +1,60 @@
 package com.agatarauzer.myBooks.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookBasicDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.ImageLinkDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.IsbnDto;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
 
 
 @Service
 public class GoogleBookMapper {
 	
-	public GoogleBookForUserDto mapToGoogleBookForUserDto(GoogleBookDto googleBookDto) {
-		
-		//retrieve subtitle
-		String fullTitle = "";
-		if (googleBookDto.getSubtitle() == null) {
-			fullTitle = googleBookDto.getTitle();
+	public List<GoogleBookForUserDto> mapToGoogleBookForUserDtoList (GoogleBooksSearchResultDto googleSearchResultDto) {
+		List<GoogleBookBasicDto> booksBasic = googleSearchResultDto.getBooks();
+		List<GoogleBookForUserDto> booksForUser = new ArrayList<>();
+		for (GoogleBookBasicDto bookBasic : booksBasic) {
+			GoogleBookDto googleBookDto = bookBasic.getGoogleBookDetails();
+			String textSnippet = Optional.ofNullable(bookBasic.getSearchInfo())
+							.map(b -> b.getTextSnippet())
+							.orElse("");
+			GoogleBookForUserDto bookForUser = mapToGoogleBookForUserDto(googleBookDto, textSnippet);
+			booksForUser.add(bookForUser);
 		}
-		else {
-			fullTitle = googleBookDto.getTitle() + " " + googleBookDto.getSubtitle();
-		}
-		
-		//retrieve authors list
-		String authors = "";
-		List<String> authorsDto = googleBookDto.getAuthors();
-		if (authorsDto == null) {
-			authors = null;
-		}
-		else {	
-			authors = authorsDto.stream().collect(Collectors.joining(","));
-		}
-		
-		//retrieve list of isbns numbers
-		String ISBNs = "";
-		List<IsbnDto> ISBNDtos = googleBookDto.getISBNs();
-		if (ISBNDtos.isEmpty()) {
-			ISBNs = "empty";
-		}
-		else {
-			ISBNs = ISBNDtos.stream().map(c -> c.getIdentifier()).collect(Collectors.joining(", "));	
-		}
-		
-		//retrieve image link
-		String link = "";
-		ImageLinkDto imageLink = googleBookDto.getImageLink();
-		if (imageLink == null) {
-			link = null;
-		}
-		else {
-			link = imageLink.getLink();
-		}
+		return booksForUser;
+	}
 	
+	private GoogleBookForUserDto mapToGoogleBookForUserDto(GoogleBookDto googleBookDto, String textSnippet) {
+		String subtitle = Optional.ofNullable(googleBookDto.getSubtitle())
+							.orElse("");
+		String fullTitle = (googleBookDto.getTitle() + " " + subtitle).trim();
+		String authors = Optional.ofNullable(googleBookDto.getAuthors())
+							.map(b -> b.stream()
+								.collect(Collectors.joining(",")))
+							.orElse(null);
+		String description = Optional.ofNullable(googleBookDto.getDescription())
+							.orElse(textSnippet);
+		String ISBNs = Optional.ofNullable(googleBookDto.getISBNs())
+							.map(b -> b.stream()
+								.map(c -> c.getIdentifier())
+								.collect(Collectors.joining(", ")))
+							.orElse(null);
+		String link = Optional.ofNullable(googleBookDto.getImageLink())
+							.map(b -> b.getLink())
+							.orElse(null);
+		
 		return new GoogleBookForUserDto(fullTitle,
 										authors,
 										googleBookDto.getPublisher(),
 										googleBookDto.getPublishingDate(),
-										googleBookDto.getDescription(),
+										description,
 										ISBNs,
 										googleBookDto.getPages(),
 										googleBookDto.getLanguage(),

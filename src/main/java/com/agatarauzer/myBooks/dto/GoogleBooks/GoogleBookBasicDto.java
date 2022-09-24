@@ -13,13 +13,9 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GoogleBookBasicDto {
 	
-	//@JsonProperty("id")
-	//private String googleBookId;
-	
-	//@JsonProperty("selfLink")
-	//private String link;
-	
 	@JsonProperty("volumeInfo")
 	private GoogleBookDto googleBookDetails;
 	
+	@JsonProperty("searchInfo")
+	private SearchInfo searchInfo;
 }

@@ -11,10 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="rental_details")
@@ -41,7 +43,7 @@ public class Rental {
 	private String notes;
 	
 	@OneToOne
-	@JoinColumn(name="rental")
+	@JoinColumn(name="book_id")
 	private Book book;
 
 	public Rental(Long id, RentalStatus status, String name, LocalDate startDate, LocalDate endDate, String notes) {

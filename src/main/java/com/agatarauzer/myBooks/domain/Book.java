@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,19 +15,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="book")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
 	
 	@Id
@@ -77,11 +77,9 @@ public class Book {
 	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	private Rental rental;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	@JsonIgnoreProperties("books")
 	private User user;
-	
 	
 	public Book(String title, String authors, String ISBN, String publisher, 
 			String publishingDate, String language, int pages, String description, String imageLink) {

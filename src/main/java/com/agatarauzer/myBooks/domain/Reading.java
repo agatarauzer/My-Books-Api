@@ -13,10 +13,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="reading_details")
@@ -48,8 +50,7 @@ public class Reading {
 	private String notes;
 	
 	@OneToOne
-	@JoinColumn(name="reading")
-	//@JsonIgnoreProperties("reading")
+	@JoinColumn(name="book_id")
 	private Book book;
 
 	public Reading(Long id, ReadingStatus status, LocalDate startDate, LocalDate endDate, int readedPages,

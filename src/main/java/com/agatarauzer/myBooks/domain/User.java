@@ -13,16 +13,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="user")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 	
 	@Id
@@ -50,7 +53,7 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	@OneToMany(targetEntity = Book.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Book.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Book> books;
 	
 	public User(Long id, String firstName, String lastName, String email, 

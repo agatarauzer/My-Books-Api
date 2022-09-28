@@ -1,10 +1,14 @@
 package com.agatarauzer.myBooks.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Rental;
+import com.agatarauzer.myBooks.exception.BookNotFoundException;
+import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
+import com.agatarauzer.myBooks.exception.RentalNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.RentalRepository;
 
@@ -19,17 +23,21 @@ public class RentalService {
 	
 	
 	public Rental getRentalForBook(Long bookId) {
+		bookRepository.findById(bookId)
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		return rentalRepository.findByBookId(bookId);
 	}
 	
 	public Rental saveRental(Long bookId, Rental rental) {
-		Book book = bookRepository.getReferenceById(bookId);
+		Book book = bookRepository.findById(bookId)
+				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		rental.setBook(book);
 		return rentalRepository.save(rental);
 	}
 	
 	public Rental updateRental(Long rentalId, Rental rental) {
-		Rental rentalUpdated = rentalRepository.getReferenceById(rentalId);
+		Rental rentalUpdated = rentalRepository.findById(rentalId)
+				.orElseThrow(() -> new RentalNotFoundException("Rental id not found: " + rentalId));
 		rentalUpdated.setStatus(rental.getStatus());
 		rentalUpdated.setName(rental.getName());
 		rentalUpdated.setStartDate(rental.getStartDate());
@@ -38,7 +46,11 @@ public class RentalService {
 		return rentalRepository.save(rentalUpdated);
 	}
 	
-	public void deleteById(Long id) {
-		rentalRepository.deleteById(id);
+	public void deleteById(Long rentalId) {
+		try {
+			rentalRepository.deleteById(rentalId);
+		} catch (DataAccessException exc) {
+			throw new ReadingNotFoundException("Rental id not found: " + rentalId);
+		}
 	}
 }

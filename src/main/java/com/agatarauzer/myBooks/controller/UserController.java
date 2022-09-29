@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/v1")
 public class UserController {
 	
 	@Autowired
@@ -29,47 +28,35 @@ public class UserController {
 	private UserMapper userMapper;
 	
 	
-	@PostMapping
+	@PostMapping("/users")
 	public UserDto addUser(@RequestBody UserDto userDto) {
 		User user = userMapper.mapToUser(userDto);
-		user.setId((long)0);
 		userService.saveUser(user);
 		return userDto;
 	}
 	
-	@GetMapping
+	@GetMapping("/users")
 	public List<UserDto> getUsers() {
 		List<User> users = userService.findAll();
 		return userMapper.mapToUserDtoList(users);
 	}
 	
-	@GetMapping("/{userId}")
+	@GetMapping("/users/{userId}")
 	public UserDto getUserById(@PathVariable Long userId) {
 		User user = userService.findUserById(userId);
-		if (user == null) {
-			throw new UserNotFoundException("User id not found: " + userId);
-		}
 		return userMapper.mapToUserDto(user);
 	}
 	
-	@PutMapping("/{userId}")
+	@PutMapping("users/{userId}")
 	public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
 		User user = userMapper.mapToUser(userDto);
-		if (user == null) {
-			throw new UserNotFoundException("User id not found: " + userId);
-		}
 		userService.updateUser(userId, user);
-		return userMapper.mapToUserDto(user);
+		return userDto;
 	}
 	
-	@DeleteMapping("/{userId}")
+	@DeleteMapping("users/{userId}")
 	public String deleteUser(@PathVariable Long userId) {
-		User user = userService.findUserById(userId);
-		if (user == null) {
-			throw new UserNotFoundException("User id not found: " + userId);
-		}
 		userService.deleteUser(userId);
-		
 		return "Deleted user with id: " + userId;
 	}
 }

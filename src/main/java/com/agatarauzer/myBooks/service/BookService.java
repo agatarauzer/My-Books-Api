@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
+import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
@@ -39,6 +40,13 @@ public class BookService {
 		return bookRepository.findByUserId(userId);		
 	}
 	
+	public Book saveBookForUser(Long userId, Book book) {
+		User user = userRepository.findById(userId)
+					.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+		book.setUser(user);
+		return bookRepository.save(book);
+	}
+
 	public Book saveBook(Book book) {
 		return bookRepository.save(book);
 	}
@@ -60,7 +68,7 @@ public class BookService {
 		return saveBook(bookUpdated);
 	}
 
-	public void deleteBookById(Long bookId) {
+	public void deleteBook(Long bookId) {
 		try {
 			bookRepository.deleteById(bookId);
 		} catch (DataAccessException exc) {

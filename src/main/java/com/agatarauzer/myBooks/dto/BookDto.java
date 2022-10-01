@@ -26,5 +26,3 @@ public class BookDto {
 	private LocalDate purchaseDate;
 	private Version version;
 }
-
-

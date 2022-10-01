@@ -90,6 +90,7 @@ public class Book {
 		this.publishingDate = publishingDate;
 		this.language = language;
 		this.pages = pages;
+		this.description = description;
 		this.imageLink = imageLink;
 	}
 

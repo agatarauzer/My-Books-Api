@@ -5,9 +5,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
+@AllArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GoogleBookDto {
@@ -31,7 +32,7 @@ public class GoogleBookDto {
 	private String description;
 	
 	@JsonProperty("industryIdentifiers")
-	private List<IsbnDto> ISBNs;
+	private List<IsbnDto> ISBN;
 	
 	@JsonProperty("pageCount")
 	private int pages;

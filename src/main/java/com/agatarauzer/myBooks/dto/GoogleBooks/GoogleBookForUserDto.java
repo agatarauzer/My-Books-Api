@@ -8,11 +8,11 @@ import lombok.Getter;
 public class GoogleBookForUserDto {
 	private String title;
 	private String authors;
+	private String ISBN;
 	private String publisher;
 	private String publishingDate;
-	private String description;
-	private String ISBNs;
-	private int pages;
 	private String language;
+	private int pages;
+	private String description;
 	private String imageLink;
 }

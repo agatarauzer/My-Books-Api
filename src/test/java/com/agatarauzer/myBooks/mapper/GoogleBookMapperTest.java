@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,11 +24,27 @@ public class GoogleBookMapperTest {
 	@Autowired
 	private GoogleBookMapper googleBookMapper;
 	
-	@Test
-	public void sholudMapGoogleBookForUserDtoToBook() {
-		GoogleBookForUserDto googleBookForUserDto = new GoogleBookForUserDto("Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
+	private GoogleBookForUserDto googleBookForUserDto;
+	private GoogleBooksSearchResultDto googleSearchResultDto; 
+	
+	@BeforeEach
+	public void prepareTestData() {
+		googleBookForUserDto = new GoogleBookForUserDto("Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
 				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");
 		
+		IsbnDto isbnDto1 = new IsbnDto("ISBN_10", "8324677615");
+		IsbnDto isbnDto2 = new IsbnDto("ISBN_13", "9788324677610");
+		ImageLinkDto imageLinkDto = new ImageLinkDto("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");
+		GoogleBookDto googleBookDto = new GoogleBookDto("Java. Podstawy.", "Wydanie IX", List.of("Cay S. Horstmann", "Gary Cornell"), List.of(isbnDto1, isbnDto2), "Helion", "2013-12-09", 
+				 "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", imageLinkDto);	
+		SearchInfo searchInfo = new SearchInfo("empty");	
+		GoogleBookBasicDto googleBookBasicDto = new GoogleBookBasicDto(googleBookDto, searchInfo);
+		List<GoogleBookBasicDto> books = List.of(googleBookBasicDto);
+		googleSearchResultDto = new GoogleBooksSearchResultDto(books, 1);
+	}
+	
+	@Test
+	public void sholudMapGoogleBookForUserDtoToBook() {
 		Book book = googleBookMapper.mapToBook(googleBookForUserDto);
 		
 		assertEquals(book.getTitle(), googleBookForUserDto.getTitle());
@@ -42,18 +59,6 @@ public class GoogleBookMapperTest {
 	
 	@Test
 	public void shouldMapGoogleSearchResultDtoToGoogleBookForUserDtoList() {
-		IsbnDto isbnDto1 = new IsbnDto("ISBN_10", "8324677615");
-		IsbnDto isbnDto2 = new IsbnDto("ISBN_13", "9788324677610");
-		ImageLinkDto imageLinkDto = new ImageLinkDto("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");
-		GoogleBookDto googleBookDto = new GoogleBookDto("Java. Podstawy.", "Wydanie IX", List.of("Cay S. Horstmann", "Gary Cornell"), "Helion", "2013-12-09", "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				List.of(isbnDto1, isbnDto2), 864, "pl", imageLinkDto);	
-		
-		SearchInfo searchInfo = new SearchInfo("empty");	
-		GoogleBookBasicDto googleBookBasicDto = new GoogleBookBasicDto(googleBookDto, searchInfo);
-		
-		List<GoogleBookBasicDto> books = List.of(googleBookBasicDto);
-		GoogleBooksSearchResultDto googleSearchResultDto = new GoogleBooksSearchResultDto(books, 1);
-		
 		List<GoogleBookForUserDto> booksForUser =  googleBookMapper.mapToGoogleBookForUserDtoList(googleSearchResultDto);
 		
 		assertEquals("Java. Podstawy. Wydanie IX", booksForUser.get(0).getTitle());

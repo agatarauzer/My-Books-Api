@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
@@ -46,7 +45,7 @@ public class UserService {
 		try {
 			userRepository.deleteById(userId);
 		} catch (DataAccessException exc) {
-			throw new ReadingNotFoundException("Reading id not found: " + userId);
+			throw new UserNotFoundException("User id not found: " + userId);
 		}
 	}		
 }

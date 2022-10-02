@@ -1,8 +1,10 @@
 package com.agatarauzer.myBooks.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.agatarauzer.myBooks.domain.User;
+import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +36,7 @@ public class UserServiceTest {
 		List<User> userList = List.of(
 				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password"),
 				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password"));
+		
 		when(userRepository.findAll()).thenReturn(userList);
 		
 		List<User> users = userService.findAll();
@@ -98,11 +102,36 @@ public class UserServiceTest {
 	@Test
 	public void shouldDeleteUser() {
 		Long id = 1L;
-		
 		doNothing().when(userRepository).deleteById(id);
-		
 		userService.deleteUser(id);
 		
+		verify(userRepository, times(1)).deleteById(id);
+	}
+	
+	@Test
+	public void shouldThrowException_findUserById() {
+		Long id = 1L;
+		doThrow(new UserNotFoundException()).when(userRepository).findById(id);
+		
+		assertThrows(UserNotFoundException.class, ()-> userService.findUserById(id));
+		verify(userRepository, times(1)).findById(id);
+	}
+	
+	@Test
+	public void shouldThrowException_updateUser() {
+		Long id = 1L;
+		doThrow(new UserNotFoundException()).when(userRepository).findById(id);
+		
+		assertThrows(UserNotFoundException.class, ()-> userService.updateUser(id, new User()));
+		verify(userRepository, times(1)).findById(id);
+	}
+	
+	@Test
+	public void shouldThrowException_deleteUser() {
+		Long id = 1L;
+		doThrow(new UserNotFoundException()).when(userRepository).deleteById(id);
+		
+		assertThrows(UserNotFoundException.class, ()-> userService.deleteUser(id));
 		verify(userRepository, times(1)).deleteById(id);
 	}
 }

@@ -31,8 +31,13 @@ public class GoogleBooksClient {
 	private GoogleBookMapper googleBookMapper;
 	
 	public List<GoogleBookForUserDto> getBooksFromSearch(String phrase) {
+		URI uri = UriComponentsBuilder.fromHttpUrl(googleBooksApiConfig.getGoogleBooksApiEndpoint() + "?q=" + phrase)
+			.build()
+			.encode()
+			.toUri();
+		 
 		try {
-			GoogleBooksSearchResultDto searchResult = restTemplate.getForObject(buildUrlToGetSearchResults(phrase), GoogleBooksSearchResultDto.class);
+			GoogleBooksSearchResultDto searchResult = restTemplate.getForObject(uri, GoogleBooksSearchResultDto.class);
 			return Optional.ofNullable(searchResult)
 					.map(s -> googleBookMapper.mapToGoogleBookForUserDtoList(s))
 					.orElseGet(Collections::emptyList);
@@ -41,13 +46,5 @@ public class GoogleBooksClient {
 			LOGGER.error(exc.getMessage(), exc);
 			return Collections.emptyList();
 		}
-	}
-	
-	private URI buildUrlToGetSearchResults(String phrase) { 
-		return UriComponentsBuilder.fromHttpUrl(googleBooksApiConfig.getGoogleBooksApiEndpoint() + "?q=" + phrase)
-				.queryParam("key", googleBooksApiConfig.getGoogleBooksAppKey())
-				.build()
-				.encode()
-				.toUri();
 	}
 }

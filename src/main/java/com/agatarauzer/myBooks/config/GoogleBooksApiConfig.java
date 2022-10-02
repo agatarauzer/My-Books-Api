@@ -11,8 +11,4 @@ public class GoogleBooksApiConfig {
 	
 	@Value("${googleBooks.api.endpoint}")
 	private String googleBooksApiEndpoint;
-	
-	@Value("${googleBooks.api.key}")
-	private String googleBooksAppKey;
-
 }

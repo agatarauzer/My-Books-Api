@@ -16,7 +16,7 @@ import com.agatarauzer.myBooks.mapper.ReadingMapper;
 import com.agatarauzer.myBooks.service.ReadingService;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/users/{userId}/books/{bookId}")
 public class ReadingController {
 	
 	@Autowired
@@ -26,13 +26,13 @@ public class ReadingController {
 	private ReadingMapper readingMapper;
 	
 	
-	@GetMapping("/books/{bookId}/readings")
+	@GetMapping("/readings")
 	public ReadingDto getReadingForBook(@PathVariable Long bookId) {
 		Reading reading = readingService.getReadingForBook(bookId);
 		return readingMapper.mapToReadingDto(reading);
 	}
 	
-	@PostMapping("/books/{bookId}/readings")
+	@PostMapping("/readings")
 	public ReadingDto addReading(@PathVariable Long bookId, @RequestBody ReadingDto readingDto) {
 		Reading reading = readingMapper.mapToReading(readingDto);
 		readingService.saveReading(bookId, reading);

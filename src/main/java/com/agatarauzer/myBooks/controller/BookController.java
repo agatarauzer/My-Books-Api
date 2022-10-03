@@ -27,7 +27,6 @@ public class BookController {
 	@Autowired
 	private BookMapper bookMapper;
 	
-	
 	@GetMapping("/books")
 	public List<BookDto> getUserBooks(@PathVariable Long userId) {
 		List<Book> books = bookService.findBooksByUser(userId);
@@ -47,7 +46,6 @@ public class BookController {
 		return bookDto;
 	}
 	
-	//TO DO: przy put gubi się isbn 
 	@PutMapping("/books/{bookId}")
 	public BookDto updateBook(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);

@@ -16,7 +16,7 @@ import com.agatarauzer.myBooks.mapper.RentalMapper;
 import com.agatarauzer.myBooks.service.RentalService;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/users/{userId}/books/{bookId}")
 public class RentalController {
 	
 	@Autowired
@@ -26,13 +26,13 @@ public class RentalController {
 	private RentalMapper rentalMapper;
 	
 	
-	@GetMapping("/books/{bookId}/rentals")
+	@GetMapping("/rentals")
 	public RentalDto getRentalForBook(@PathVariable Long bookId) {
 		Rental rental = rentalService.getRentalForBook(bookId);
 		return rentalMapper.mapToRentalDto(rental);
 	}
 	
-	@PostMapping("/books/{bookId}/rentals")
+	@PostMapping("/rentals")
 	public RentalDto addRental(@PathVariable Long bookId, @RequestBody RentalDto rentalDto) {
 		Rental rental = rentalMapper.mapToRental(rentalDto);
 		rentalService.saveRental(bookId, rental);

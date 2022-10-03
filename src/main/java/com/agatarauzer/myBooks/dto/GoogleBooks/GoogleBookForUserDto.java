@@ -2,7 +2,9 @@ package com.agatarauzer.myBooks.dto.GoogleBooks;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class GoogleBookForUserDto {

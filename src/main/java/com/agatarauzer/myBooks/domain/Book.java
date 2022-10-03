@@ -41,7 +41,7 @@ public class Book {
 	@Column(name="authors")
 	private String authors;
 	
-	@Column(name="ISBNs_numbers")
+	@Column(name="ISBN_numbers")
 	private String ISBN;
 	
 	@Column(name="publisher")
@@ -81,8 +81,8 @@ public class Book {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	public Book(String title, String authors, String ISBN, String publisher, 
-			String publishingDate, String language, int pages, String description, String imageLink) {
+	public Book(String title, String authors, String ISBN, String publisher, String publishingDate, 
+			String language, int pages, String description, String imageLink) {
 		this.title = title;
 		this.authors = authors;
 		this.ISBN = ISBN;

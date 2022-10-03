@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,23 +24,23 @@ public class GoogleBookDto {
 	@JsonProperty("authors")
 	private List<String> authors;
 	
+	@JsonProperty("industryIdentifiers")
+	private List<IsbnDto> ISBN;
+	
 	@JsonProperty("publisher")
 	private String publisher;
 	
 	@JsonProperty("publishedDate")
 	private String publishingDate;
 	
-	@JsonProperty("description")
-	private String description;
-	
-	@JsonProperty("industryIdentifiers")
-	private List<IsbnDto> ISBN;
+	@JsonProperty("language")
+	private String language;
 	
 	@JsonProperty("pageCount")
 	private int pages;
 	
-	@JsonProperty("language")
-	private String language;
+	@JsonProperty("description")
+	private String description;
 	
 	@JsonProperty("imageLinks")
 	private ImageLinkDto imageLink;

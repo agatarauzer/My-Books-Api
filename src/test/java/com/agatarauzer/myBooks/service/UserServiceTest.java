@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,108 +32,86 @@ public class UserServiceTest {
 	@Mock
 	private UserRepository userRepository;
 	
+	private Long userId;
+	private User user;
+	
+	@BeforeEach
+	public void prepareTestData() {
+		userId = 1L;
+		user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
+	}
+
 	@Test
 	public void shouldfindAllUsers() {
-		List<User> userList = List.of(
-				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password"),
+		List<User> userList = List.of(user,
 				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password"));
-		
 		when(userRepository.findAll()).thenReturn(userList);
 		
 		List<User> users = userService.findAll();
 		
 		assertEquals(2, users.size());
-		assertEquals(1L, users.get(0).getId());
-		assertEquals("Tomasz", users.get(0).getFirstName());
-		assertEquals("Malinowski", users.get(0).getLastName());
-		assertEquals("ala.maj@gmail.com", users.get(1).getEmail());
-		assertEquals("agamaj", users.get(1).getLogin());
-		assertEquals("aga_maj_password", users.get(1).getPassword());
+		assertEquals(userList.get(0), users.get(0)); 
 	}
 	
 	@Test
 	public void sholudFindUserById() {
-		Long id = 1L;
-		Optional<User> user = Optional.of(new User(id, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password"));
+		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		
-		when(userRepository.findById(id)).thenReturn(user);
+		User foundedUser = userService.findUserById(userId);
 		
-		User foundedUser = userService.findUserById(id);
-		
-		assertEquals("Tomasz", foundedUser.getFirstName());
-		assertEquals("Malinowski", foundedUser.getLastName());
-		assertEquals("tomasz.malinowski@gmail.com", foundedUser.getEmail());
-		assertEquals("tommal", foundedUser.getLogin());
-		assertEquals("tom_mal_password", foundedUser.getPassword());
+		assertEquals(user, foundedUser);
 	}
 	
 	@Test
 	public void sholudSaveUser() {
-		User user = new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
-		
 		when(userRepository.save(user)).thenReturn(user);
 		
 		User savedUser = userService.saveUser(user);
 		
-		assertEquals("Tomasz", savedUser.getFirstName());
-		assertEquals("Malinowski", savedUser.getLastName());
-		assertEquals("tomasz.malinowski@gmail.com", savedUser.getEmail());
-		assertEquals("tommal", savedUser.getLogin());
-		assertEquals("tom_mal_password", savedUser.getPassword());
+		assertEquals(user, savedUser);
 	}
 	
 	@Test
 	public void sholudUpdateUser() {
-		Long id = 1L;
-		Optional<User> userOptional = Optional.of(new User(id, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password"));
-		User userUpdated = new User(id, "Tomek", "Malik", "tomasz.malik@gmail.com", "tommalik", "to_password");
-		
-		when(userRepository.findById(id)).thenReturn(userOptional);
+		User userUpdated = new User(userId, "Tomek", "Malik", "tomasz.malik@gmail.com", "tommalik", "to_password");
+		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(userRepository.save(any(User.class))).thenReturn(userUpdated);
 		
-		User userAfterUpdate = userService.updateUser(id, userUpdated);
+		User userAfterUpdate = userService.updateUser(userId, userUpdated);
 		
-		assertEquals(userUpdated.getFirstName(), userAfterUpdate.getFirstName());
-		assertEquals(userUpdated.getLastName(), userAfterUpdate.getLastName());
-		assertEquals(userUpdated.getEmail(), userAfterUpdate.getEmail());
-		assertEquals(userUpdated.getLogin(), userAfterUpdate.getLogin());
-		assertEquals(userUpdated.getPassword(), userAfterUpdate.getPassword());
+		assertEquals(userUpdated, userAfterUpdate);
 	}
 	
 	@Test
 	public void shouldDeleteUser() {
-		Long id = 1L;
-		doNothing().when(userRepository).deleteById(id);
-		userService.deleteUser(id);
+		doNothing().when(userRepository).deleteById(userId);
+		userService.deleteUser(userId);
 		
-		verify(userRepository, times(1)).deleteById(id);
+		verify(userRepository, times(1)).deleteById(userId);
 	}
 	
 	@Test
 	public void shouldThrowException_findUserById() {
-		Long id = 1L;
-		doThrow(new UserNotFoundException()).when(userRepository).findById(id);
+		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
 		
-		assertThrows(UserNotFoundException.class, ()-> userService.findUserById(id));
-		verify(userRepository, times(1)).findById(id);
+		assertThrows(UserNotFoundException.class, ()-> userService.findUserById(userId));
+		verify(userRepository, times(1)).findById(userId);
 	}
 	
 	@Test
 	public void shouldThrowException_updateUser() {
-		Long id = 1L;
-		doThrow(new UserNotFoundException()).when(userRepository).findById(id);
+		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
 		
-		assertThrows(UserNotFoundException.class, ()-> userService.updateUser(id, new User()));
-		verify(userRepository, times(1)).findById(id);
+		assertThrows(UserNotFoundException.class, ()-> userService.updateUser(userId, new User()));
+		verify(userRepository, times(1)).findById(userId);
 	}
 	
 	@Test
 	public void shouldThrowException_deleteUser() {
-		Long id = 1L;
-		doThrow(new UserNotFoundException()).when(userRepository).deleteById(id);
+		doThrow(new UserNotFoundException()).when(userRepository).deleteById(userId);
 		
-		assertThrows(UserNotFoundException.class, ()-> userService.deleteUser(id));
-		verify(userRepository, times(1)).deleteById(id);
+		assertThrows(UserNotFoundException.class, ()-> userService.deleteUser(userId));
+		verify(userRepository, times(1)).deleteById(userId);
 	}
 }
 

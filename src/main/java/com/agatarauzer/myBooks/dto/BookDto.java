@@ -1,7 +1,5 @@
 package com.agatarauzer.myBooks.dto;
 
-import java.time.LocalDate;
-
 import com.agatarauzer.myBooks.domain.Version;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +20,6 @@ public class BookDto {
 	private int pages;
 	private String description;
 	private String imageLink;
-	private Double price;
-	private LocalDate purchaseDate;
 	private Version version;
+	private int copies;
 }

@@ -1,7 +1,5 @@
 package com.agatarauzer.myBooks.domain;
 
-import java.time.LocalDate;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 @Getter
 @Setter
@@ -62,14 +59,11 @@ public class Book {
 	@Column(name="image_link")
 	private String imageLink;
 	
-	@Column(name="price")
-	private Double price;
-	
-	@Column(name="purchase_date")
-	private LocalDate purchaseDate;
-	
 	@Column(name="version")
 	private Version version;
+	
+	@Column(name="copies")
+	private int copies;
 	
 	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	private Reading reading;
@@ -77,10 +71,14 @@ public class Book {
 	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	private Rental rental;
 	
+	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+	private Purchase purchase;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+
 	public Book(String title, String authors, String ISBN, String publisher, String publishingDate, 
 			String language, int pages, String description, String imageLink) {
 		this.title = title;
@@ -95,8 +93,8 @@ public class Book {
 	}
 
 	public Book(Long id, String title, String authors, String ISBN, String publisher, String publishingDate,
-			String language, int pages, String description, String imageLink, Double price, LocalDate purchaseDate,
-			Version version) {
+			String language, int pages, String description, String imageLink,
+			Version version, int copies) {
 		this.id = id;
 		this.title = title;
 		this.authors = authors;
@@ -107,9 +105,8 @@ public class Book {
 		this.pages = pages;
 		this.description = description;
 		this.imageLink = imageLink;
-		this.price = price;
-		this.purchaseDate = purchaseDate;
 		this.version = version;
+		this.copies = copies;
 	}
 }
 

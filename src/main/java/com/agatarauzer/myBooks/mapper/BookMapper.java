@@ -22,9 +22,8 @@ public class BookMapper {
 						bookDto.getPages(),
 						bookDto.getDescription(),
 						bookDto.getImageLink(),
-						bookDto.getPrice(),
-						bookDto.getPurchaseDate(),
-						bookDto.getVersion());
+						bookDto.getVersion(),
+						bookDto.getCopies());
 	}
 	
 	public BookDto mapToBookDto(Book book) {
@@ -38,11 +37,9 @@ public class BookMapper {
 						book.getPages(),
 						book.getDescription(),
 						book.getImageLink(),
-						book.getPrice(),
-						book.getPurchaseDate(),
-						book.getVersion());
+						book.getVersion(),
+						book.getCopies());
 	}
-	
 	
 	public List<BookDto> mapToBookDtoList(List<Book> books) {
 		return books.stream()

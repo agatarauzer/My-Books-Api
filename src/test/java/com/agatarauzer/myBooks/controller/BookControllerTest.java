@@ -54,12 +54,10 @@ public class BookControllerTest {
 	private void prepareTestData() {
 		userId = 1L; 
 		bookId = 1L;
-		book = new Book(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-				89.00, LocalDate.of(2018, 9, 5), Version.PAPER);
-		bookDto = new BookDto(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-				89.00, LocalDate.of(2018, 9, 5), Version.PAPER);
+		book = new Book(bookId, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
+				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
+		bookDto = new BookDto(bookId, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
+				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",Version.PAPER, 1);
 	}
 	
 	@Test 
@@ -77,16 +75,15 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$", hasSize(1)))
 			.andExpect(jsonPath("$[0].title", is("Java. Podstawy. Wydanie IX")))
 			.andExpect(jsonPath("$[0].authors", is("Cay S. Horstmann,Gary Cornell")))
-			.andExpect(jsonPath("$[0].isbn", is("9788324677610, 8324677615")))
+			.andExpect(jsonPath("$[0].isbn", is("8324677615, 9788324677610")))
 			.andExpect(jsonPath("$[0].publisher", is("Helion")))
 			.andExpect(jsonPath("$[0].publishingDate", is("2013-12-09")))
 			.andExpect(jsonPath("$[0].language", is("pl")))
 			.andExpect(jsonPath("$[0].pages", is(864)))
 			.andExpect(jsonPath("$[0].description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$[0].imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$[0].price", is(89.00)))
-			.andExpect(jsonPath("$[0].purchaseDate", is("2018-09-05")))
-			.andExpect(jsonPath("$[0].version", is("PAPER")));
+			.andExpect(jsonPath("$[0].version", is("PAPER")))
+			.andExpect(jsonPath("$[0].copies", is(1)));
 	}
 	
 	@Test
@@ -100,7 +97,7 @@ public class BookControllerTest {
 		.andExpect(status().is(200))
 		.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
 		.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
-		.andExpect(jsonPath("$.isbn", is("9788324677610, 8324677615")))
+		.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
 		.andExpect(jsonPath("$.publisher", is("Helion")))
 		.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
 		.andExpect(jsonPath("$.language", is("pl")))
@@ -125,7 +122,7 @@ public class BookControllerTest {
 				.andExpect(status().is(200))
 				.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
 				.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
-				.andExpect(jsonPath("$.isbn", is("9788324677610, 8324677615")))
+				.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
 				.andExpect(jsonPath("$.publisher", is("Helion")))
 				.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
 				.andExpect(jsonPath("$.language", is("pl")))
@@ -135,11 +132,9 @@ public class BookControllerTest {
 	@Test
 	public void shouldUpdateBook() throws Exception {
 		Book bookUpdated = new Book(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "9788324677789, 8324677455", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed",
-				94.00, LocalDate.of(2022, 3, 4), Version.E_BOOK);
+				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed", Version.E_BOOK, 2);
 		BookDto bookUpdatedDto = new BookDto(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "9788324677789, 8324677455", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed",
-				94.00, LocalDate.of(2022, 3, 4), Version.E_BOOK);
+				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed", Version.E_BOOK, 2);
 		
 		when(bookService.updateBook(1L, book)).thenReturn(bookUpdated);
 	
@@ -162,9 +157,8 @@ public class BookControllerTest {
 				.andExpect(jsonPath("$.pages", is(900)))
 				.andExpect(jsonPath("$.description", is("Kolejne wydanie_changed")))
 				.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")))
-				.andExpect(jsonPath("$.price", is(94.00)))
-				.andExpect(jsonPath("$.purchaseDate", is("2022-03-02")))
-				.andExpect(jsonPath("$.version", is("E_BOOK")));
+				.andExpect(jsonPath("$.version", is("E_BOOK")))
+				.andExpect(jsonPath("$.copies", is("2")));
 	}
 	
 	@Test

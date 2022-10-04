@@ -9,7 +9,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +48,7 @@ public class BookServiceTest {
 		bookId = 1L;
 		userId = 1L;
 		book = new Book(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-				89.00, LocalDate.of(2018, 9, 5), Version.PAPER);
+				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
 	}
 	
 	@Test
@@ -87,12 +85,7 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldSaveBookForUser() {
-		Long userId = 1L;
 		User user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
-		Book book = new Book(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-				89.00, LocalDate.of(2018, 9, 5), Version.PAPER);
-		
 		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(bookRepository.save(book)).thenReturn(book);
 		
@@ -114,8 +107,7 @@ public class BookServiceTest {
 	@Test
 	public void shouldUpdateBook() {
 		Book bookUpdated = new Book(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "9788324677789, 8324677455", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed",
-				94.00, LocalDate.of(2022, 3, 4), Version.E_BOOK);
+				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed", Version.E_BOOK, 2);
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(bookRepository.save(any(Book.class))).thenReturn(bookUpdated);
 		

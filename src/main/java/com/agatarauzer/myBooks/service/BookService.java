@@ -63,8 +63,8 @@ public class BookService {
 		bookUpdated.setPages(book.getPages());
 		bookUpdated.setDescription(book.getDescription());
 		bookUpdated.setImageLink(book.getImageLink());
-		bookUpdated.setPrice(book.getPrice());
-		bookUpdated.setPurchaseDate(book.getPurchaseDate());
+		bookUpdated.setVersion(book.getVersion());
+		bookUpdated.setCopies(book.getCopies());
 		return saveBook(bookUpdated);
 	}
 

@@ -48,7 +48,7 @@ public class ReadingController {
 	
 	@DeleteMapping("/readings/{readingId}")
 	public String deleteReading(@PathVariable Long readingId) {
-		readingService.deleteById(readingId);
+		readingService.deleteReading(readingId);
 		return "Deleted reading: " + readingId;
 	}
 }

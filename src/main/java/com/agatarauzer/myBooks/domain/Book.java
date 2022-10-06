@@ -63,7 +63,7 @@ public class Book {
 	private Version version;
 	
 	@Column(name="copies")
-	private int copies;
+	private Integer copies;
 	
 	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
 	private Reading reading;
@@ -94,7 +94,7 @@ public class Book {
 
 	public Book(Long id, String title, String authors, String ISBN, String publisher, String publishingDate,
 			String language, int pages, String description, String imageLink,
-			Version version, int copies) {
+			Version version, Integer copies) {
 		this.id = id;
 		this.title = title;
 		this.authors = authors;

@@ -7,5 +7,5 @@ import com.agatarauzer.myBooks.domain.Reading;
 
 @Repository
 public interface ReadingRepository extends CrudRepository<Reading, Long> {
-	public Reading findByBookId(Long book_id);
+	public Reading findByBookId(Long bookId);
 }

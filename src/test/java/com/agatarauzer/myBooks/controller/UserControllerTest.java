@@ -102,20 +102,17 @@ public class UserControllerTest {
 	@Test
 	public void shouldUpdateUser() throws Exception {
 		Long id = 1L;
-		User user = new User(id, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
 		User userUpdated = new User(id, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommalin", "tomasz_malin_password");
-		UserDto userUpdatedDto = new UserDto(id, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommalin", "tomasz_malin_password");
-		
-		when(userService.updateUser(id, user)).thenReturn(userUpdated);
+		when(userService.updateUser(id, userUpdated)).thenReturn(userUpdated);
 		
 		Gson gson = new Gson();
-		String jsonUserDto = gson.toJson(userUpdatedDto);
+		String jsonUser = gson.toJson(userUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/v1/users/{id}", id)
 						.contentType(MediaType.APPLICATION_JSON)
 						.characterEncoding("UTF-8")
-						.content(jsonUserDto))
+						.content(jsonUser))
 				.andExpect(status().is(200))
 				.andExpect(jsonPath("$.login", is("tommalin")))
 				.andExpect(jsonPath("$.password", is("tomasz_malin_password")));	

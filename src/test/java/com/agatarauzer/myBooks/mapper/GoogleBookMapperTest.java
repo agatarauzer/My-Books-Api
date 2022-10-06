@@ -29,7 +29,7 @@ public class GoogleBookMapperTest {
 	
 	@BeforeEach
 	public void prepareTestData() {
-		googleBookForUserDto = new GoogleBookForUserDto("Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
+		googleBookForUserDto = new GoogleBookForUserDto("Java. Podstawy. Wydanie IX", "Cay S. Horstmann, Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
 				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");
 		
 		IsbnDto isbnDto1 = new IsbnDto("ISBN_10", "8324677615");
@@ -62,7 +62,7 @@ public class GoogleBookMapperTest {
 		List<GoogleBookForUserDto> booksForUser =  googleBookMapper.mapToGoogleBookForUserDtoList(googleSearchResultDto);
 		
 		assertEquals("Java. Podstawy. Wydanie IX", booksForUser.get(0).getTitle());
-		assertEquals("Cay S. Horstmann,Gary Cornell", booksForUser.get(0).getAuthors());
+		assertEquals("Cay S. Horstmann, Gary Cornell", booksForUser.get(0).getAuthors());
 		assertEquals("8324677615, 9788324677610", booksForUser.get(0).getISBN());
 		assertEquals("Helion", booksForUser.get(0).getPublisher());
 		assertEquals("2013-12-09", booksForUser.get(0).getPublishingDate());

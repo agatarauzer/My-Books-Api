@@ -131,26 +131,23 @@ public class BookControllerTest {
 	
 	@Test
 	public void shouldUpdateBook() throws Exception {
-		Book bookUpdated = new Book(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "9788324677789, 8324677455", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
+		Book bookUpdated = new Book(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "8324677615, 9788324677610", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
 				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed", Version.E_BOOK, 2);
-		BookDto bookUpdatedDto = new BookDto(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "9788324677789, 8324677455", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed", Version.E_BOOK, 2);
-		
-		when(bookService.updateBook(1L, book)).thenReturn(bookUpdated);
-	
+		when(bookService.updateBook(1L, bookUpdated)).thenReturn(bookUpdated);
+
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
 				.create();
-		String jsonBookDto = gson.toJson(bookUpdatedDto);
+		String jsonBook = gson.toJson(bookUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-						.put("/v1/users/1/books/{bookId}", bookId)
+						.put("/v1/users/{userId}/books/{bookId}", userId, bookId)
 						.contentType(MediaType.APPLICATION_JSON)
 						.characterEncoding("UTF-8")
-						.content(jsonBookDto))
+						.content(jsonBook))
 				.andExpect(status().is(200))
 				.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX_changed")))
 				.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell_changed")))
-				.andExpect(jsonPath("$.isbn", is("9788324677789, 8324677455")))
+				.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
 				.andExpect(jsonPath("$.publisher", is("Helion_changed")))
 				.andExpect(jsonPath("$.publishingDate", is("2022-12-22")))
 				.andExpect(jsonPath("$.language", is("pl_changed")))

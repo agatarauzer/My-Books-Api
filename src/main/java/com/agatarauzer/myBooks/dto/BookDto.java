@@ -21,5 +21,5 @@ public class BookDto {
 	private String description;
 	private String imageLink;
 	private Version version;
-	private int copies;
+	private Integer copies;
 }

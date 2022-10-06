@@ -50,7 +50,7 @@ public class GoogleBookMapper {
 		String fullTitle = (googleBookDto.getTitle() + " " + subtitle).trim();
 		String authors = Optional.ofNullable(googleBookDto.getAuthors())
 							.map(b -> b.stream()
-								.collect(Collectors.joining(",")))
+								.collect(Collectors.joining(", ")))
 							.orElse(null);
 		String description = Optional.ofNullable(googleBookDto.getDescription())
 							.orElse(textSnippet);
@@ -58,7 +58,7 @@ public class GoogleBookMapper {
 							.map(b -> b.stream()
 								.map(c -> c.getIdentifier())
 								.collect(Collectors.joining(", ")))
-							.orElse(null);
+							.orElse("ISBN_number");
 		String link = Optional.ofNullable(googleBookDto.getImageLink())
 							.map(b -> b.getLink())
 							.orElse(null);

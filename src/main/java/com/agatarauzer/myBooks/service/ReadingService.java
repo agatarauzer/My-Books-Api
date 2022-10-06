@@ -47,7 +47,7 @@ public class ReadingService {
 		return readingRepository.save(readingUpdated);
 	}
 	
-	public void deleteById(Long readingId) {
+	public void deleteReading(Long readingId) {
 		try {
 			readingRepository.deleteById(readingId);
 		} catch (DataAccessException exc) {

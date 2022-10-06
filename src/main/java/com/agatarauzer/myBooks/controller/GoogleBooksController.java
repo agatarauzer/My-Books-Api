@@ -8,25 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agatarauzer.myBooks.domain.Book;
-import com.agatarauzer.myBooks.dto.BookDto;
-import com.agatarauzer.myBooks.mapper.BookMapper;
+import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
 import com.agatarauzer.myBooks.service.GoogleBooksSearchService;
 
 
 @RestController
-@RequestMapping("/v1/users/{userId}/books")
+@RequestMapping("/v1/books")
 public class GoogleBooksController {
 	
 	@Autowired
 	private GoogleBooksSearchService searchService;
 	
-	@Autowired
-	private BookMapper bookMapper;
-	
 	@GetMapping("/search")
-	public List<BookDto> getSearchResultByPhrase(@RequestParam String phrase) {
-		List<Book> books = searchService.searchBookByPhrase(phrase);
-		return bookMapper.mapToBookDtoList(books);
+	public List<GoogleBookForUserDto> getSearchResultByPhrase(@RequestParam String phrase) {
+		return  searchService.searchBookByPhrase(phrase);
 	}
 }

@@ -21,28 +21,28 @@ public class UserMapperTest {
 	public void shouldMapUserToUserDto() {
 		User user = new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
 		
-		UserDto userDto = userMapper.mapToUserDto(user);
+		UserDto userDtoMapped = userMapper.mapToUserDto(user);
 		
-		assertEquals(user.getId(), userDto.getId());
-		assertEquals(user.getFirstName(), userDto.getFirstName());
-		assertEquals(user.getLastName(), userDto.getLastName());
-		assertEquals(user.getEmail(), userDto.getEmail());
-		assertEquals(user.getLogin(), userDto.getLogin());
-		assertEquals(user.getPassword(), userDto.getPassword());
+		assertEquals(user.getId(), userDtoMapped.getId());
+		assertEquals(user.getFirstName(), userDtoMapped.getFirstName());
+		assertEquals(user.getLastName(), userDtoMapped.getLastName());
+		assertEquals(user.getEmail(), userDtoMapped.getEmail());
+		assertEquals(user.getLogin(), userDtoMapped.getLogin());
+		assertEquals(user.getPassword(), userDtoMapped.getPassword());
 	}
 
 	@Test
 	public void shouldMapUserDtoToUser() {
 		UserDto userDto = new UserDto(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
 		
-		User user = userMapper.mapToUser(userDto);
+		User userMapped = userMapper.mapToUser(userDto);
 		
-		assertEquals(userDto.getId(), user.getId());
-		assertEquals(userDto.getFirstName(), user.getFirstName());
-		assertEquals(userDto.getLastName(), user.getLastName());
-		assertEquals(userDto.getEmail(), user.getEmail());
-		assertEquals(userDto.getLogin(), user.getLogin());
-		assertEquals(userDto.getPassword(), user.getPassword());
+		assertEquals(userDto.getId(), userMapped.getId());
+		assertEquals(userDto.getFirstName(), userMapped.getFirstName());
+		assertEquals(userDto.getLastName(), userMapped.getLastName());
+		assertEquals(userDto.getEmail(), userMapped.getEmail());
+		assertEquals(userDto.getLogin(), userMapped.getLogin());
+		assertEquals(userDto.getPassword(), userMapped.getPassword());
 	}
 	
 	@Test
@@ -51,19 +51,19 @@ public class UserMapperTest {
 				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password"),
 				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password"));
 		
-		List<UserDto> userDtoList = userMapper.mapToUserDtoList(userList);
+		List<UserDto> userDtoListMapped = userMapper.mapToUserDtoList(userList);
 		
-		assertEquals(userList.get(0).getId(), userDtoList.get(0).getId());
-		assertEquals(userList.get(0).getFirstName(), userDtoList.get(0).getFirstName());
-		assertEquals(userList.get(0).getLastName(), userDtoList.get(0).getLastName());
-		assertEquals(userList.get(0).getEmail(), userDtoList.get(0).getEmail());
-		assertEquals(userList.get(0).getLogin(), userDtoList.get(0).getLogin());
-		assertEquals(userList.get(0).getPassword(), userDtoList.get(0).getPassword());
-		assertEquals(userList.get(1).getId(), userDtoList.get(1).getId());
-		assertEquals(userList.get(1).getFirstName(), userDtoList.get(1).getFirstName());
-		assertEquals(userList.get(1).getLastName(), userDtoList.get(1).getLastName());
-		assertEquals(userList.get(1).getEmail(), userDtoList.get(1).getEmail());
-		assertEquals(userList.get(1).getLogin(), userDtoList.get(1).getLogin());
-		assertEquals(userList.get(1).getPassword(), userDtoList.get(1).getPassword());
+		assertEquals(userList.get(0).getId(), userDtoListMapped.get(0).getId());
+		assertEquals(userList.get(0).getFirstName(), userDtoListMapped.get(0).getFirstName());
+		assertEquals(userList.get(0).getLastName(), userDtoListMapped.get(0).getLastName());
+		assertEquals(userList.get(0).getEmail(), userDtoListMapped.get(0).getEmail());
+		assertEquals(userList.get(0).getLogin(), userDtoListMapped.get(0).getLogin());
+		assertEquals(userList.get(0).getPassword(), userDtoListMapped.get(0).getPassword());
+		assertEquals(userList.get(1).getId(), userDtoListMapped.get(1).getId());
+		assertEquals(userList.get(1).getFirstName(), userDtoListMapped.get(1).getFirstName());
+		assertEquals(userList.get(1).getLastName(), userDtoListMapped.get(1).getLastName());
+		assertEquals(userList.get(1).getEmail(), userDtoListMapped.get(1).getEmail());
+		assertEquals(userList.get(1).getLogin(), userDtoListMapped.get(1).getLogin());
+		assertEquals(userList.get(1).getPassword(), userDtoListMapped.get(1).getPassword());
 	}
 }

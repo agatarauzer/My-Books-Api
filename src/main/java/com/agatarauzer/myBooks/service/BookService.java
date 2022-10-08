@@ -56,7 +56,7 @@ public class BookService {
 				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		bookUpdated.setTitle(book.getTitle());
 		bookUpdated.setAuthors(book.getAuthors());
-		bookUpdated.setISBN(book.getISBN());
+		bookUpdated.setIsbn(book.getIsbn());
 		bookUpdated.setPublisher(book.getPublisher());
 		bookUpdated.setPublishingDate(book.getPublishingDate());
 		bookUpdated.setLanguage(book.getLanguage());

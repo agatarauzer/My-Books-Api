@@ -13,7 +13,7 @@ public class BookDto {
 	private Long id;
 	private String title;
 	private String authors;
-	private String ISBN;
+	private String isbn;
 	private String publisher;
 	private String publishingDate;
 	private String language;

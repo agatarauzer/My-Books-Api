@@ -20,7 +20,7 @@ public class GoogleBookMapper {
 	public Book mapToBook(GoogleBookForUserDto googleBookForUserDto) {
 		return new Book(googleBookForUserDto.getTitle(),
 						googleBookForUserDto.getAuthors(),
-						googleBookForUserDto.getISBN(),
+						googleBookForUserDto.getIsbn(),
 						googleBookForUserDto.getPublisher(),
 						googleBookForUserDto.getPublishingDate(),
 						googleBookForUserDto.getLanguage(),
@@ -37,7 +37,7 @@ public class GoogleBookMapper {
 			GoogleBookDto googleBookDto = bookBasic.getGoogleBookDto();
 			String textSnippet = Optional.ofNullable(bookBasic.getSearchInfo())
 							.map(b -> b.getTextSnippet())
-							.orElse("");
+							.orElse(null);
 			GoogleBookForUserDto bookForUser = mapToGoogleBookForUserDto(googleBookDto, textSnippet);
 			booksForUser.add(bookForUser);
 		}
@@ -54,11 +54,11 @@ public class GoogleBookMapper {
 							.orElse(null);
 		String description = Optional.ofNullable(googleBookDto.getDescription())
 							.orElse(textSnippet);
-		String ISBN = Optional.ofNullable(googleBookDto.getISBN())
+		String ISBN = Optional.ofNullable(googleBookDto.getIsbn())
 							.map(b -> b.stream()
 								.map(c -> c.getIdentifier())
 								.collect(Collectors.joining(", ")))
-							.orElse("ISBN_number");
+							.orElse(null);
 		String link = Optional.ofNullable(googleBookDto.getImageLink())
 							.map(b -> b.getLink())
 							.orElse(null);

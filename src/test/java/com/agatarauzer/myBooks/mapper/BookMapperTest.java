@@ -37,7 +37,7 @@ public class BookMapperTest {
 
 		assertEquals(bookDto.getTitle(), bookMapped.getTitle());
 		assertEquals(bookDto.getAuthors(), bookMapped.getAuthors());
-		assertEquals(bookDto.getISBN(), bookMapped.getISBN());
+		assertEquals(bookDto.getIsbn(), bookMapped.getIsbn());
 		assertEquals(bookDto.getPublisher(), bookMapped.getPublisher());
 		assertEquals(bookDto.getPublishingDate(), bookMapped.getPublishingDate());
 		assertEquals(bookDto.getLanguage(), bookMapped.getLanguage());
@@ -53,7 +53,7 @@ public class BookMapperTest {
 		
 		assertEquals(book.getTitle(), bookDtoMapped.getTitle());
 		assertEquals(book.getAuthors(), bookDtoMapped.getAuthors());
-		assertEquals(book.getISBN(), bookDtoMapped.getISBN());
+		assertEquals(book.getIsbn(), bookDtoMapped.getIsbn());
 		assertEquals(book.getPublisher(), bookDtoMapped.getPublisher());
 		assertEquals(book.getPublishingDate(), bookDtoMapped.getPublishingDate());
 		assertEquals(book.getLanguage(), bookDtoMapped.getLanguage());
@@ -71,7 +71,7 @@ public class BookMapperTest {
 		
 		assertEquals(books.get(0).getTitle(), booksDtoMapped.get(0).getTitle());
 		assertEquals(books.get(0).getAuthors(), booksDtoMapped.get(0).getAuthors());
-		assertEquals(books.get(0).getISBN(), booksDtoMapped.get(0).getISBN());
+		assertEquals(books.get(0).getIsbn(), booksDtoMapped.get(0).getIsbn());
 		assertEquals(books.get(0).getPublisher(), booksDtoMapped.get(0).getPublisher());
 		assertEquals(books.get(0).getPublishingDate(), booksDtoMapped.get(0).getPublishingDate());
 		assertEquals(books.get(0).getLanguage(), booksDtoMapped.get(0).getLanguage());

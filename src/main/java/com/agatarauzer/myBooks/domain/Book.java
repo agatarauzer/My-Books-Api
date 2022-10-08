@@ -39,7 +39,7 @@ public class Book {
 	private String authors;
 	
 	@Column(name="ISBN_numbers")
-	private String ISBN;
+	private String isbn;
 	
 	@Column(name="publisher")
 	private String publisher;
@@ -79,11 +79,11 @@ public class Book {
 	private User user;
 	
 
-	public Book(String title, String authors, String ISBN, String publisher, String publishingDate, 
+	public Book(String title, String authors, String isbn, String publisher, String publishingDate, 
 			String language, int pages, String description, String imageLink) {
 		this.title = title;
 		this.authors = authors;
-		this.ISBN = ISBN;
+		this.isbn = isbn;
 		this.publisher = publisher;
 		this.publishingDate = publishingDate;
 		this.language = language;
@@ -92,13 +92,13 @@ public class Book {
 		this.imageLink = imageLink;
 	}
 
-	public Book(Long id, String title, String authors, String ISBN, String publisher, String publishingDate,
+	public Book(Long id, String title, String authors, String isbn, String publisher, String publishingDate,
 			String language, int pages, String description, String imageLink,
 			Version version, Integer copies) {
 		this.id = id;
 		this.title = title;
 		this.authors = authors;
-		this.ISBN = ISBN;
+		this.isbn = isbn;
 		this.publisher = publisher;
 		this.publishingDate = publishingDate;
 		this.language = language;

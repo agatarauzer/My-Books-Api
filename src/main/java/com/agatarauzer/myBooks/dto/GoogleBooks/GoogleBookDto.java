@@ -25,7 +25,7 @@ public class GoogleBookDto {
 	private List<String> authors;
 	
 	@JsonProperty("industryIdentifiers")
-	private List<IsbnDto> ISBN;
+	private List<IsbnDto> isbn;
 	
 	@JsonProperty("publisher")
 	private String publisher;

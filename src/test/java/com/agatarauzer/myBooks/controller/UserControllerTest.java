@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import com.agatarauzer.myBooks.dto.UserDto;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @SpringJUnitWebConfig
 @WebMvcTest(UserController.class)
@@ -105,7 +107,8 @@ public class UserControllerTest {
 		User userUpdated = new User(id, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommalin", "tomasz_malin_password");
 		when(userService.updateUser(id, userUpdated)).thenReturn(userUpdated);
 		
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+				.create();
 		String jsonUser = gson.toJson(userUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders

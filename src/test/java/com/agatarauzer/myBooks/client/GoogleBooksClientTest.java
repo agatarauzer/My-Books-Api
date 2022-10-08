@@ -74,7 +74,7 @@ public class GoogleBooksClientTest {
 		assertEquals(1, booksDtoList.size());
 		assertEquals("Java. Podstawy. Wydanie IX", booksDtoList.get(0).getTitle());
 		assertEquals("Cay S. Horstmann,Gary Cornell", booksDtoList.get(0).getAuthors());
-		assertEquals("8324677615, 9788324677610", booksDtoList.get(0).getISBN());
+		assertEquals("8324677615, 9788324677610", booksDtoList.get(0).getIsbn());
 		assertEquals("Helion", booksDtoList.get(0).getPublisher());
 		assertEquals("2013-12-09", booksDtoList.get(0).getPublishingDate());
 		assertEquals("pl", booksDtoList.get(0).getLanguage());

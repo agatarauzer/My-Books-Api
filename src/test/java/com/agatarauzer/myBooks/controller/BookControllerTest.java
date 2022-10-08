@@ -101,7 +101,11 @@ public class BookControllerTest {
 		.andExpect(jsonPath("$.publisher", is("Helion")))
 		.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
 		.andExpect(jsonPath("$.language", is("pl")))
-		.andExpect(jsonPath("$.pages", is(864)));
+		.andExpect(jsonPath("$.pages", is(864)))
+		.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
+		.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
+		.andExpect(jsonPath("$.version", is("PAPER")))
+		.andExpect(jsonPath("$.copies", is(1)));
 	}
 	
 	@Test
@@ -126,7 +130,11 @@ public class BookControllerTest {
 				.andExpect(jsonPath("$.publisher", is("Helion")))
 				.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
 				.andExpect(jsonPath("$.language", is("pl")))
-				.andExpect(jsonPath("$.pages", is(864)));
+				.andExpect(jsonPath("$.pages", is(864)))
+				.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
+				.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
+				.andExpect(jsonPath("$.version", is("PAPER")))
+				.andExpect(jsonPath("$.copies", is(1)));
 	}
 	
 	@Test
@@ -155,7 +163,7 @@ public class BookControllerTest {
 				.andExpect(jsonPath("$.description", is("Kolejne wydanie_changed")))
 				.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")))
 				.andExpect(jsonPath("$.version", is("E_BOOK")))
-				.andExpect(jsonPath("$.copies", is("2")));
+				.andExpect(jsonPath("$.copies", is(2)));
 	}
 	
 	@Test

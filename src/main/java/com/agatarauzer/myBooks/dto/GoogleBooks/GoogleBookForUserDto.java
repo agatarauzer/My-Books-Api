@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class GoogleBookForUserDto {
 	private String title;
 	private String authors;
-	private String ISBN;
+	private String isbn;
 	private String publisher;
 	private String publishingDate;
 	private String language;

@@ -48,7 +48,7 @@ public class PurchaseController {
 	
 	@DeleteMapping("/purchases/{purchaseId}")
 	public String deletePurchase(@PathVariable Long purchaseId) {
-		purchaseService.deleteById(purchaseId);
+		purchaseService.deletePurchase(purchaseId);
 		return "Deleted purchase: " + purchaseId;
 	}
 }

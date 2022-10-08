@@ -31,7 +31,6 @@ import com.agatarauzer.myBooks.repository.ReadingRepository;
 @ExtendWith(MockitoExtension.class)
 public class ReadingServiceTest {
 	
-	
 	@InjectMocks
 	private ReadingService readingService;
 	
@@ -48,9 +47,8 @@ public class ReadingServiceTest {
 	
 	@BeforeEach
 	public void prepareTestData() {
-		
 		bookId = 1L;
-		book = new Book(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
+		book = new Book(bookId, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
 				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
 		
 		readingId = 1L;

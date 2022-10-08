@@ -46,7 +46,7 @@ public class RentalService {
 		return rentalRepository.save(rentalUpdated);
 	}
 	
-	public void deleteById(Long rentalId) {
+	public void deleteRental(Long rentalId) {
 		try {
 			rentalRepository.deleteById(rentalId);
 		} catch (DataAccessException exc) {

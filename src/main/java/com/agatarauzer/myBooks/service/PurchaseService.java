@@ -43,7 +43,7 @@ public class PurchaseService {
 		return purchaseRepository.save(purchaseUpdated);
 	}
 	
-	public void deleteById(Long purchaseId) {
+	public void deletePurchase(Long purchaseId) {
 		try {
 			purchaseRepository.deleteById(purchaseId);
 		} catch (DataAccessException exc) {

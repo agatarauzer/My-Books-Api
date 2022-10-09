@@ -36,7 +36,7 @@ public class UserService {
 		userUpdated.setFirstName(user.getFirstName());
 		userUpdated.setLastName(user.getLastName());
 		userUpdated.setEmail(user.getEmail());
-		userUpdated.setLogin(user.getLogin());
+		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
 		return saveUser(userUpdated);
 	}

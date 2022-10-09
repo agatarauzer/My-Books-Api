@@ -27,7 +27,7 @@ public class UserMapperTest {
 		assertEquals(user.getFirstName(), userDtoMapped.getFirstName());
 		assertEquals(user.getLastName(), userDtoMapped.getLastName());
 		assertEquals(user.getEmail(), userDtoMapped.getEmail());
-		assertEquals(user.getLogin(), userDtoMapped.getLogin());
+		assertEquals(user.getUsername(), userDtoMapped.getUsername());
 		assertEquals(user.getPassword(), userDtoMapped.getPassword());
 	}
 
@@ -41,7 +41,7 @@ public class UserMapperTest {
 		assertEquals(userDto.getFirstName(), userMapped.getFirstName());
 		assertEquals(userDto.getLastName(), userMapped.getLastName());
 		assertEquals(userDto.getEmail(), userMapped.getEmail());
-		assertEquals(userDto.getLogin(), userMapped.getLogin());
+		assertEquals(userDto.getUsername(), userMapped.getUsername());
 		assertEquals(userDto.getPassword(), userMapped.getPassword());
 	}
 	
@@ -57,13 +57,13 @@ public class UserMapperTest {
 		assertEquals(userList.get(0).getFirstName(), userDtoListMapped.get(0).getFirstName());
 		assertEquals(userList.get(0).getLastName(), userDtoListMapped.get(0).getLastName());
 		assertEquals(userList.get(0).getEmail(), userDtoListMapped.get(0).getEmail());
-		assertEquals(userList.get(0).getLogin(), userDtoListMapped.get(0).getLogin());
+		assertEquals(userList.get(0).getUsername(), userDtoListMapped.get(0).getUsername());
 		assertEquals(userList.get(0).getPassword(), userDtoListMapped.get(0).getPassword());
 		assertEquals(userList.get(1).getId(), userDtoListMapped.get(1).getId());
 		assertEquals(userList.get(1).getFirstName(), userDtoListMapped.get(1).getFirstName());
 		assertEquals(userList.get(1).getLastName(), userDtoListMapped.get(1).getLastName());
 		assertEquals(userList.get(1).getEmail(), userDtoListMapped.get(1).getEmail());
-		assertEquals(userList.get(1).getLogin(), userDtoListMapped.get(1).getLogin());
+		assertEquals(userList.get(1).getUsername(), userDtoListMapped.get(1).getUsername());
 		assertEquals(userList.get(1).getPassword(), userDtoListMapped.get(1).getPassword());
 	}
 }

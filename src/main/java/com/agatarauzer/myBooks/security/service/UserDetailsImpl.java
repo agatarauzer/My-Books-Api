@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security;
+package com.agatarauzer.myBooks.security.service;
 
 import java.util.Collection;
 import java.util.List;

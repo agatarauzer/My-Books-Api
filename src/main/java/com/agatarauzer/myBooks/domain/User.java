@@ -29,17 +29,14 @@ import lombok.Setter;
 @Entity
 @Table(name="users")
 public class User {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_id")
 	private Long id;
 	
-	@NotNull
 	@Column(name="first_name")
 	private String firstName;
 	
-	@NotNull
 	@Column(name="last_name")
 	private String lastName;
 	
@@ -71,6 +68,12 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.username = username;
+		this.password = password;
+	}
+	
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
 }

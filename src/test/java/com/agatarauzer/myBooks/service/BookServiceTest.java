@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.agatarauzer.myBooks.domain.Book;
+import com.agatarauzer.myBooks.domain.ERole;
+import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.Version;
 import com.agatarauzer.myBooks.exception.BookNotFoundException;
@@ -85,7 +88,7 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldSaveBookForUser() {
-		User user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
+		User user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_USER_PAID)));
 		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(bookRepository.save(book)).thenReturn(book);
 		

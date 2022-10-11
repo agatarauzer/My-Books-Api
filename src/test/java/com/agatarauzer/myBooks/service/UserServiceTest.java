@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.agatarauzer.myBooks.domain.ERole;
+import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
@@ -38,13 +41,13 @@ public class UserServiceTest {
 	@BeforeEach
 	public void prepareTestData() {
 		userId = 1L;
-		user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password");
+		user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_ADMIN)));
 	}
 
 	@Test
 	public void shouldfindAllUsers() {
 		List<User> userList = List.of(user,
-				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password"));
+				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", Set.of(new Role(ERole.ROLE_USER_PAID))));
 		when(userRepository.findAll()).thenReturn(userList);
 		
 		List<User> users = userService.findAll();
@@ -73,7 +76,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void sholudUpdateUser() {
-		User userUpdated = new User(userId, "Tomek", "Malik", "tomasz.malik@gmail.com", "tommalik", "to_password");
+		User userUpdated = new User(userId, "Tomek", "Malik", "tomasz.malik@gmail.com", "tommalik", "to_password", Set.of(new Role(ERole.ROLE_USER_PAID)));
 		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(userRepository.save(any(User.class))).thenReturn(userUpdated);
 		

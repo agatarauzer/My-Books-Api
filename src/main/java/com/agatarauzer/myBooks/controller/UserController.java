@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
+import com.agatarauzer.myBooks.dto.UserDtoAdmin;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 
@@ -28,20 +29,11 @@ public class UserController {
 	private UserMapper userMapper;
 	
 	
-	/*
-	@PostMapping("/users")
-	public UserDto addUser(@RequestBody UserDto userDto) {
-		User user = userMapper.mapToUser(userDto);
-		userService.saveUser(user);
-		return userDto;
-	}
-	*/
-	
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<UserDto> getUsers() {
+	public List<UserDtoAdmin> getUsers() {
 		List<User> users = userService.findAll();
-		return userMapper.mapToUserDtoList(users);
+		return userMapper.mapToUserDtoAdminList(users);
 	}
 	
 	@GetMapping("/users/{userId}")

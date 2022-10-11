@@ -3,6 +3,8 @@ package com.agatarauzer.myBooks.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,6 +61,7 @@ public class Book {
 	@Column(name="image_link")
 	private String imageLink;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="version")
 	private Version version;
 	

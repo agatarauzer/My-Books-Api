@@ -23,6 +23,7 @@ So the user can gather data about:
 - book reading (is book read, start and end dates, rate, user notes etc),
 - book rents (is book lended or borrowed, from/to who, start and end dates),
 - book purchase (price, date of purchase etc).
+
 App gives possibility to search titles via GoogleBooks, and automatically add book's information from this source. 
 In next step, user can fill missing data about book. Main functionalities are concentrated on adding customized data by user.
 

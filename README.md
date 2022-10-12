@@ -14,7 +14,7 @@
 
 ## General Information
 MyBooks is a learning project, to train and develop my programming skills.
-It gives me a chance to use in practice features of Spring framework, especially Spring Data, Spring REST, Spring Security.
+It gives me a chance to use in practice features of Spring framework (especially Spring Data JPA, Spring Security), Hibernate and build complex REST application.
 
 ## Description
 MyBooks is a virtual home library. It helps to store book titles with additional informations. 
@@ -29,13 +29,13 @@ In next step, user can fill missing data about book. Main functionalities are co
 
 ## Technologies
 Project is created with:
-- Java 11
+- Java 17
 - Spring Boot 2.7
-- Spring Data 2.7 
+- Spring Data JPA 2.7 
 - Hibernate
 - REST
 - MySQL database
-- Spring Security and JJWT
+- Spring Security and JWT
 - JUnit5 and Mockito testing
 - Maven
 
@@ -68,7 +68,7 @@ In progress. New functionalities are systematically added.
 - Adding e-mail reminder about date of returning lended/borrowed book.
 - Simple recommendation system.
 - Integration testing.
-- Deploy on Heroku
+- Deployment on Heroku.
 
 ## Inspiration
 The app is inspired by Bookshelf application.

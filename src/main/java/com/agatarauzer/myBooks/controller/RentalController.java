@@ -1,6 +1,7 @@
 package com.agatarauzer.myBooks.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import com.agatarauzer.myBooks.service.RentalService;
 
 @RestController
 @RequestMapping("/v1/users/{userId}/books/{bookId}")
+@PreAuthorize("hasRole('USER_PAID') or hasRole('ADMIN')")
 public class RentalController {
 	
 	@Autowired

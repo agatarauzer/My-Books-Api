@@ -18,7 +18,7 @@ import com.agatarauzer.myBooks.service.PurchaseService;
 
 @RestController
 @RequestMapping("/v1/users/{userId}/books/{bookId}")
-@PreAuthorize("hasRole('USER_PAID')")
+@PreAuthorize("hasRole('USER_PAID') or hasRole('ADMIN')")
 public class PurchaseController {
 	
 	@Autowired

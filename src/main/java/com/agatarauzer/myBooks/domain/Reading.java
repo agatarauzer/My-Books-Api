@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -52,8 +51,7 @@ public class Reading {
 	@Column(name="notes")
 	private String notes;
 	
-	@OneToOne
-	@JoinColumn(name="book_id")
+	@OneToOne(mappedBy="reading")
 	private Book book;
 
 	public Reading(Long id, ReadingStatus status, LocalDate startDate, LocalDate endDate, int readedPages,

@@ -68,7 +68,6 @@ public class ReadingServiceTest {
 	@Test
 	public void shouldSaveReading() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(readingRepository.save(reading)).thenReturn(reading);
 		
 		Reading savedReading = readingService.saveReading(bookId, reading);
 		
@@ -88,9 +87,10 @@ public class ReadingServiceTest {
 	
 	@Test
 	public void shouldDeleteReading() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doNothing().when(readingRepository).deleteById(readingId);
 		
-		readingService.deleteReading(readingId);
+		readingService.deleteReading(bookId, readingId);
 		
 		verify(readingRepository, times(1)).deleteById(readingId);
 	}
@@ -121,9 +121,10 @@ public class ReadingServiceTest {
 	
 	@Test
 	public void shouldThrowException_deleteReading() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doThrow(new ReadingNotFoundException()).when(readingRepository).deleteById(readingId);
 		
-		assertThrows(ReadingNotFoundException.class, ()-> readingService.deleteReading(readingId));
+		assertThrows(ReadingNotFoundException.class, ()-> readingService.deleteReading(bookId, readingId));
 		verify(readingRepository, times(1)).deleteById(readingId);
 	}
 }

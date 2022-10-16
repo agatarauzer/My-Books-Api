@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -45,8 +44,7 @@ public class Rental {
 	@Column(name="notes")
 	private String notes;
 	
-	@OneToOne
-	@JoinColumn(name="book_id")
+	@OneToOne(mappedBy="rental")
 	private Book book;
 
 	public Rental(Long id, RentalStatus status, String name, LocalDate startDate, LocalDate endDate, String notes) {

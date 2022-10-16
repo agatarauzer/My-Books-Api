@@ -68,13 +68,16 @@ public class Book {
 	@Column(name="copies")
 	private Integer copies;
 	
-	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="reading_id")
 	private Reading reading;
 	
-	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="rental_id")
 	private Rental rental;
 	
-	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="purchase_id")
 	private Purchase purchase;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -68,7 +68,6 @@ public class RentalServiceTest {
 	@Test
 	public void shouldSaveRental() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(rentalRepository.save(rental)).thenReturn(rental);
 		
 		Rental savedRental = rentalService.saveRental(bookId, rental);
 		
@@ -88,9 +87,10 @@ public class RentalServiceTest {
 	
 	@Test
 	public void shouldDeleteRental() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doNothing().when(rentalRepository).deleteById(rentalId);
 		
-		rentalService.deleteRental(rentalId);
+		rentalService.deleteRental(bookId, rentalId);
 		
 		verify(rentalRepository, times(1)).deleteById(rentalId);
 	}
@@ -121,9 +121,10 @@ public class RentalServiceTest {
 	
 	@Test
 	public void shouldThrowException_deleteRental() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doThrow(new RentalNotFoundException()).when(rentalRepository).deleteById(rentalId);
 		
-		assertThrows(RentalNotFoundException.class, ()-> rentalService.deleteRental(rentalId));
+		assertThrows(RentalNotFoundException.class, ()-> rentalService.deleteRental(bookId, rentalId));
 		verify(rentalRepository, times(1)).deleteById(rentalId);
 	}
 }

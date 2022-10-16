@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,8 +38,7 @@ public class Purchase {
 	@Column(name="bought_from")
 	private String boughtFrom;
 	
-	@OneToOne
-	@JoinColumn(name="book_id")
+	@OneToOne(mappedBy="purchase")
 	private Book book;
 
 	public Purchase(Long id, Double price, LocalDate purchaseDate, String boughtFrom) {
@@ -50,3 +48,6 @@ public class Purchase {
 		this.boughtFrom = boughtFrom;
 	}
 }
+
+
+

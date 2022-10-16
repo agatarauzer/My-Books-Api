@@ -55,7 +55,7 @@ public class PurchaseServiceTest {
 	}
 	
 	@Test
-	public void shouldGetRentalForBook() {
+	public void shouldGetPurchaseForBook() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(purchaseRepository.findByBookId(bookId)).thenReturn(purchase);
 		
@@ -65,9 +65,8 @@ public class PurchaseServiceTest {
 	}
 	
 	@Test
-	public void shouldSaveRental() {
+	public void shouldSavePurchase() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(purchaseRepository.save(purchase)).thenReturn(purchase);
 		
 		Purchase savedPurchase = purchaseService.savePurchase(bookId, purchase);
 		
@@ -75,7 +74,7 @@ public class PurchaseServiceTest {
 	}
 	
 	@Test
-	public void shouldUpdateRental() {
+	public void shouldUpdatePurchase() {
 		Purchase purchaseUpdated = new Purchase(purchaseId, 51.99, LocalDate.of(2020, 8, 9), "taniaksiazka.pl");
 		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
 		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchaseUpdated);
@@ -87,9 +86,10 @@ public class PurchaseServiceTest {
 	
 	@Test
 	public void shouldDeletePurchase() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doNothing().when(purchaseRepository).deleteById(purchaseId);
 		
-		purchaseService.deletePurchase(purchaseId);
+		purchaseService.deletePurchase(bookId, purchaseId);
 		
 		verify(purchaseRepository, times(1)).deleteById(purchaseId);
 	}
@@ -120,9 +120,10 @@ public class PurchaseServiceTest {
 	
 	@Test
 	public void shouldThrowException_deletePurchase() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doThrow(new PurchaseNotFoundException()).when(purchaseRepository).deleteById(purchaseId);
 		
-		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.deletePurchase(purchaseId));
+		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.deletePurchase(bookId, purchaseId));
 		verify(purchaseRepository, times(1)).deleteById(purchaseId);
 	}
 }

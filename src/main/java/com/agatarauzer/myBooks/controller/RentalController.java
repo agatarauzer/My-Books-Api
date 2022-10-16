@@ -49,8 +49,8 @@ public class RentalController {
 	}
 	
 	@DeleteMapping("/rentals/{rentalId}")
-	public String deleteRental(@PathVariable Long rentalId) {
-		rentalService.deleteRental(rentalId);
+	public String deleteRental(@PathVariable Long bookId, @PathVariable Long rentalId) {
+		rentalService.deleteRental(bookId, rentalId);
 		return "Deleted reading: " + rentalId;
 	}
 }

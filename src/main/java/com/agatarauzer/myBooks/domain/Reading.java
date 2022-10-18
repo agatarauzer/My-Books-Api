@@ -41,12 +41,12 @@ public class Reading {
 	private LocalDate endDate;
 	
 	@Column(name="readed_pages")
-	private int readedPages;
+	private Integer readedPages;
 	
 	@Column(name="rate")
 	@Min(value=1)
 	@Max(value=5)
-	private int rate;
+	private Integer rate;
 	
 	@Column(name="notes")
 	private String notes;
@@ -54,8 +54,8 @@ public class Reading {
 	@OneToOne(mappedBy="reading")
 	private Book book;
 
-	public Reading(Long id, ReadingStatus status, LocalDate startDate, LocalDate endDate, int readedPages,
-			int rate, String notes) {
+	public Reading(Long id, ReadingStatus status, LocalDate startDate, LocalDate endDate, Integer readedPages,
+			Integer rate, String notes) {
 		this.id = id;
 		this.status = status;
 		this.startDate = startDate;

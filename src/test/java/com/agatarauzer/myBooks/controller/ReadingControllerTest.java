@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import com.google.gson.GsonBuilder;
 
 @SpringJUnitWebConfig
 @WebMvcTest(ReadingController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ReadingControllerTest {
 	
 	@Autowired
@@ -121,7 +123,7 @@ public class ReadingControllerTest {
 	
 	@Test
 	public void shouldDeleteReading() throws Exception {
-		doNothing().when(readingService).deleteReading(readingId);
+		doNothing().when(readingService).deleteReading(bookId, readingId);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 						.delete("/v1/users/1/books/{bookId}/readings/{readingId}", bookId, readingId)

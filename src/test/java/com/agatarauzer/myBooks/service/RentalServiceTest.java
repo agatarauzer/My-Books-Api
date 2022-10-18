@@ -86,6 +86,24 @@ public class RentalServiceTest {
 	}
 	
 	@Test
+	public void shouldUpdateOnlyGivenFields() {
+		Rental rentalUpdated = new Rental(null, RentalStatus.LENDED, null, LocalDate.of(2020, 5, 9), null, null);
+		Rental rentalExpected = new Rental(rentalId, RentalStatus.LENDED, "from Kate", LocalDate.of(2020, 5, 9), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
+		
+		when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
+		when(rentalRepository.save(any(Rental.class))).thenReturn(rentalExpected);
+		
+		Rental rentalAfterUpdate = rentalService.updateRental(rentalId, rentalUpdated);
+			
+		assertEquals(rentalExpected.getId(), rentalAfterUpdate.getId());
+		assertEquals(rentalExpected.getStatus(), rentalAfterUpdate.getStatus());
+		assertEquals(rentalExpected.getName(), rentalAfterUpdate.getName());
+		assertEquals(rentalExpected.getStartDate(), rentalAfterUpdate.getStartDate());
+		assertEquals(rentalExpected.getEndDate(), rentalAfterUpdate.getEndDate());
+		assertEquals(rentalExpected.getNotes(), rentalAfterUpdate.getNotes());
+	}
+	
+	@Test
 	public void shouldDeleteRental() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doNothing().when(rentalRepository).deleteById(rentalId);

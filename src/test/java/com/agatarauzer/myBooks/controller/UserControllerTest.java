@@ -1,5 +1,6 @@
 package com.agatarauzer.myBooks.controller;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -7,20 +8,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.agatarauzer.myBooks.domain.ERole;
+import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
+import com.agatarauzer.myBooks.dto.UserDtoAdmin;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 import com.google.gson.Gson;
@@ -28,6 +33,7 @@ import com.google.gson.GsonBuilder;
 
 @SpringJUnitWebConfig
 @WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UserControllerTest {
 	
 	@Autowired
@@ -38,15 +44,10 @@ public class UserControllerTest {
 	
 	@MockBean
 	private UserService userService;
-	
-	
+
 	@Test
-	@WithMockUser(username = "admin", password = "123", roles = "admin")
 	public void shouldGetUsers() throws Exception {
-		
-		/*
-		 * List<UserDtoAdmin> userDtoList = List.of(
-		
+		List<UserDtoAdmin> userDtoList = List.of(
 				new UserDtoAdmin(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", "ROLE_ADMIN"),
 				new UserDtoAdmin(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", "ROLE_USER_PAID"));
 		List<User> userList = List.of(
@@ -56,20 +57,13 @@ public class UserControllerTest {
 		when(userService.findAll()).thenReturn(userList);
 		when(userMapper.mapToUserDtoAdminList(userList)).thenReturn(userDtoList);
 		
-		*/
-		
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/v1/users")
 						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200));
-	
-				
-		/*
+				.andExpect(status().is(200))
 				.andExpect(jsonPath("$", hasSize(2)))
 				.andExpect(jsonPath("$[0].id", is(1)))
-				.andExpect(jsonPath("$[1].lastName", is("Maj")))
-				.andExpect(jsonPath("$[1].login", is("agamaj")));
-				*/
+				.andExpect(jsonPath("$[1].lastName", is("Maj")));	
 	}
 	
 	@Test
@@ -82,7 +76,7 @@ public class UserControllerTest {
 		when(userMapper.mapToUserDto(user)).thenReturn(userDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-						.get("/v1/users/{id}", id)
+						.get("/v1/users/1")
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(200))
 				.andExpect(jsonPath("$.firstName", is("Tomasz")))
@@ -105,7 +99,7 @@ public class UserControllerTest {
 						.characterEncoding("UTF-8")
 						.content(jsonUser))
 				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.login", is("tommalin")))
+				.andExpect(jsonPath("$.firstName", is("Tomasz")))
 				.andExpect(jsonPath("$.password", is("tomasz_malin_password")));	
 	}
 	

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import com.google.gson.GsonBuilder;
 
 @SpringJUnitWebConfig
 @WebMvcTest(RentalController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class RentalControllerTest {
 	
 	@Autowired
@@ -118,7 +120,7 @@ public class RentalControllerTest {
 	
 	@Test
 	public void shouldDeleteRental() throws Exception {
-		doNothing().when(rentalService).deleteRental(rentalId);
+		doNothing().when(rentalService).deleteRental(bookId, rentalId);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 						.delete("/v1/users/1/books/{bookId}/rentals/{rentalId}", bookId, rentalId)

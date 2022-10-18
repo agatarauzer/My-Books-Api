@@ -16,7 +16,7 @@ public class ReadingDto {
 	private ReadingStatus status;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private int readedPages;
-	private int rate;
+	private Integer readedPages;
+	private Integer rate;
 	private String notes;
 }

@@ -50,7 +50,10 @@ public class User {
 	
 	@NotNull
 	@Column(name="password")
-	private String password;
+	private String password; 
+	
+	@Column(name="enabled")
+	private Boolean enabled = false;
 	
 	@OneToMany(targetEntity = Book.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Book> books;
@@ -61,6 +64,7 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	
+	
 	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -68,7 +72,9 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String username, String email, String password) {
+	public User(String firstName, String lastName, String username, String email, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.username = username;
 		this.email = email;
 		this.password = password;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.agatarauzer.myBooks.domain.ConfirmationToken;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
@@ -16,6 +17,9 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ConfirmationTokenService confirmationTokenService;
 	
 	public List<User> findAll() {
 		return IterableUtils.toList(userRepository.findAll());
@@ -28,6 +32,14 @@ public class UserService {
 	
 	public User saveUser(User user) {
 		return userRepository.save(user);
+	}
+	
+	public void confirmUser(ConfirmationToken confirmationToken) {
+		User user = confirmationToken.getUser();
+		user.setEnabled(true);
+		userRepository.save(user);
+		
+		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
 	}
 	
 	public User updateUser(Long userId, User user) {

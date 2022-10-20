@@ -35,7 +35,7 @@ public class UserController {
 		List<User> users = userService.findAll();
 		return userMapper.mapToUserDtoAdminList(users);
 	}
-	
+
 	@GetMapping("/users/{userId}")
 	public UserDto getUserById(@PathVariable Long userId) {
 		User user = userService.findUserById(userId);

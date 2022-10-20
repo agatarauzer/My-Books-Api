@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.agatarauzer.myBooks.domain.ConfirmationToken;
 import com.agatarauzer.myBooks.domain.ERole;
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
@@ -29,6 +30,7 @@ import com.agatarauzer.myBooks.repository.RoleRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
 import com.agatarauzer.myBooks.security.jwt.JwtUtils;
 import com.agatarauzer.myBooks.security.service.UserDetailsImpl;
+import com.agatarauzer.myBooks.service.ConfirmationTokenService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -48,6 +50,9 @@ public class AuthController {
 	
 	@Autowired
 	JwtUtils jwtUtils;
+	
+	@Autowired
+	ConfirmationTokenService confirmationTokenService;
 	
 	
 	@PostMapping("/signin")
@@ -75,7 +80,7 @@ public class AuthController {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Username is taken!"));
+					.body(new MessageResponse("Error: Username is already taken!"));
 		}
 		
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -85,7 +90,9 @@ public class AuthController {
 		}
 		
 		//create new account
-		User user = new User(signUpRequest.getUsername(),
+		User user = new User(signUpRequest.getFirstName(),
+				signUpRequest.getLastName(),
+				signUpRequest.getUsername(),
 				signUpRequest.getEmail(),
 				encoder.encode(signUpRequest.getPassword()));
 		
@@ -126,6 +133,9 @@ public class AuthController {
 		
 		user.setRoles(roles);
 		userRepository.save(user);
+		
+		ConfirmationToken confirmationToken = new ConfirmationToken(user);
+		confirmationTokenService.saveConfirmationToken(confirmationToken);
 		
 		return ResponseEntity.ok(new MessageResponse("User registred sucessfully!"));
 	}

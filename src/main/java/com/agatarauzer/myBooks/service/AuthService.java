@@ -1,5 +1,6 @@
 package com.agatarauzer.myBooks.service;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.ConfirmationToken;
 import com.agatarauzer.myBooks.domain.ERole;
@@ -26,6 +28,7 @@ import com.agatarauzer.myBooks.repository.UserRepository;
 import com.agatarauzer.myBooks.security.jwt.JwtUtils;
 import com.agatarauzer.myBooks.security.service.UserDetailsImpl;
 
+@Service
 public class AuthService {
 	
 	@Autowired
@@ -69,7 +72,6 @@ public class AuthService {
 					roles);
 	}
 	
-	
 	public  MessageResponse registerUser(SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return new MessageResponse("Error: Username is already taken!");
@@ -88,6 +90,7 @@ public class AuthService {
 		
 		Set<Role> roles = setupUserRoles(signUpRequest.getRole());
 		user.setRoles(roles);
+		user.setRegistrationDate(LocalDate.now());
 		userRepository.save(user);
 		
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
@@ -99,7 +102,6 @@ public class AuthService {
 	
 	private Set<Role> setupUserRoles(Set<String> givenRoles) {
 		Set<Role> roles = new HashSet<>();
-		
 		if (givenRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER_LIMITED)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
@@ -132,8 +134,8 @@ public class AuthService {
 	}
 	
 	private void sendConfirmationMail(String email, String token) {
-		String subject = "Mail Confirmation Link!";
-		String text = "Thank you for registering. Please click on the link below to activate your account." 
+		String subject = "My Books: Confirmation Link!";
+		String text = "Thank you for registering! \n Please click on the link below to activate your account. \n" 
 					+ "http://localhost:8080/v1/auth/signup/confirm?token=" + token;
 		
 		Mail mail = new Mail(email, subject, text);

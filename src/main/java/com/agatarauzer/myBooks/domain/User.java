@@ -1,5 +1,6 @@
 package com.agatarauzer.myBooks.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -51,6 +52,9 @@ public class User {
 	@NotNull
 	@Column(name="password")
 	private String password; 
+	
+	@Column
+	private LocalDate registrationDate;
 	
 	@Column(name="enabled")
 	private Boolean enabled = false;

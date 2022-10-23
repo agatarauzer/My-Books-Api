@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,10 @@ public class ConfirmationTokenService {
 	
 	public void deleteConfirmationToken(Long id) {
 		confirmationTokenRepository.deleteById(id);
+	}
+	
+	public Optional<ConfirmationToken> findConfirmationToken(String token) {
+		return confirmationTokenRepository.findConfirmationTokenByConfirmationToken(token);
 	}
 }
 

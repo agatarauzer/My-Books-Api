@@ -28,6 +28,9 @@ import com.agatarauzer.myBooks.repository.UserRepository;
 import com.agatarauzer.myBooks.security.jwt.JwtUtils;
 import com.agatarauzer.myBooks.security.service.UserDetailsImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AuthService {
 	
@@ -81,7 +84,6 @@ public class AuthService {
 			return new MessageResponse("Error: Email is already in use!");
 		}
 		
-		//create new account
 		User user = new User(signUpRequest.getFirstName(),
 				signUpRequest.getLastName(),
 				signUpRequest.getUsername(),
@@ -92,10 +94,12 @@ public class AuthService {
 		user.setRoles(roles);
 		user.setRegistrationDate(LocalDate.now());
 		userRepository.save(user);
+		log.info("User is saved in DB (but not confirmed yet)");
 		
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
 		confirmationTokenService.saveConfirmationToken(confirmationToken);
 		sendConfirmationMail(user.getEmail(), confirmationToken.getConfirmationToken());
+		log.info("Confirmation mail has been send to user");
 		
 		return new MessageResponse("User registred sucessfully!");
 	}

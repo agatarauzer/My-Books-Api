@@ -12,6 +12,9 @@ import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService {
 	
@@ -37,8 +40,8 @@ public class UserService {
 	public void confirmUser(ConfirmationToken confirmationToken) {
 		User user = confirmationToken.getUser();
 		user.setEnabled(true);
-		userRepository.save(user);
-		
+		saveUser(user);
+		log.info("User is confirmed and enabled");
 		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
 	}
 	
@@ -50,7 +53,9 @@ public class UserService {
 		userUpdated.setEmail(user.getEmail());
 		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
-		return saveUser(userUpdated);
+		saveUser(userUpdated);
+		log.info("User is updated");
+		return userUpdated;
 	}
 	
 	public void deleteUser(Long userId) {

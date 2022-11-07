@@ -3,7 +3,6 @@ package com.agatarauzer.myBooks.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -82,12 +81,12 @@ public class UserServiceTest {
 		
 		User userAfterUpdate = userService.updateUser(userId, userUpdated);
 		
-		assertEquals(userUpdated, userAfterUpdate);
+		assertEquals(userUpdated.getEmail(), userAfterUpdate.getEmail());
+		assertEquals(userUpdated.getLastName(), userAfterUpdate.getLastName());
 	}
 	
 	@Test
 	public void shouldDeleteUser() {
-		doNothing().when(userRepository).deleteById(userId);
 		userService.deleteUser(userId);
 		
 		verify(userRepository, times(1)).deleteById(userId);

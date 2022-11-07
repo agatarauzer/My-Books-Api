@@ -3,7 +3,6 @@ package com.agatarauzer.myBooks.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -121,8 +120,6 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldDeleteBook() {
-		doNothing().when(bookRepository).deleteById(bookId);
-		
 		bookService.deleteBook(bookId);
 		
 		verify(bookRepository, times(1)).deleteById(bookId);

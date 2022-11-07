@@ -3,7 +3,6 @@ package com.agatarauzer.myBooks.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -50,7 +49,6 @@ public class ReadingServiceTest {
 		bookId = 1L;
 		book = new Book(bookId, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
 				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
-		
 		readingId = 1L;
 		reading = new Reading(readingId, ReadingStatus.READED, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 820, 4, "Java basics...");
 	}
@@ -107,7 +105,6 @@ public class ReadingServiceTest {
 	@Test
 	public void shouldDeleteReading() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		doNothing().when(readingRepository).deleteById(readingId);
 		
 		readingService.deleteReading(bookId, readingId);
 		

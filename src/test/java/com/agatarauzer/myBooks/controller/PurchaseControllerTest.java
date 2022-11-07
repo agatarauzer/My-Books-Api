@@ -64,12 +64,12 @@ public class PurchaseControllerTest {
 		when(purchaseMapper.mapToPurchaseDto(purchase)).thenReturn(purchaseDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users/1/books/{bookId}/purchases", bookId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.price", is(48.90)))
-				.andExpect(jsonPath("$.purchaseDate", is("2022-07-12")))
-				.andExpect(jsonPath("$.boughtFrom", is("empik.com")));	
+				.get("/v1/users/1/books/{bookId}/purchases", bookId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.price", is(48.90)))
+			.andExpect(jsonPath("$.purchaseDate", is("2022-07-12")))
+			.andExpect(jsonPath("$.boughtFrom", is("empik.com")));	
 	}
 	
 	@Test 
@@ -77,19 +77,20 @@ public class PurchaseControllerTest {
 		when(purchaseService.savePurchase(bookId, purchase)).thenReturn(purchase);
 		when(purchaseMapper.mapToPurchase(purchaseDto)).thenReturn(purchase);
 		
-		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
-				.create();
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+			.create();
 		String jsonPurchaseDto = gson.toJson(purchaseDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.post("/v1/users/1/books/{bookId}/purchases", bookId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonPurchaseDto))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.price", is(48.90)))
-				.andExpect(jsonPath("$.purchaseDate", is("2022-07-12")))
-				.andExpect(jsonPath("$.boughtFrom", is("empik.com")));	
+				.post("/v1/users/1/books/{bookId}/purchases", bookId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonPurchaseDto))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.price", is(48.90)))
+			.andExpect(jsonPath("$.purchaseDate", is("2022-07-12")))
+			.andExpect(jsonPath("$.boughtFrom", is("empik.com")));	
 	}
 	
 	@Test
@@ -97,27 +98,28 @@ public class PurchaseControllerTest {
 		Purchase purchaseUpdated = new Purchase(purchaseId, 52.90, LocalDate.of(2022, 8, 15), "www.empik.com");
 		when(purchaseService.updatePurchase(purchaseId, purchaseUpdated)).thenReturn(purchaseUpdated);
 		
-		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
-				.create();
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+			.create();
 		String jsonPurchaseUpdated = gson.toJson(purchaseUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.put("/v1/users/1/books/{bookId}/purchases/{purchaseId}", bookId, purchaseId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonPurchaseUpdated))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.price", is(52.90)))
-				.andExpect(jsonPath("$.purchaseDate", is("2022-08-15")))
-				.andExpect(jsonPath("$.boughtFrom", is("www.empik.com")));	
+				.put("/v1/users/1/books/{bookId}/purchases/{purchaseId}", bookId, purchaseId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonPurchaseUpdated))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.price", is(52.90)))
+			.andExpect(jsonPath("$.purchaseDate", is("2022-08-15")))
+			.andExpect(jsonPath("$.boughtFrom", is("www.empik.com")));	
 	}
 	
 	@Test
 	public void shouldDeletePurchase() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-					.delete("/v1/users/1/books/{bookId}/purchases/{purchaseId}", bookId, purchaseId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200));
+				.delete("/v1/users/1/books/{bookId}/purchases/{purchaseId}", bookId, purchaseId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200));
 		
 		verify(purchaseService, times(1)).deletePurchase(bookId, purchaseId);
 	}	

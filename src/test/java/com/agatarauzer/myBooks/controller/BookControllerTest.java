@@ -72,21 +72,21 @@ public class BookControllerTest {
 		when(bookMapper.mapToBookDtoList(booksList)).thenReturn(booksDtoList);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users/{userId}/books", userId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].title", is("Java. Podstawy. Wydanie IX")))
-				.andExpect(jsonPath("$[0].authors", is("Cay S. Horstmann,Gary Cornell")))
-				.andExpect(jsonPath("$[0].isbn", is("8324677615, 9788324677610")))
-				.andExpect(jsonPath("$[0].publisher", is("Helion")))
-				.andExpect(jsonPath("$[0].publishingDate", is("2013-12-09")))
-				.andExpect(jsonPath("$[0].language", is("pl")))
-				.andExpect(jsonPath("$[0].pages", is(864)))
-				.andExpect(jsonPath("$[0].description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
-				.andExpect(jsonPath("$[0].imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-				.andExpect(jsonPath("$[0].version", is("PAPER")))
-				.andExpect(jsonPath("$[0].copies", is(1)));
+				.get("/v1/users/{userId}/books", userId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$", hasSize(1)))
+			.andExpect(jsonPath("$[0].title", is("Java. Podstawy. Wydanie IX")))
+			.andExpect(jsonPath("$[0].authors", is("Cay S. Horstmann,Gary Cornell")))
+			.andExpect(jsonPath("$[0].isbn", is("8324677615, 9788324677610")))
+			.andExpect(jsonPath("$[0].publisher", is("Helion")))
+			.andExpect(jsonPath("$[0].publishingDate", is("2013-12-09")))
+			.andExpect(jsonPath("$[0].language", is("pl")))
+			.andExpect(jsonPath("$[0].pages", is(864)))
+			.andExpect(jsonPath("$[0].description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
+			.andExpect(jsonPath("$[0].imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
+			.andExpect(jsonPath("$[0].version", is("PAPER")))
+			.andExpect(jsonPath("$[0].copies", is(1)));
 	}
 	
 	@Test
@@ -95,20 +95,20 @@ public class BookControllerTest {
 		when(bookMapper.mapToBookDto(book)).thenReturn(bookDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users/1/books/{bookId}", bookId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
-				.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
-				.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
-				.andExpect(jsonPath("$.publisher", is("Helion")))
-				.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
-				.andExpect(jsonPath("$.language", is("pl")))
-				.andExpect(jsonPath("$.pages", is(864)))
-				.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
-				.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-				.andExpect(jsonPath("$.version", is("PAPER")))
-				.andExpect(jsonPath("$.copies", is(1)));
+				.get("/v1/users/1/books/{bookId}", bookId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
+			.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
+			.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
+			.andExpect(jsonPath("$.publisher", is("Helion")))
+			.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
+			.andExpect(jsonPath("$.language", is("pl")))
+			.andExpect(jsonPath("$.pages", is(864)))
+			.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
+			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
+			.andExpect(jsonPath("$.version", is("PAPER")))
+			.andExpect(jsonPath("$.copies", is(1)));
 	}
 	
 	@Test
@@ -122,22 +122,22 @@ public class BookControllerTest {
 		String jsonBookDto = gson.toJson(bookDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.post("/v1/users/{userId}/books", userId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonBookDto))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
-				.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
-				.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
-				.andExpect(jsonPath("$.publisher", is("Helion")))
-				.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
-				.andExpect(jsonPath("$.language", is("pl")))
-				.andExpect(jsonPath("$.pages", is(864)))
-				.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
-				.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-				.andExpect(jsonPath("$.version", is("PAPER")))
-				.andExpect(jsonPath("$.copies", is(1)));
+				.post("/v1/users/{userId}/books", userId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonBookDto))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
+			.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
+			.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
+			.andExpect(jsonPath("$.publisher", is("Helion")))
+			.andExpect(jsonPath("$.publishingDate", is("2013-12-09")))
+			.andExpect(jsonPath("$.language", is("pl")))
+			.andExpect(jsonPath("$.pages", is(864)))
+			.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
+			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
+			.andExpect(jsonPath("$.version", is("PAPER")))
+			.andExpect(jsonPath("$.copies", is(1)));
 	}
 	
 	@Test
@@ -151,30 +151,30 @@ public class BookControllerTest {
 		String jsonBook = gson.toJson(bookUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.put("/v1/users/{userId}/books/{bookId}", userId, bookId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonBook))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX_changed")))
-				.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell_changed")))
-				.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
-				.andExpect(jsonPath("$.publisher", is("Helion_changed")))
-				.andExpect(jsonPath("$.publishingDate", is("2022-12-22")))
-				.andExpect(jsonPath("$.language", is("pl_changed")))
-				.andExpect(jsonPath("$.pages", is(900)))
-				.andExpect(jsonPath("$.description", is("Kolejne wydanie_changed")))
-				.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")))
-				.andExpect(jsonPath("$.version", is("E_BOOK")))
-				.andExpect(jsonPath("$.copies", is(2)));
+				.put("/v1/users/{userId}/books/{bookId}", userId, bookId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonBook))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX_changed")))
+			.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell_changed")))
+			.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
+			.andExpect(jsonPath("$.publisher", is("Helion_changed")))
+			.andExpect(jsonPath("$.publishingDate", is("2022-12-22")))
+			.andExpect(jsonPath("$.language", is("pl_changed")))
+			.andExpect(jsonPath("$.pages", is(900)))
+			.andExpect(jsonPath("$.description", is("Kolejne wydanie_changed")))
+			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")))
+			.andExpect(jsonPath("$.version", is("E_BOOK")))
+			.andExpect(jsonPath("$.copies", is(2)));
 	}
 	
 	@Test
 	public void sholudDeleteBook() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-					.delete("/v1/users/1/books/{bookId}", bookId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200));
+				.delete("/v1/users/1/books/{bookId}", bookId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200));
 		
 		verify(bookService, times(1)).deleteBook(bookId);
 	}

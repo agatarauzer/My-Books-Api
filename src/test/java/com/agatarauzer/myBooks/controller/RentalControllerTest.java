@@ -65,14 +65,14 @@ public class RentalControllerTest {
 		when(rentalMapper.mapToRentalDto(rental)).thenReturn(rentalDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users/1/books/{bookId}/rentals", bookId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.status", is("BORROWED")))
-				.andExpect(jsonPath("$.name", is("from Kate")))
-				.andExpect(jsonPath("$.startDate", is("2022-06-21")))
-				.andExpect(jsonPath("$.endDate", is("2023-01-05")))
-				.andExpect(jsonPath("$.notes", is("Kate will need it in January!")));	
+				.get("/v1/users/1/books/{bookId}/rentals", bookId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.status", is("BORROWED")))
+			.andExpect(jsonPath("$.name", is("from Kate")))
+			.andExpect(jsonPath("$.startDate", is("2022-06-21")))
+			.andExpect(jsonPath("$.endDate", is("2023-01-05")))
+			.andExpect(jsonPath("$.notes", is("Kate will need it in January!")));	
 	}
 	
 	@Test 
@@ -85,16 +85,16 @@ public class RentalControllerTest {
 		String jsonRentalDto = gson.toJson(rentalDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.post("/v1/users/1/books/{bookId}/rentals", bookId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonRentalDto))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.status", is("BORROWED")))
-				.andExpect(jsonPath("$.name", is("from Kate")))
-				.andExpect(jsonPath("$.startDate", is("2022-06-21")))
-				.andExpect(jsonPath("$.endDate", is("2023-01-05")))
-				.andExpect(jsonPath("$.notes", is("Kate will need it in January!")));	
+				.post("/v1/users/1/books/{bookId}/rentals", bookId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonRentalDto))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.status", is("BORROWED")))
+			.andExpect(jsonPath("$.name", is("from Kate")))
+			.andExpect(jsonPath("$.startDate", is("2022-06-21")))
+			.andExpect(jsonPath("$.endDate", is("2023-01-05")))
+			.andExpect(jsonPath("$.notes", is("Kate will need it in January!")));	
 	}
 	
 	@Test
@@ -102,29 +102,30 @@ public class RentalControllerTest {
 		Rental rentalUpdated = new Rental(rentalId, RentalStatus.LENDED, "to Kate", LocalDate.of(2020, 5, 9), LocalDate.of(2021, 8, 9), "Not needed now");
 		when(rentalService.updateRental(rentalId, rentalUpdated)).thenReturn(rentalUpdated);
 		
-		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
-				.create();
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+			.create();
 		String jsonRentalUpdated = gson.toJson(rentalUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.put("/v1/users/1/books/{bookId}/rentals/{rentalId}", bookId, rentalId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonRentalUpdated))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.status", is("LENDED")))
-				.andExpect(jsonPath("$.name", is("to Kate")))
-				.andExpect(jsonPath("$.startDate", is("2020-05-09")))
-				.andExpect(jsonPath("$.endDate", is("2021-08-09")))
-				.andExpect(jsonPath("$.notes", is("Not needed now")));
+				.put("/v1/users/1/books/{bookId}/rentals/{rentalId}", bookId, rentalId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonRentalUpdated))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.status", is("LENDED")))
+			.andExpect(jsonPath("$.name", is("to Kate")))
+			.andExpect(jsonPath("$.startDate", is("2020-05-09")))
+			.andExpect(jsonPath("$.endDate", is("2021-08-09")))
+			.andExpect(jsonPath("$.notes", is("Not needed now")));
 	}
 	
 	@Test
 	public void shouldDeleteRental() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-					.delete("/v1/users/1/books/{bookId}/rentals/{rentalId}", bookId, rentalId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200));
+				.delete("/v1/users/1/books/{bookId}/rentals/{rentalId}", bookId, rentalId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200));
 		
 		verify(rentalService, times(1)).deleteRental(bookId, rentalId);
 	}	

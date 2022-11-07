@@ -59,12 +59,12 @@ public class UserControllerTest {
 		when(userMapper.mapToUserDtoAdminList(userList)).thenReturn(userDtoList);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users")
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$", hasSize(2)))
-				.andExpect(jsonPath("$[0].id", is(1)))
-				.andExpect(jsonPath("$[1].lastName", is("Maj")));	
+				.get("/v1/users")
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$", hasSize(2)))
+			.andExpect(jsonPath("$[0].id", is(1)))
+			.andExpect(jsonPath("$[1].lastName", is("Maj")));	
 	}
 	
 	@Test
@@ -77,11 +77,11 @@ public class UserControllerTest {
 		when(userMapper.mapToUserDto(user)).thenReturn(userDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users/1")
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.firstName", is("Tomasz")))
-				.andExpect(jsonPath("$.email", is("tomasz.malinowski@gmail.com")));
+				.get("/v1/users/1")
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.firstName", is("Tomasz")))
+			.andExpect(jsonPath("$.email", is("tomasz.malinowski@gmail.com")));
 	}
 	
 	@Test
@@ -90,27 +90,28 @@ public class UserControllerTest {
 		User userUpdated = new User("Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tomasz_malin_password");
 		when(userService.updateUser(id, userUpdated)).thenReturn(userUpdated);
 		
-		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
-				.create();
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+			.create();
 		String jsonUser = gson.toJson(userUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.put("/v1/users/{id}", id)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonUser))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.firstName", is("Tomasz")))
-				.andExpect(jsonPath("$.password", is("tomasz_malin_password")));	
+				.put("/v1/users/{id}", id)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonUser))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.firstName", is("Tomasz")))
+			.andExpect(jsonPath("$.password", is("tomasz_malin_password")));	
 	}
 	
 	@Test
 	public void sholudDeleteUser() throws Exception {
 		Long id = 1L;
 		mockMvc.perform(MockMvcRequestBuilders
-						.delete("/v1/users/{id}", id)
-						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200));
+				.delete("/v1/users/{id}", id)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200));
 		
 		verify(userService, times(1)).deleteUser(id);
 	}

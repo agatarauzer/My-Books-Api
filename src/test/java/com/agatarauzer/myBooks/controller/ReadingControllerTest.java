@@ -65,15 +65,15 @@ public class ReadingControllerTest {
 		when(readingMapper.mapToReadingDto(reading)).thenReturn(readingDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.get("/v1/users/1/books/{bookId}/readings", bookId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.status", is("READED")))
-				.andExpect(jsonPath("$.startDate", is("2020-05-09")))
-				.andExpect(jsonPath("$.endDate", is("2022-01-24")))
-				.andExpect(jsonPath("$.readedPages", is(820)))
-				.andExpect(jsonPath("$.rate", is(4)))
-				.andExpect(jsonPath("$.notes", is("Java basics...")));	
+				.get("/v1/users/1/books/{bookId}/readings", bookId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.status", is("READED")))
+			.andExpect(jsonPath("$.startDate", is("2020-05-09")))
+			.andExpect(jsonPath("$.endDate", is("2022-01-24")))
+			.andExpect(jsonPath("$.readedPages", is(820)))
+			.andExpect(jsonPath("$.rate", is(4)))
+			.andExpect(jsonPath("$.notes", is("Java basics...")));	
 	}
 	
 	@Test 
@@ -81,22 +81,23 @@ public class ReadingControllerTest {
 		when(readingService.saveReading(bookId, reading)).thenReturn(reading);
 		when(readingMapper.mapToReading(readingDto)).thenReturn(reading);
 		
-		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
-				.create();
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+			.create();
 		String jsonReadingDto = gson.toJson(readingDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.post("/v1/users/1/books/{bookId}/readings", bookId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonReadingDto))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.status", is("READED")))
-				.andExpect(jsonPath("$.startDate", is("2020-05-09")))
-				.andExpect(jsonPath("$.endDate", is("2022-01-24")))
-				.andExpect(jsonPath("$.readedPages", is(820)))
-				.andExpect(jsonPath("$.rate", is(4)))
-				.andExpect(jsonPath("$.notes", is("Java basics...")));	
+				.post("/v1/users/1/books/{bookId}/readings", bookId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonReadingDto))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.status", is("READED")))
+			.andExpect(jsonPath("$.startDate", is("2020-05-09")))
+			.andExpect(jsonPath("$.endDate", is("2022-01-24")))
+			.andExpect(jsonPath("$.readedPages", is(820)))
+			.andExpect(jsonPath("$.rate", is(4)))
+			.andExpect(jsonPath("$.notes", is("Java basics...")));	
 	}
 	
 	@Test
@@ -104,30 +105,31 @@ public class ReadingControllerTest {
 		Reading readingUpdated = new Reading(readingId, ReadingStatus.IN_READING, LocalDate.of(2021, 6, 10), LocalDate.of(2022, 2, 25), 350, 5, "Java basics");
 		when(readingService.updateReading(readingId, readingUpdated)).thenReturn(readingUpdated);
 		
-		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
-				.create();
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
+			.create();
 		String jsonReadingUpdated = gson.toJson(readingUpdated);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-					.put("/v1/users/1/books/{bookId}/readings/{readingId}", bookId, readingId)
-					.contentType(MediaType.APPLICATION_JSON)
-					.characterEncoding("UTF-8")
-					.content(jsonReadingUpdated))
-				.andExpect(status().is(200))
-				.andExpect(jsonPath("$.status", is("IN_READING")))
-				.andExpect(jsonPath("$.startDate", is("2021-06-10")))
-				.andExpect(jsonPath("$.endDate", is("2022-02-25")))
-				.andExpect(jsonPath("$.readedPages", is(350)))
-				.andExpect(jsonPath("$.rate", is(5)))
-				.andExpect(jsonPath("$.notes", is("Java basics")));	
+				.put("/v1/users/1/books/{bookId}/readings/{readingId}", bookId, readingId)
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonReadingUpdated))
+			.andExpect(status().is(200))
+			.andExpect(jsonPath("$.status", is("IN_READING")))
+			.andExpect(jsonPath("$.startDate", is("2021-06-10")))
+			.andExpect(jsonPath("$.endDate", is("2022-02-25")))
+			.andExpect(jsonPath("$.readedPages", is(350)))
+			.andExpect(jsonPath("$.rate", is(5)))
+			.andExpect(jsonPath("$.notes", is("Java basics")));	
 	}
 	
 	@Test
 	public void shouldDeleteReading() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-					.delete("/v1/users/1/books/{bookId}/readings/{readingId}", bookId, readingId)
-					.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().is(200));	
+				.delete("/v1/users/1/books/{bookId}/readings/{readingId}", bookId, readingId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().is(200));	
 		
 		verify(readingService, times(1)).deleteReading(bookId, readingId);
 	}	

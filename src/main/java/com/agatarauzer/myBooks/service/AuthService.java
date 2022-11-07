@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,46 +14,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.ConfirmationToken;
-import com.agatarauzer.myBooks.domain.ERole;
 import com.agatarauzer.myBooks.domain.Mail;
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.payload.request.LoginRequest;
-import com.agatarauzer.myBooks.payload.request.SignupRequest;
-import com.agatarauzer.myBooks.payload.response.JwtResponse;
-import com.agatarauzer.myBooks.payload.response.MessageResponse;
+import com.agatarauzer.myBooks.domain.enums.ERole;
+import com.agatarauzer.myBooks.dto.singUpIn.JwtResponse;
+import com.agatarauzer.myBooks.dto.singUpIn.LoginRequest;
+import com.agatarauzer.myBooks.dto.singUpIn.MessageResponse;
+import com.agatarauzer.myBooks.dto.singUpIn.SignupRequest;
 import com.agatarauzer.myBooks.repository.RoleRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
 import com.agatarauzer.myBooks.security.jwt.JwtUtils;
 import com.agatarauzer.myBooks.security.service.UserDetailsImpl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 	
-	@Autowired
-	AuthenticationManager authenticationManager;
-	
-	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	RoleRepository roleRepository;
-	
-	@Autowired
-	PasswordEncoder encoder;
-	
-	@Autowired
-	JwtUtils jwtUtils;
-	
-	@Autowired
-	ConfirmationTokenService confirmationTokenService;
-	
-	@Autowired
-	MailSenderService mailSenderService;
-	
+	private final AuthenticationManager authenticationManager;
+	private final UserRepository userRepository;
+	private final RoleRepository roleRepository;
+	private final PasswordEncoder encoder;
+	private final JwtUtils jwtUtils;
+	private final ConfirmationTokenService confirmationTokenService;
+	private final MailSenderService mailSenderService;
 	
 	public JwtResponse authenticateUser(LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
@@ -108,7 +95,7 @@ public class AuthService {
 		Set<Role> roles = new HashSet<>();
 		if (givenRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER_LIMITED)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 			roles.add(userRole);
 		}
 		else {
@@ -116,7 +103,7 @@ public class AuthService {
 				switch (role) {
 				case "userPaid":
 					Role userPaidRole = roleRepository.findByName(ERole.ROLE_USER_PAID)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 					roles.add(userPaidRole);
 					break;
 				

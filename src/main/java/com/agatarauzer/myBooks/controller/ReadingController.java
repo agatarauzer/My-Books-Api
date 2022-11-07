@@ -1,6 +1,5 @@
 package com.agatarauzer.myBooks.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +15,16 @@ import com.agatarauzer.myBooks.dto.ReadingDto;
 import com.agatarauzer.myBooks.mapper.ReadingMapper;
 import com.agatarauzer.myBooks.service.ReadingService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/v1/users/{userId}/books/{bookId}")
 @PreAuthorize("hasRole('USER_PAID') or hasRole('ADMIN')")
+@RequiredArgsConstructor
 public class ReadingController {
 	
-	@Autowired
-	private ReadingService readingService;
-	
-	@Autowired
-	private ReadingMapper readingMapper;
-	
+	private final ReadingService readingService;
+	private final ReadingMapper readingMapper;
 	
 	@GetMapping("/readings")
 	public ReadingDto getReadingForBook(@PathVariable Long bookId) {

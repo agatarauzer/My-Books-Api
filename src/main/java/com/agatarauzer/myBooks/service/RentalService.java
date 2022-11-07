@@ -3,28 +3,26 @@ package com.agatarauzer.myBooks.service;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Rental;
-import com.agatarauzer.myBooks.domain.RentalStatus;
+import com.agatarauzer.myBooks.domain.enums.RentalStatus;
 import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
 import com.agatarauzer.myBooks.exception.RentalNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.RentalRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class RentalService {
 	
-	@Autowired
-	private RentalRepository rentalRepository;
-	
-	@Autowired
-	private BookRepository bookRepository;
-	
+	private final RentalRepository rentalRepository;
+	private final BookRepository bookRepository;
 	
 	public Rental getRentalForBook(Long bookId) {
 		bookRepository.findById(bookId)

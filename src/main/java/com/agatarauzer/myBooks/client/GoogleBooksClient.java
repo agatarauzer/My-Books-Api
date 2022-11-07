@@ -1,13 +1,10 @@
 package com.agatarauzer.myBooks.client;
 
-import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
-
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -18,19 +15,19 @@ import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
 import com.agatarauzer.myBooks.mapper.GoogleBookMapper;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class GoogleBooksClient {
 	
-	@Autowired
-	private RestTemplate restTemplate;
-
-	@Autowired 
-	private GoogleBooksApiConfig googleBooksApiConfig;
+	private final RestTemplate restTemplate;
+	private final GoogleBooksApiConfig googleBooksApiConfig;
+	private final GoogleBookMapper googleBookMapper;
 	
-	@Autowired
-	private GoogleBookMapper googleBookMapper;
-	
-	public List<GoogleBookForUserDto> getBooksFromSearch(String phrase) {
+	public List<GoogleBookForUserDto> getBooksFromSearch(final String phrase) {
 		URI uri = UriComponentsBuilder.fromHttpUrl(googleBooksApiConfig.getGoogleBooksApiEndpoint() + "?q=" + phrase)
 			.build()
 			.encode()
@@ -43,7 +40,7 @@ public class GoogleBooksClient {
 					.orElseGet(Collections::emptyList);
 		}
 		catch (RestClientException exc) {
-			LOGGER.error(exc.getMessage(), exc);
+			log.error(exc.getMessage(), exc);
 			return Collections.emptyList();
 		}
 	}

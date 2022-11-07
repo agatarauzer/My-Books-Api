@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.agatarauzer.myBooks.domain.Reading;
-import com.agatarauzer.myBooks.domain.ReadingStatus;
+import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
 import com.agatarauzer.myBooks.dto.ReadingDto;
 
 @SpringBootTest

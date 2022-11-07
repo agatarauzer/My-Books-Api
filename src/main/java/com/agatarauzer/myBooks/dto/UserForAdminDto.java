@@ -2,12 +2,10 @@ package com.agatarauzer.myBooks.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class UserDtoAdmin {
+public class UserForAdminDto {
 	private Long id;
 	private String firstName;
 	private String lastName;

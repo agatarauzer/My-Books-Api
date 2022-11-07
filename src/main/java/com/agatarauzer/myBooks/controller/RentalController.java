@@ -1,6 +1,5 @@
 package com.agatarauzer.myBooks.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +15,16 @@ import com.agatarauzer.myBooks.dto.RentalDto;
 import com.agatarauzer.myBooks.mapper.RentalMapper;
 import com.agatarauzer.myBooks.service.RentalService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/v1/users/{userId}/books/{bookId}")
 @PreAuthorize("hasRole('USER_PAID') or hasRole('ADMIN')")
+@RequiredArgsConstructor
 public class RentalController {
 	
-	@Autowired
-	private RentalService rentalService;
-	
-	@Autowired
-	private RentalMapper rentalMapper;
-	
+	private final RentalService rentalService;
+	private final RentalMapper rentalMapper;
 	
 	@GetMapping("/rentals")
 	public RentalDto getRentalForBook(@PathVariable Long bookId) {

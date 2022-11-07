@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.payload.request;
+package com.agatarauzer.myBooks.dto.singUpIn;
 
 import java.util.Set;
 

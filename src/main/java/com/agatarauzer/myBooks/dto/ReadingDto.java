@@ -2,13 +2,12 @@ package com.agatarauzer.myBooks.dto;
 
 import java.time.LocalDate;
 
-import com.agatarauzer.myBooks.domain.ReadingStatus;
+import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Getter
 public class ReadingDto {

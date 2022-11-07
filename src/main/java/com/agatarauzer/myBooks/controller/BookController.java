@@ -2,7 +2,6 @@ package com.agatarauzer.myBooks.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +16,15 @@ import com.agatarauzer.myBooks.dto.BookDto;
 import com.agatarauzer.myBooks.mapper.BookMapper;
 import com.agatarauzer.myBooks.service.BookService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/v1/users/{userId}")
+@RequiredArgsConstructor
 public class BookController {
 	
-	@Autowired
-	private BookService bookService;
-	
-	@Autowired
-	private BookMapper bookMapper;
+	private final BookService bookService;
+	private final BookMapper bookMapper;
 	
 	@GetMapping("/books")
 	public List<BookDto> getUserBooks(@PathVariable Long userId) {

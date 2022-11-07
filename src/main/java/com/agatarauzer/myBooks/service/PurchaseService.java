@@ -3,7 +3,6 @@ package com.agatarauzer.myBooks.service;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +13,14 @@ import com.agatarauzer.myBooks.exception.PurchaseNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.PurchaseRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PurchaseService {
 	
-	@Autowired
-	private PurchaseRepository purchaseRepository;
-	
-	@Autowired
-	private BookRepository bookRepository;
-	
+	private final PurchaseRepository purchaseRepository;
+	private final BookRepository bookRepository;
 	
 	public Purchase getPurchaseForBook(Long bookId) {
 		bookRepository.findById(bookId)

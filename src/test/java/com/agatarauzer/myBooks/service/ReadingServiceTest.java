@@ -20,8 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Reading;
-import com.agatarauzer.myBooks.domain.ReadingStatus;
-import com.agatarauzer.myBooks.domain.Version;
+import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
+import com.agatarauzer.myBooks.domain.enums.Version;
 import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;

@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.domain.Book;
-import com.agatarauzer.myBooks.domain.Version;
+import com.agatarauzer.myBooks.domain.enums.Version;
 import com.agatarauzer.myBooks.dto.BookDto;
 import com.agatarauzer.myBooks.mapper.BookMapper;
 import com.agatarauzer.myBooks.service.BookService;

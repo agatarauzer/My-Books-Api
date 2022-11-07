@@ -1,6 +1,5 @@
 package com.agatarauzer.myBooks.security.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,11 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	UserRepository userRepository;
+	private final UserRepository userRepository;
 	
 	@Override
 	@Transactional

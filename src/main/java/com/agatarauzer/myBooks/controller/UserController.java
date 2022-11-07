@@ -2,7 +2,6 @@ package com.agatarauzer.myBooks.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserDtoAdmin;
+import com.agatarauzer.myBooks.dto.UserForAdminDto;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/v1")
+@RequiredArgsConstructor
 public class UserController {
 	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private UserMapper userMapper;
-	
+	private final UserService userService;
+	private final UserMapper userMapper;
 	
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<UserDtoAdmin> getUsers() {
+	public List<UserForAdminDto> getUsers() {
 		List<User> users = userService.findAll();
-		return userMapper.mapToUserDtoAdminList(users);
+		return userMapper.mapToUserForAdminDtoList(users);
 	}
 
 	@GetMapping("/users/{userId}")

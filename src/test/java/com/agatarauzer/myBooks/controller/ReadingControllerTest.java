@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.domain.Reading;
-import com.agatarauzer.myBooks.domain.ReadingStatus;
+import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
 import com.agatarauzer.myBooks.dto.ReadingDto;
 import com.agatarauzer.myBooks.mapper.ReadingMapper;
 import com.agatarauzer.myBooks.service.BookService;

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.payload.response;
+package com.agatarauzer.myBooks.dto.singUpIn;
 
 import java.util.List;
 

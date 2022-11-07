@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.domain.ERole;
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
+import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserDtoAdmin;
+import com.agatarauzer.myBooks.dto.UserForAdminDto;
 
 @SpringBootTest
 public class UserMapperTest {
@@ -51,7 +51,7 @@ public class UserMapperTest {
 				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_ADMIN))),
 				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", Set.of(new Role(ERole.ROLE_USER_PAID))));
 		
-		List<UserDtoAdmin> userDtoListMapped = userMapper.mapToUserDtoAdminList(userList);
+		List<UserForAdminDto> userDtoListMapped = userMapper.mapToUserForAdminDtoList(userList);
 		
 		assertEquals(userList.get(0).getId(), userDtoListMapped.get(0).getId());
 		assertEquals(userList.get(0).getFirstName(), userDtoListMapped.get(0).getFirstName());

@@ -1,6 +1,5 @@
 package com.agatarauzer.myBooks.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,16 +17,16 @@ import com.agatarauzer.myBooks.security.jwt.AuthEntryPointJwt;
 import com.agatarauzer.myBooks.security.jwt.AuthTokenFilter;
 import com.agatarauzer.myBooks.security.service.UserDetailsServiceImpl;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 	
-	@Autowired
-	UserDetailsServiceImpl userDetailsService;
-	
-	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
+	private final UserDetailsServiceImpl userDetailsService;
+	private final AuthEntryPointJwt unauthorizedHandler;
 	
 	@Bean 
 	public AuthTokenFilter authenticationJwtTokenFilter() {

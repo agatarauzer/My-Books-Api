@@ -1,12 +1,11 @@
 package com.agatarauzer.myBooks.dto;
 
-import com.agatarauzer.myBooks.domain.Version;
+import com.agatarauzer.myBooks.domain.enums.Version;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Getter
 public class BookDto {

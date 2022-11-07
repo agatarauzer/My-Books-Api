@@ -4,7 +4,6 @@ package com.agatarauzer.myBooks.service;
 import java.util.List;
 
 import org.apache.commons.collections4.IterableUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +14,15 @@ import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
 	
-	@Autowired
-	private BookRepository bookRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
+	private final BookRepository bookRepository;
+	private final UserRepository userRepository;
 	
 	public List<Book> findAll() {
 		return IterableUtils.toList(bookRepository.findAll());		

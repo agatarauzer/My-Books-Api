@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.agatarauzer.myBooks.domain.Rental;
-import com.agatarauzer.myBooks.domain.RentalStatus;
+import com.agatarauzer.myBooks.domain.enums.RentalStatus;
 import com.agatarauzer.myBooks.dto.RentalDto;
 
 @SpringBootTest

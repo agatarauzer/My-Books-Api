@@ -20,8 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Rental;
-import com.agatarauzer.myBooks.domain.RentalStatus;
-import com.agatarauzer.myBooks.domain.Version;
+import com.agatarauzer.myBooks.domain.enums.RentalStatus;
+import com.agatarauzer.myBooks.domain.enums.Version;
 import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.RentalNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;

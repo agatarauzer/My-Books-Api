@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserDtoAdmin;
+import com.agatarauzer.myBooks.dto.UserForAdminDto;
 
 @Service
 public class UserMapper {
 	
-	public UserDtoAdmin mapToUserDtoAdmin(User user) {
+	public UserForAdminDto mapToUserForAdminDto(User user) {
 		String roles = user.getRoles().stream()
 				.map(role -> role.toString())
 				.collect(Collectors.joining(", "));
 		
-		return new UserDtoAdmin(
+		return new UserForAdminDto(
 				user.getId(),
 				user.getFirstName(),
 				user.getLastName(),
@@ -44,9 +44,9 @@ public class UserMapper {
 				userDto.getPassword());
 	}
 	
-	public List<UserDtoAdmin> mapToUserDtoAdminList(List<User> users) {
+	public List<UserForAdminDto> mapToUserForAdminDtoList(List<User> users) {
 		return users.stream()
-				.map(u -> mapToUserDtoAdmin(u))
+				.map(u -> mapToUserForAdminDto(u))
 				.collect(Collectors.toList());
 	}
 }

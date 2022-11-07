@@ -22,11 +22,11 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.domain.ERole;
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
+import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserDtoAdmin;
+import com.agatarauzer.myBooks.dto.UserForAdminDto;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 import com.google.gson.Gson;
@@ -48,15 +48,15 @@ public class UserControllerTest {
 
 	@Test
 	public void shouldGetUsers() throws Exception {
-		List<UserDtoAdmin> userDtoList = List.of(
-				new UserDtoAdmin(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", "ROLE_ADMIN"),
-				new UserDtoAdmin(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", "ROLE_USER_PAID"));
+		List<UserForAdminDto> userDtoList = List.of(
+				new UserForAdminDto(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", "ROLE_ADMIN"),
+				new UserForAdminDto(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", "ROLE_USER_PAID"));
 		List<User> userList = List.of(
 				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_ADMIN))),
 				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", Set.of(new Role(ERole.ROLE_USER_PAID))));
 		
 		when(userService.findAll()).thenReturn(userList);
-		when(userMapper.mapToUserDtoAdminList(userList)).thenReturn(userDtoList);
+		when(userMapper.mapToUserForAdminDtoList(userList)).thenReturn(userDtoList);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/v1/users")

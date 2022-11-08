@@ -15,10 +15,18 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	Boolean existsByUsername(String username);
 	Boolean existsByEmail(String email);
 	
-	@Query(value = "SELECT cast(registration_date as CHAR(7)) as REG_MTH, count(1) as SUM "
-			+ "FROM (select * from USERS WHERE registration_date is not null) U2 GROUP BY REG_MTH "
-			+ "order by REG_MTH desc", nativeQuery = true)
+	@Query(value = "SELECT cast(registration_date as CHAR(7)) as Month, count(1) as Sum "
+			+ "FROM (select * from USERS WHERE registration_date IS NOT NULL) U2 GROUP BY Month "
+			+ "order by Month desc", nativeQuery = true)
 	Map<String, Long> findByRegistrationMonth();
 
+	@Query(value = "SELECT cast(registration_date as CHAR(7)) as Month, count(1) as Role"
+			+ "FROM (SELECT * FROM users WHERE registration_date IS NOT NULL) u "
+			+ "JOIN user_roles ur ON u.user_id = ur.user_id "
+			+ "JOIN roles r ON ur.role_id = r.role_id"
+			+ "WHERE r.name = :role"
+			+ "GROUP BY Month"
+			+ "ORDER BY Month desc", nativeQuery = true)
+	Map<String, Long> findByRegistrationMonthAndRole(String role);
 }
 

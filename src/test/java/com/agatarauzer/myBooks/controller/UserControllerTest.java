@@ -48,13 +48,47 @@ public class UserControllerTest {
 
 	@Test
 	public void shouldGetUsers() throws Exception {
-		List<UserForAdminDto> userDtoList = List.of(
-				new UserForAdminDto(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", "ROLE_ADMIN"),
-				new UserForAdminDto(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", "ROLE_USER_PAID"));
-		List<User> userList = List.of(
-				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_ADMIN))),
-				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", Set.of(new Role(ERole.ROLE_USER_PAID))));
 		
+		List<UserForAdminDto> userDtoList = List.of(
+				UserForAdminDto.builder()
+					.id(1L)
+					.firstName("Tomasz")
+					.lastName("Malinowski")
+					.email("tomasz.malinowski@gmail.com")
+					.username("tommal")
+					.password("tom_mal_password")
+					.roles("ROLE_ADMIN")
+					.build(),
+				UserForAdminDto.builder()
+					.id(2L)
+					.firstName("Alicja")
+					.lastName("Maj")
+					.email("ala.maj@gmail.com")
+					.username("agamaj")
+					.password("aga_maj_password")
+					.roles("ROLE_USER_PAID")
+					.build());
+	
+		List<User> userList = List.of(
+				User.builder()
+					.id(1L)
+					.firstName("Tomasz")
+					.lastName("Malinowski")
+					.email("tomasz.malinowski@gmail.com")
+					.username("tommal")
+					.password("tom_mal_password")
+					.roles(Set.of(new Role(ERole.ROLE_ADMIN)))
+					.build(),
+				User.builder()
+					.id(2L)
+					.firstName("Alicja")
+					.lastName("Maj")
+					.email("ala.maj@gmail.com")
+					.username("agamaj")
+					.password("aga_maj_password")
+					.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
+					.build());
+
 		when(userService.findAll()).thenReturn(userList);
 		when(userMapper.mapToUserForAdminDtoList(userList)).thenReturn(userDtoList);
 		
@@ -70,8 +104,18 @@ public class UserControllerTest {
 	@Test
 	public void shouldGetUserById() throws Exception {
 		Long id = 1L;
-		User user = new User("Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tom_mal_password");
-		UserDto userDto = new UserDto("Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tom_mal_password");
+		User user = User.builder()
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.password("tom_mal_password")
+				.build();
+		UserDto userDto = UserDto.builder()
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.password("tom_mal_password")
+				.build();
 		
 		when(userService.findUserById(id)).thenReturn(user);
 		when(userMapper.mapToUserDto(user)).thenReturn(userDto);
@@ -87,7 +131,12 @@ public class UserControllerTest {
 	@Test
 	public void shouldUpdateUser() throws Exception {
 		Long id = 1L;
-		User userUpdated = new User("Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tomasz_malin_password");
+		User userUpdated =  User.builder()
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.password("tom_malin_password")
+				.build();
 		when(userService.updateUser(id, userUpdated)).thenReturn(userUpdated);
 		
 		Gson gson = new GsonBuilder()
@@ -102,7 +151,7 @@ public class UserControllerTest {
 				.content(jsonUser))
 			.andExpect(status().is(200))
 			.andExpect(jsonPath("$.firstName", is("Tomasz")))
-			.andExpect(jsonPath("$.password", is("tomasz_malin_password")));	
+			.andExpect(jsonPath("$.password", is("tom_malin_password")));	
 	}
 	
 	@Test

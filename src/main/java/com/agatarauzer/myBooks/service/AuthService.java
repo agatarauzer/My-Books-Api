@@ -18,9 +18,9 @@ import com.agatarauzer.myBooks.domain.Mail;
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.enums.ERole;
+import com.agatarauzer.myBooks.dto.MessageResponse;
 import com.agatarauzer.myBooks.dto.singUpIn.JwtResponse;
 import com.agatarauzer.myBooks.dto.singUpIn.LoginRequest;
-import com.agatarauzer.myBooks.dto.singUpIn.MessageResponse;
 import com.agatarauzer.myBooks.dto.singUpIn.SignupRequest;
 import com.agatarauzer.myBooks.repository.RoleRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
@@ -71,11 +71,13 @@ public class AuthService {
 			return new MessageResponse("Error: Email is already in use!");
 		}
 		
-		User user = new User(signUpRequest.getFirstName(),
-				signUpRequest.getLastName(),
-				signUpRequest.getUsername(),
-				signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()));
+		User user = User.builder()
+				.firstName(signUpRequest.getFirstName())
+				.lastName(signUpRequest.getLastName())
+				.username(signUpRequest.getUsername())
+				.email(signUpRequest.getEmail())
+				.password(encoder.encode(signUpRequest.getPassword()))
+				.build();
 		
 		Set<Role> roles = setupUserRoles(signUpRequest.getRole());
 		user.setRoles(roles);

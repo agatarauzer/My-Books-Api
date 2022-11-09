@@ -49,8 +49,20 @@ public class BookServiceTest {
 	public void prepareTestData() {
 		bookId = 1L;
 		userId = 1L;
-		book = new Book(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.version(Version.PAPER)
+				.copies(1)
+				.build();
 	}
 	
 	@Test
@@ -87,7 +99,15 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldSaveBookForUser() {
-		User user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_USER_PAID)));
+		User user = User.builder()
+				.id(1L)
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.username("tommal")
+				.password("tom_mal_password")
+				.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
+				.build();
 		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(bookRepository.save(book)).thenReturn(book);
 		
@@ -108,8 +128,20 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldUpdateBook() {
-		Book bookUpdated = new Book(bookId, "Java. Podstawy. Wydanie IX_changed", "Cay S. Horstmann,Gary Cornell_changed", "9788324677789, 8324677455", "Helion_changed", "2022-12-22", "pl_changed", 900, "Kolejne wydanie_changed", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed", Version.E_BOOK, 2);
+		Book bookUpdated = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX_changed")
+				.authors("Cay S. Horstmann,Gary Cornell_changed")
+				.isbn("8324677615, 0000000000000")
+				.publisher("Helion_changed")
+				.publishingDate("2022-12-22")
+				.language("pl_changed")
+				.pages(900)
+				.description("Kolejne wydanie_changed")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
+				.version(Version.E_BOOK)
+				.copies(2)
+				.build();
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(bookRepository.save(any(Book.class))).thenReturn(bookUpdated);
 		

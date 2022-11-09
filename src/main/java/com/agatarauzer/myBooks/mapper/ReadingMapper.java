@@ -9,22 +9,26 @@ import com.agatarauzer.myBooks.dto.ReadingDto;
 public class ReadingMapper {
 	
 	public ReadingDto mapToReadingDto(Reading reading) {
-		return new ReadingDto(reading.getId(),
-				reading.getStatus(),
-				reading.getStartDate(),
-				reading.getEndDate(),
-				reading.getReadedPages(),
-				reading.getRate(),
-				reading.getNotes());
+		return ReadingDto.builder()
+				.id(reading.getId())
+				.status(reading.getStatus())
+				.startDate(reading.getStartDate())
+				.endDate(reading.getEndDate())
+				.readedPages(reading.getReadedPages())
+				.rate(reading.getRate())
+				.notes(reading.getNotes())
+				.build();		
 	}
 	
 	public Reading mapToReading(ReadingDto readingDto) {
-		return new Reading(readingDto.getId(),
-				readingDto.getStatus(),
-				readingDto.getStartDate(),
-				readingDto.getEndDate(),
-				readingDto.getReadedPages(),
-				readingDto.getRate(),
-				readingDto.getNotes());
+		return Reading.builder()
+				.id(readingDto.getId())
+				.status(readingDto.getStatus())
+				.startDate(readingDto.getStartDate())
+				.endDate(readingDto.getEndDate())
+				.readedPages(readingDto.getReadedPages())
+				.rate(readingDto.getRate())
+				.notes(readingDto.getNotes())
+				.build();	
 	}
 }

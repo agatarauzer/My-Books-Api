@@ -17,18 +17,39 @@ import com.agatarauzer.myBooks.dto.BookDto;
 public class BookMapperTest {
 	
 	@Autowired
-	BookMapper bookMapper;
+	private BookMapper bookMapper;
 	
 	private Book book;
 	private BookDto bookDto;
 	
 	@BeforeEach
 	public void prepareTestData() {
-		book = new Book(1L, "Java. Podstawy. Wydanie IX","Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
-		bookDto = new BookDto(1L, "Java. Podstawy. Wydanie IX","Cay S. Horstmann,Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-				Version.PAPER, 1);
+		book = Book.builder()
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.version(Version.PAPER)
+				.copies(1)
+				.build();
+		bookDto = BookDto.builder()
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.version(Version.PAPER)
+				.copies(1)
+				.build();
 	}
 	
 	@Test

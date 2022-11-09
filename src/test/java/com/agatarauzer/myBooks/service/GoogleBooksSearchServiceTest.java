@@ -26,9 +26,17 @@ public class GoogleBooksSearchServiceTest {
 	
 	@Test
 	public void shouldGetBooksBySearchedPhrase() {
-		GoogleBookForUserDto book = new GoogleBookForUserDto("Good Economics, Bad Economics Eight Ways We Get the World Wrong and How to Set It Right", "Abhijit V. Banerjee, Esther Duflo",
-				"1610399501, 9781610399500", "PublicAffairs", "2019-11-12", "en", 320, "Two prize-winning economists show how economics, when done right, can help us solve the thorniest social and political problems",
-				"http://books.google.com/books/content?id=GUnWwgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api");
+		GoogleBookForUserDto book = GoogleBookForUserDto.builder()
+				.title("Good Economics, Bad Economics Eight Ways We Get the World Wrong and How to Set It Right")
+				.authors("Abhijit V. Banerjee, Esther Duflo")
+				.isbn("1610399501, 9781610399500")
+				.publisher("PublicAffairs")
+				.publishingDate("2019-11-12")
+				.language("en")
+				.pages(320)
+				.description("Two prize-winning economists show how economics, when done right, can help us solve the thorniest social and political problems")
+				.imageLink("http://books.google.com/books/content?id=GUnWwgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api")
+				.build();
 		List<GoogleBookForUserDto> books = List.of(book);
 		when(googleBooksClient.getBooksFromSearch("good economics")).thenReturn(books);
 		

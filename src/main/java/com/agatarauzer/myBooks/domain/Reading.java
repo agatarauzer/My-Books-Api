@@ -16,13 +16,17 @@ import javax.validation.constraints.Min;
 
 import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name="readings")
 public class Reading {
@@ -55,15 +59,4 @@ public class Reading {
 	
 	@OneToOne(mappedBy="reading")
 	private Book book;
-
-	public Reading(Long id, ReadingStatus status, LocalDate startDate, LocalDate endDate, Integer readedPages,
-			Integer rate, String notes) {
-		this.id = id;
-		this.status = status;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.readedPages = readedPages;
-		this.rate = rate;
-		this.notes = notes;
-	}
 }

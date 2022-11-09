@@ -18,13 +18,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name="users")
 public class User {
@@ -54,6 +58,7 @@ public class User {
 	@Column(name="registration_date")
 	private LocalDate registrationDate;
 	
+	@Builder.Default
 	@Column(name="enabled")
 	private Boolean enabled = false;
 	
@@ -65,31 +70,4 @@ public class User {
 				joinColumns = @JoinColumn(name = "user_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
-	
-	
-	public User(String firstName, String lastName, String email, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-	}
-	
-	public User(String firstName, String lastName, String username, String email, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
-
-	public User(Long id, String firstName, String lastName, String email, String username,
-			String password, Set<Role> roles) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-	}
 }

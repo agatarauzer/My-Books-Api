@@ -10,14 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name="purchases")
 public class Purchase {
@@ -38,13 +42,6 @@ public class Purchase {
 	
 	@OneToOne(mappedBy="purchase")
 	private Book book;
-
-	public Purchase(Long id, Double price, LocalDate purchaseDate, String boughtFrom) {
-		this.id = id;
-		this.price = price;
-		this.purchaseDate = purchaseDate;
-		this.boughtFrom = boughtFrom;
-	}
 }
 
 

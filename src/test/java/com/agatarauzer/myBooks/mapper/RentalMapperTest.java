@@ -24,8 +24,22 @@ public class RentalMapperTest {
 	
 	@BeforeEach
 	public void prepareTestData() {
-		rental = new Rental(1L, RentalStatus.BORROWED, "from Kate", LocalDate.of(2022, 6, 21), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
-		rentalDto = new RentalDto(1L, RentalStatus.BORROWED, "from Kate", LocalDate.of(2022, 6, 21), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
+		rental = Rental.builder()
+					.id(1L)
+					.status(RentalStatus.BORROWED)
+					.name("from Kate")
+					.startDate(LocalDate.of(2022, 6, 21))
+					.endDate(LocalDate.of(2023, 1, 5))
+					.notes("Kate will need it in January!")
+					.build();
+		rentalDto = RentalDto.builder()
+					.id(1L)
+					.status(RentalStatus.BORROWED)
+					.name("from Kate")
+					.startDate(LocalDate.of(2022, 6, 21))
+					.endDate(LocalDate.of(2023, 1, 5))
+					.notes("Kate will need it in January!")
+					.build();
 	}
 	
 	@Test

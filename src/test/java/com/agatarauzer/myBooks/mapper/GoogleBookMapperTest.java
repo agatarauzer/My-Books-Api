@@ -29,9 +29,18 @@ public class GoogleBookMapperTest {
 	
 	@BeforeEach
 	public void prepareTestData() {
-		googleBookForUserDto = new GoogleBookForUserDto("Java. Podstawy. Wydanie IX", "Cay S. Horstmann, Gary Cornell", "9788324677610, 8324677615", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");
-		
+		googleBookForUserDto = GoogleBookForUserDto.builder()
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.build();
+			
 		IsbnDto isbnDto1 = new IsbnDto("ISBN_10", "8324677615");
 		IsbnDto isbnDto2 = new IsbnDto("ISBN_13", "9788324677610");
 		ImageLinkDto imageLinkDto = new ImageLinkDto("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");

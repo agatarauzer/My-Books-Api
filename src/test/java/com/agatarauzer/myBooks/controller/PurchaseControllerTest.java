@@ -54,8 +54,18 @@ public class PurchaseControllerTest {
 	public void prepareTestData() {
 		bookId = 1L;
 		purchaseId = 1L;
-		purchase = new Purchase(purchaseId, 48.90, LocalDate.of(2022, 7, 12), "empik.com");
-		purchaseDto = new PurchaseDto(purchaseId, 48.90, LocalDate.of(2022, 7, 12), "empik.com");
+		purchase = Purchase.builder()
+				.id(purchaseId)
+				.price(48.90)
+				.purchaseDate(LocalDate.of(2022, 7, 12))
+				.boughtFrom("empik.com")
+				.build();
+		purchaseDto = PurchaseDto.builder()
+				.id(purchaseId)
+				.price(48.90)
+				.purchaseDate(LocalDate.of(2022, 7, 12))
+				.boughtFrom("empik.com")
+				.build();
 	}
 	
 	@Test
@@ -95,7 +105,12 @@ public class PurchaseControllerTest {
 	
 	@Test
 	public void shouldUpdatePurchase() throws Exception {
-		Purchase purchaseUpdated = new Purchase(purchaseId, 52.90, LocalDate.of(2022, 8, 15), "www.empik.com");
+		Purchase purchaseUpdated = Purchase.builder()
+				.id(purchaseId)
+				.price(52.90)
+				.purchaseDate(LocalDate.of(2022, 8, 15))
+				.boughtFrom("www.empik.com")
+				.build();
 		when(purchaseService.updatePurchase(purchaseId, purchaseUpdated)).thenReturn(purchaseUpdated);
 		
 		Gson gson = new GsonBuilder()

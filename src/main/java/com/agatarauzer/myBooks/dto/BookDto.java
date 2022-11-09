@@ -2,11 +2,10 @@ package com.agatarauzer.myBooks.dto;
 
 import com.agatarauzer.myBooks.domain.enums.Version;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-
-@AllArgsConstructor
+@Builder
 @Getter
 public class BookDto {
 	private Long id;

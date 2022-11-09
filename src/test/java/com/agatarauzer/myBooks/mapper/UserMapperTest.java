@@ -23,7 +23,12 @@ public class UserMapperTest {
 	
 	@Test
 	public void shouldMapUserToUserDto() {
-		User user = new User("Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tom_mal_password");
+		User user = User.builder()
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.password("tom_mal_password")
+				.build();
 		
 		UserDto userDtoMapped = userMapper.mapToUserDto(user);
 		
@@ -35,7 +40,12 @@ public class UserMapperTest {
 
 	@Test
 	public void shouldMapUserDtoToUser() {
-		UserDto userDto = new UserDto("Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tom_mal_password");
+		UserDto userDto = UserDto.builder()
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.password("tom_mal_password")
+				.build();
 		
 		User userMapped = userMapper.mapToUser(userDto);
 		
@@ -48,8 +58,24 @@ public class UserMapperTest {
 	@Test
 	public void shouldMapUserListToUserDtoAdminList() {
 		List<User> userList = List.of(
-				new User(1L, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_ADMIN))),
-				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", Set.of(new Role(ERole.ROLE_USER_PAID))));
+				User.builder()
+				.id(1L)
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.username("tommal")
+				.password("tom_mal_password")
+				.roles(Set.of(new Role(ERole.ROLE_ADMIN)))
+				.build(),
+			User.builder()
+				.id(2L)
+				.firstName("Alicja")
+				.lastName("Maj")
+				.email("ala.maj@gmail.com")
+				.username("agamaj")
+				.password("aga_maj_password")
+				.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
+				.build());
 		
 		List<UserForAdminDto> userDtoListMapped = userMapper.mapToUserForAdminDtoList(userList);
 		

@@ -42,6 +42,11 @@ public class BookService {
 	public Book saveBookForUser(Long userId, Book book) {
 		User user = userRepository.findById(userId)
 					.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+		
+		//Optional<Book> bookInDb = bookRepository.findByTitle(book.getTitle());
+		//if (bookInDb.isPresent()) {
+			//return new MessageResponse("Title has been already added to your account.");
+		//}
 		book.setUser(user);
 		return bookRepository.save(book);
 	}

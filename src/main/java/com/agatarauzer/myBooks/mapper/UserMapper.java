@@ -18,30 +18,33 @@ public class UserMapper {
 				.map(role -> role.toString())
 				.collect(Collectors.joining(", "));
 		
-		return new UserForAdminDto(
-				user.getId(),
-				user.getFirstName(),
-				user.getLastName(),
-				user.getEmail(),
-				user.getUsername(),
-				user.getPassword(),
-				roles);
+		return UserForAdminDto.builder()
+				.id(user.getId())
+				.firstName(user.getFirstName())
+				.lastName(user.getLastName())
+				.email(user.getEmail())
+				.username(user.getUsername())
+				.password(user.getPassword())
+				.roles(roles)
+				.build();
 	}
 	
 	public UserDto mapToUserDto(User user) {
-		return new UserDto(
-				user.getFirstName(),
-				user.getLastName(),
-				user.getEmail(),
-				user.getPassword());		
+		return UserDto.builder()
+				.firstName(user.getFirstName())
+				.lastName(user.getLastName())
+				.email(user.getEmail())
+				.password(user.getPassword())
+				.build();		
 	}
 	
 	public User mapToUser(UserDto userDto) {
-		return new User(
-				userDto.getFirstName(),
-				userDto.getLastName(),
-				userDto.getEmail(),
-				userDto.getPassword());
+		return User.builder()
+				.firstName(userDto.getFirstName())
+				.lastName(userDto.getLastName())
+				.email(userDto.getEmail())
+				.password(userDto.getPassword())
+				.build();	
 	}
 	
 	public List<UserForAdminDto> mapToUserForAdminDtoList(List<User> users) {

@@ -18,16 +18,17 @@ import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
 public class GoogleBookMapper {
 	
 	public Book mapToBook(GoogleBookForUserDto googleBookForUserDto) {
-		return new Book(googleBookForUserDto.getTitle(),
-						googleBookForUserDto.getAuthors(),
-						googleBookForUserDto.getIsbn(),
-						googleBookForUserDto.getPublisher(),
-						googleBookForUserDto.getPublishingDate(),
-						googleBookForUserDto.getLanguage(),
-						googleBookForUserDto.getPages(),
-						googleBookForUserDto.getDescription(),
-						googleBookForUserDto.getImageLink()
-						);			
+		return Book.builder()
+				.title(googleBookForUserDto.getTitle())
+				.authors(googleBookForUserDto.getAuthors())
+				.isbn(googleBookForUserDto.getIsbn())
+				.publisher(googleBookForUserDto.getPublisher())
+				.publishingDate(googleBookForUserDto.getPublishingDate())
+				.language(googleBookForUserDto.getLanguage())
+				.pages(googleBookForUserDto.getPages())
+				.description(googleBookForUserDto.getDescription())
+				.imageLink(googleBookForUserDto.getImageLink())
+				.build();
 	}
 	
 	public List<GoogleBookForUserDto> mapToGoogleBookForUserDtoList (GoogleBooksSearchResultDto googleSearchResultDto) {
@@ -63,15 +64,17 @@ public class GoogleBookMapper {
 							.map(b -> b.getLink())
 							.orElse(null);
 		
-		return new GoogleBookForUserDto(fullTitle,
-										authors,
-										ISBN,
-										googleBookDto.getPublisher(),
-										googleBookDto.getPublishingDate(),
-										googleBookDto.getLanguage(),
-										googleBookDto.getPages(),
-										description,
-										link);
+		return GoogleBookForUserDto.builder()
+				.title(fullTitle)
+				.authors(authors)
+				.isbn(ISBN)
+				.publisher(googleBookDto.getPublisher())
+				.publishingDate(googleBookDto.getPublishingDate())
+				.language(googleBookDto.getLanguage())
+				.pages(googleBookDto.getPages())
+				.description(description)
+				.imageLink(link)
+				.build();
 	}
 }
 

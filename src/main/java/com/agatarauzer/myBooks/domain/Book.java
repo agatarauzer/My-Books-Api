@@ -17,13 +17,17 @@ import javax.validation.constraints.NotNull;
 
 import com.agatarauzer.myBooks.domain.enums.Version;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name="books")
 public class Book {
@@ -83,37 +87,6 @@ public class Book {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-
-	public Book(String title, String authors, String isbn, String publisher, String publishingDate, 
-			String language, int pages, String description, String imageLink) {
-		this.title = title;
-		this.authors = authors;
-		this.isbn = isbn;
-		this.publisher = publisher;
-		this.publishingDate = publishingDate;
-		this.language = language;
-		this.pages = pages;
-		this.description = description;
-		this.imageLink = imageLink;
-	}
-
-	public Book(Long id, String title, String authors, String isbn, String publisher, String publishingDate,
-			String language, int pages, String description, String imageLink,
-			Version version, Integer copies) {
-		this.id = id;
-		this.title = title;
-		this.authors = authors;
-		this.isbn = isbn;
-		this.publisher = publisher;
-		this.publishingDate = publishingDate;
-		this.language = language;
-		this.pages = pages;
-		this.description = description;
-		this.imageLink = imageLink;
-		this.version = version;
-		this.copies = copies;
-	}
 }
 
 

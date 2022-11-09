@@ -47,11 +47,30 @@ public class RentalServiceTest {
 	@BeforeEach
 	public void prepareTestData() {
 		bookId = 1L;
-		book = new Book(bookId, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX_changed")
+				.authors("Cay S. Horstmann,Gary Cornell_changed")
+				.isbn("8324677615, 0000000000000")
+				.publisher("Helion_changed")
+				.publishingDate("2022-12-22")
+				.language("pl_changed")
+				.pages(900)
+				.description("Kolejne wydanie_changed")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
+				.version(Version.E_BOOK)
+				.copies(2)
+				.build();
 		
 		rentalId = 1L;
-		rental = new Rental(rentalId, RentalStatus.BORROWED, "from Kate", LocalDate.of(2022, 6, 21), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
+		rental = Rental.builder()
+				.id(1L)
+				.status(RentalStatus.BORROWED)
+				.name("from Kate")
+				.startDate(LocalDate.of(2022, 6, 21))
+				.endDate(LocalDate.of(2023, 1, 5))
+				.notes("Kate will need it in January!")
+				.build();
 	}
 	
 	@Test
@@ -75,7 +94,14 @@ public class RentalServiceTest {
 	
 	@Test
 	public void shouldUpdateRental() {
-		Rental rentalUpdated = new Rental(rentalId, RentalStatus.LENDED, "to Kate", LocalDate.of(2020, 5, 9), LocalDate.of(2021, 8, 9), "Not needed now");
+		Rental rentalUpdated = Rental.builder()
+				.id(rentalId)
+				.status(RentalStatus.LENDED)
+				.name("to Kate")
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2021, 8, 9))
+				.notes("Not needed now")
+				.build();
 		when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
 		when(rentalRepository.save(any(Rental.class))).thenReturn(rentalUpdated);
 		
@@ -86,8 +112,23 @@ public class RentalServiceTest {
 	
 	@Test
 	public void shouldUpdateOnlyGivenFields() {
-		Rental rentalUpdated = new Rental(null, RentalStatus.LENDED, null, LocalDate.of(2020, 5, 9), null, null);
-		Rental rentalExpected = new Rental(rentalId, RentalStatus.LENDED, "from Kate", LocalDate.of(2020, 5, 9), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
+		Rental rentalUpdated = Rental.builder()
+				.id(null)
+				.status(RentalStatus.LENDED)
+				.name(null)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(null)
+				.notes(null)
+				.build();
+				
+		Rental rentalExpected = Rental.builder()
+				.id(rentalId)
+				.status(RentalStatus.LENDED)
+				.name("from Kate")
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2023, 1, 5))
+				.notes("Kate will need it in January!")
+				.build();
 		
 		when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
 		when(rentalRepository.save(any(Rental.class))).thenReturn(rentalExpected);

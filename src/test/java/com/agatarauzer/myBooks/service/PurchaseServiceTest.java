@@ -46,10 +46,27 @@ public class PurchaseServiceTest {
 	@BeforeEach
 	public void prepareTestData() {
 		bookId = 1L;
-		book = new Book(1L, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX_changed")
+				.authors("Cay S. Horstmann,Gary Cornell_changed")
+				.isbn("8324677615, 0000000000000")
+				.publisher("Helion_changed")
+				.publishingDate("2022-12-22")
+				.language("pl_changed")
+				.pages(900)
+				.description("Kolejne wydanie_changed")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
+				.version(Version.E_BOOK)
+				.copies(2)
+				.build();
 		purchaseId = 1L;
-		purchase = new Purchase(purchaseId, 48.90, LocalDate.of(2022, 7, 12), "empik.com");
+		purchase =  Purchase.builder()
+				.id(purchaseId)
+				.price(48.90)
+				.purchaseDate(LocalDate.of(2022, 7, 12))
+				.boughtFrom("empik.com")
+				.build();
 	}
 	
 	@Test
@@ -73,7 +90,12 @@ public class PurchaseServiceTest {
 	
 	@Test
 	public void shouldUpdatePurchase() {
-		Purchase purchaseUpdated = new Purchase(purchaseId, 51.99, LocalDate.of(2020, 8, 9), "taniaksiazka.pl");
+		Purchase purchaseUpdated =  Purchase.builder()
+				.id(purchaseId)
+				.price(51.99)
+				.purchaseDate(LocalDate.of(2020, 8, 9))
+				.boughtFrom("taniaksiazka.pl")
+				.build();
 		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
 		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchaseUpdated);
 		
@@ -84,9 +106,18 @@ public class PurchaseServiceTest {
 	
 	@Test
 	public void shouldUpdateOnlyGivenFields() {
-		Purchase purchaseUpdated = new Purchase(null, 51.99, null, "taniaksiazka.pl");
-		Purchase purchaseExpected = new Purchase(purchaseId, 51.99, LocalDate.of(2022, 7, 12), "taniaksiazka.pl");
-		
+		Purchase purchaseUpdated = Purchase.builder()
+				.id(null)
+				.price(51.99)
+				.purchaseDate(null)
+				.boughtFrom("taniaksiazka.pl")
+				.build();
+		Purchase purchaseExpected = Purchase.builder()
+				.id(purchaseId)
+				.price(51.99)
+				.purchaseDate(LocalDate.of(2022, 7, 12))
+				.boughtFrom("taniaksiazka.pl")
+				.build();
 		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
 		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchaseExpected);
 		

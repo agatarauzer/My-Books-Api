@@ -1,11 +1,9 @@
 package com.agatarauzer.myBooks.dto.GoogleBooks;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 @Getter
 public class GoogleBookForUserDto {
 	private String title;

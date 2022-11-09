@@ -55,8 +55,24 @@ public class ReadingControllerTest {
 	public void prepareTestData() {
 		bookId = 1L;
 		readingId = 1L;
-		reading = new Reading(readingId, ReadingStatus.READED, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 820, 4, "Java basics...");
-		readingDto = new ReadingDto(readingId, ReadingStatus.READED, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 820, 4, "Java basics...");
+		reading = Reading.builder()
+				.id(readingId)
+				.status(ReadingStatus.READED)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2022, 1, 24))
+				.readedPages(820)
+				.rate(4)
+				.notes("Java basics...")
+				.build();	
+		readingDto = ReadingDto.builder()
+				.id(readingId)
+				.status(ReadingStatus.READED)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2022, 1, 24))
+				.readedPages(820)
+				.rate(4)
+				.notes("Java basics...")
+				.build();
 	}
 	
 	@Test
@@ -102,7 +118,15 @@ public class ReadingControllerTest {
 	
 	@Test
 	public void shouldUpdateReading() throws Exception {
-		Reading readingUpdated = new Reading(readingId, ReadingStatus.IN_READING, LocalDate.of(2021, 6, 10), LocalDate.of(2022, 2, 25), 350, 5, "Java basics");
+		Reading readingUpdated = Reading.builder()
+				.id(readingId)
+				.status(ReadingStatus.IN_READING)
+				.startDate(LocalDate.of(2021, 6, 10))
+				.endDate(LocalDate.of(2022, 2, 25))
+				.readedPages(350)
+				.rate(5)
+				.notes("Java basics")
+				.build();
 		when(readingService.updateReading(readingId, readingUpdated)).thenReturn(readingUpdated);
 		
 		Gson gson = new GsonBuilder()

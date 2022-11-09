@@ -24,8 +24,24 @@ public class ReadingMapperTest {
 	
 	@BeforeEach
 	public void prepareTestData() {
-		reading = new Reading(1L, ReadingStatus.READED, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 820, 4, "Java basics");
-		readingDto = new ReadingDto(1L, ReadingStatus.READED, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 820, 4, "Java basics");
+		reading = Reading.builder()
+				.id(1L)
+				.status(ReadingStatus.READED)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2022, 1, 24))
+				.readedPages(820)
+				.rate(4)
+				.notes("Java basics...")
+				.build();	
+		readingDto = ReadingDto.builder()
+				.id(1L)
+				.status(ReadingStatus.READED)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2022, 1, 24))
+				.readedPages(820)
+				.rate(4)
+				.notes("Java basics...")
+				.build();
 	}
 	
 	@Test

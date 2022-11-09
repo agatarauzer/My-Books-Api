@@ -14,13 +14,17 @@ import javax.persistence.Table;
 
 import com.agatarauzer.myBooks.domain.enums.RentalStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name="rentals")
 public class Rental {
@@ -48,13 +52,4 @@ public class Rental {
 	
 	@OneToOne(mappedBy="rental")
 	private Book book;
-
-	public Rental(Long id, RentalStatus status, String name, LocalDate startDate, LocalDate endDate, String notes) {
-		this.id = id;
-		this.status = status;
-		this.name = name;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.notes = notes;
-	}
 }

@@ -47,10 +47,30 @@ public class ReadingServiceTest {
 	@BeforeEach
 	public void prepareTestData() {
 		bookId = 1L;
-		book = new Book(bookId, "Java. Podstawy. Wydanie IX", "Cay S. Horstmann,Gary Cornell", "8324677615, 9788324677610", "Helion", "2013-12-09", "pl", 864, "Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", 
-				  "http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api", Version.PAPER, 1);
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX_changed")
+				.authors("Cay S. Horstmann,Gary Cornell_changed")
+				.isbn("8324677615, 0000000000000")
+				.publisher("Helion_changed")
+				.publishingDate("2022-12-22")
+				.language("pl_changed")
+				.pages(900)
+				.description("Kolejne wydanie_changed")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
+				.version(Version.E_BOOK)
+				.copies(2)
+				.build();
 		readingId = 1L;
-		reading = new Reading(readingId, ReadingStatus.READED, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 820, 4, "Java basics...");
+		reading = Reading.builder()
+				.id(readingId)
+				.status(ReadingStatus.READED)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2022, 1, 24))
+				.readedPages(820)
+				.rate(4)
+				.notes("Java basics...")
+				.build();
 	}
 	
 	@Test
@@ -74,7 +94,15 @@ public class ReadingServiceTest {
 	
 	@Test
 	public void shouldUpdateReading() {
-		Reading readingUpdated = new Reading(readingId, ReadingStatus.LEFT, LocalDate.of(2020, 5, 9), null, 35, 2, "Boring!");
+		Reading readingUpdated = Reading.builder()
+				.id(readingId)
+				.status(ReadingStatus.LEFT)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(null)
+				.readedPages(35)
+				.rate(2)
+				.notes("Boring!")
+				.build();	
 		when(readingRepository.findById(readingId)).thenReturn(Optional.of(reading));
 		when(readingRepository.save(any(Reading.class))).thenReturn(readingUpdated);
 		
@@ -85,9 +113,24 @@ public class ReadingServiceTest {
 	
 	@Test
 	public void shouldUpdateOnlyGivenFields() {
-		Reading readingUpdated = new Reading(null, ReadingStatus.LEFT, null, null, null, 2, "Boring!");
-		Reading readingExpected = new Reading(readingId, ReadingStatus.LEFT, LocalDate.of(2020, 5, 9), LocalDate.of(2022, 1, 24), 840, 2, "Boring!");
-		
+		Reading readingUpdated = Reading.builder()
+				.id(null)
+				.status(ReadingStatus.LEFT)
+				.startDate(null)
+				.endDate(null)
+				.readedPages(null)
+				.rate(2)
+				.notes("Boring!")
+				.build();
+		Reading readingExpected = Reading.builder()
+				.id(readingId)
+				.status(ReadingStatus.LEFT)
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2022, 1, 24))
+				.readedPages(840)
+				.rate(2)
+				.notes("Boring!")
+				.build();
 		when(readingRepository.findById(readingId)).thenReturn(Optional.of(reading));
 		when(readingRepository.save(any(Reading.class))).thenReturn(readingExpected);
 		

@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,16 +17,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.agatarauzer.myBooks.security.service.UserDetailsServiceImpl;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@AllArgsConstructor
-@NoArgsConstructor
 public class AuthTokenFilter extends OncePerRequestFilter {
 
+	@Autowired
 	private JwtUtils jwtUtils;
+	
+	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 	
 	@Override

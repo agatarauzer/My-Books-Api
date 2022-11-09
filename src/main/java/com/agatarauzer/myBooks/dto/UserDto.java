@@ -1,9 +1,9 @@
 package com.agatarauzer.myBooks.dto;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-@AllArgsConstructor
+@Builder
 @Getter
 public class UserDto {
 	private String firstName;

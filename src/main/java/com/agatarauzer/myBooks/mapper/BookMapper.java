@@ -12,33 +12,37 @@ import com.agatarauzer.myBooks.dto.BookDto;
 public class BookMapper {
 	
 	public Book mapToBook(BookDto bookDto) {
-		return new Book(bookDto.getId(),
-						bookDto.getTitle(),
-						bookDto.getAuthors(),
-						bookDto.getIsbn(),
-						bookDto.getPublisher(),
-						bookDto.getPublishingDate(),
-						bookDto.getLanguage(),
-						bookDto.getPages(),
-						bookDto.getDescription(),
-						bookDto.getImageLink(),
-						bookDto.getVersion(),
-						bookDto.getCopies());
+		return Book.builder()
+				.id(bookDto.getId())
+				.title(bookDto.getTitle())
+				.authors(bookDto.getAuthors())
+				.isbn(bookDto.getIsbn())
+				.publisher(bookDto.getPublisher())
+				.publishingDate(bookDto.getPublishingDate())
+				.language(bookDto.getLanguage())
+				.pages(bookDto.getPages())
+				.description(bookDto.getDescription())
+				.imageLink(bookDto.getImageLink())
+				.version(bookDto.getVersion())
+				.copies(bookDto.getCopies())
+				.build();			
 	}
 	
 	public BookDto mapToBookDto(Book book) {
-		return new BookDto(book.getId(),
-						book.getTitle(),
-						book.getAuthors(),
-						book.getIsbn(),
-						book.getPublisher(),
-						book.getPublishingDate(),
-						book.getLanguage(),
-						book.getPages(),
-						book.getDescription(),
-						book.getImageLink(),
-						book.getVersion(),
-						book.getCopies());
+		return BookDto.builder()
+				.id(book.getId())
+				.title(book.getTitle())
+				.authors(book.getAuthors())
+				.isbn(book.getIsbn())
+				.publisher(book.getPublisher())
+				.publishingDate(book.getPublishingDate())
+				.language(book.getLanguage())
+				.pages(book.getPages())
+				.description(book.getDescription())
+				.imageLink(book.getImageLink())
+				.version(book.getVersion())
+				.copies(book.getCopies())
+				.build();
 	}
 	
 	public List<BookDto> mapToBookDtoList(List<Book> books) {

@@ -9,17 +9,21 @@ import com.agatarauzer.myBooks.dto.PurchaseDto;
 @Service
 public class PurchaseMapper {
 	public PurchaseDto mapToPurchaseDto(Purchase purchase) {
-		return new PurchaseDto(purchase.getId(),
-				purchase.getPrice(),
-				purchase.getPurchaseDate(),
-				purchase.getBoughtFrom());
+		return PurchaseDto.builder()
+				.id(purchase.getId())
+				.price(purchase.getPrice())
+				.purchaseDate(purchase.getPurchaseDate())
+				.boughtFrom(purchase.getBoughtFrom())
+				.build();
 	}
 	
 	public Purchase mapToPurchase(PurchaseDto purchaseDto) {
-		return new Purchase(purchaseDto.getId(),
-				purchaseDto.getPrice(),
-				purchaseDto.getPurchaseDate(),
-				purchaseDto.getBoughtFrom());
+		return Purchase.builder()
+				.id(purchaseDto.getId())
+				.price(purchaseDto.getPrice())
+				.purchaseDate(purchaseDto.getPurchaseDate())
+				.boughtFrom(purchaseDto.getBoughtFrom())
+				.build();
 	}
 }
 

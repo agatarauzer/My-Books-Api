@@ -40,13 +40,29 @@ public class UserServiceTest {
 	@BeforeEach
 	public void prepareTestData() {
 		userId = 1L;
-		user = new User(userId, "Tomasz", "Malinowski", "tomasz.malinowski@gmail.com", "tommal", "tom_mal_password", Set.of(new Role(ERole.ROLE_ADMIN)));
+		user = User.builder()
+				.id(1L)
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.username("tommal")
+				.password("tom_mal_password")
+				.roles(Set.of(new Role(ERole.ROLE_ADMIN)))
+				.build();
 	}
 
 	@Test
 	public void shouldfindAllUsers() {
 		List<User> userList = List.of(user,
-				new User(2L, "Alicja", "Maj", "ala.maj@gmail.com", "agamaj", "aga_maj_password", Set.of(new Role(ERole.ROLE_USER_PAID))));
+							User.builder()
+							.id(2L)
+							.firstName("Alicja")
+							.lastName("Maj")
+							.email("ala.maj@gmail.com")
+							.username("agamaj")
+							.password("aga_maj_password")
+							.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
+							.build());
 		when(userRepository.findAll()).thenReturn(userList);
 		
 		List<User> users = userService.findAll();
@@ -75,7 +91,16 @@ public class UserServiceTest {
 	
 	@Test
 	public void sholudUpdateUser() {
-		User userUpdated = new User(userId, "Tomek", "Malik", "tomasz.malik@gmail.com", "tommalik", "to_password", Set.of(new Role(ERole.ROLE_USER_PAID)));
+		User userUpdated =  User.builder()
+				.id(userId)
+				.firstName("Tomek")
+				.lastName("Malik")
+				.email("tomasz.malik@gmail.com")
+				.username("tommalik")
+				.password("to_password")
+				.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
+				.build();
+		
 		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(userRepository.save(any(User.class))).thenReturn(userUpdated);
 		

@@ -23,8 +23,18 @@ public class PurchaseMapperTest {
 	
 	@BeforeEach
 	public void prepareTestData() {
-		purchase = new Purchase(1L, 49.99, LocalDate.of(2022, 6, 21), "taniaksiazka.pl");
-		purchaseDto = new PurchaseDto(1L, 49.99, LocalDate.of(2022, 6, 21), "taniaksiazka.pl");
+		purchase = Purchase.builder()
+				.id(1L)
+				.price(49.99)
+				.purchaseDate(LocalDate.of(2022, 6, 21))
+				.boughtFrom("taniaksiazka.pl")
+				.build();
+		purchaseDto = PurchaseDto.builder()
+				.id(1L)
+				.price(49.99)
+				.purchaseDate(LocalDate.of(2022, 6, 21))
+				.boughtFrom("taniaksiazka.pl")
+				.build();
 	}
 	
 	@Test

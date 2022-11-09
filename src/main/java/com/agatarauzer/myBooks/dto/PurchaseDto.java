@@ -2,11 +2,11 @@ package com.agatarauzer.myBooks.dto;
 
 import java.time.LocalDate;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 
-@AllArgsConstructor
+@Builder
 @Getter
 public class PurchaseDto {
 	private Long id;

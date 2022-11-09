@@ -9,20 +9,24 @@ import com.agatarauzer.myBooks.dto.RentalDto;
 public class RentalMapper {
 	
 	public Rental mapToRental(RentalDto rentalDto) {
-		return new Rental(rentalDto.getId(),
-				rentalDto.getStatus(),
-				rentalDto.getName(),
-				rentalDto.getStartDate(),
-				rentalDto.getEndDate(),
-				rentalDto.getNotes());
+		return Rental.builder()
+				.id(rentalDto.getId())
+				.status(rentalDto.getStatus())
+				.name(rentalDto.getName())
+				.startDate(rentalDto.getStartDate())
+				.endDate(rentalDto.getEndDate())
+				.notes(rentalDto.getNotes())
+				.build();
 	}
 	
 	public RentalDto mapToRentalDto(Rental rental) {
-		return new RentalDto(rental.getId(),
-				rental.getStatus(),
-				rental.getName(),
-				rental.getStartDate(),
-				rental.getEndDate(),
-				rental.getNotes());
+		return RentalDto.builder()
+				.id(rental.getId())
+				.status(rental.getStatus())
+				.name(rental.getName())
+				.startDate(rental.getStartDate())
+				.endDate(rental.getEndDate())
+				.notes(rental.getNotes())
+				.build();
 	}
 }

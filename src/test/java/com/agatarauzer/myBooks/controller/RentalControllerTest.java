@@ -55,8 +55,22 @@ public class RentalControllerTest {
 	public void prepareTestData() {
 		bookId = 1L;
 		rentalId = 1L;
-		rental = new Rental(rentalId, RentalStatus.BORROWED, "from Kate", LocalDate.of(2022, 6, 21), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
-		rentalDto = new RentalDto(rentalId, RentalStatus.BORROWED, "from Kate", LocalDate.of(2022, 6, 21), LocalDate.of(2023, 1, 5), "Kate will need it in January!");
+		rental =Rental.builder()
+				.id(1L)
+				.status(RentalStatus.BORROWED)
+				.name("from Kate")
+				.startDate(LocalDate.of(2022, 6, 21))
+				.endDate(LocalDate.of(2023, 1, 5))
+				.notes("Kate will need it in January!")
+				.build();
+		rentalDto = RentalDto.builder()
+				.id(1L)
+				.status(RentalStatus.BORROWED)
+				.name("from Kate")
+				.startDate(LocalDate.of(2022, 6, 21))
+				.endDate(LocalDate.of(2023, 1, 5))
+				.notes("Kate will need it in January!")
+				.build();
 	}
 	
 	@Test
@@ -99,7 +113,14 @@ public class RentalControllerTest {
 	
 	@Test
 	public void shouldUpdateRental() throws Exception {
-		Rental rentalUpdated = new Rental(rentalId, RentalStatus.LENDED, "to Kate", LocalDate.of(2020, 5, 9), LocalDate.of(2021, 8, 9), "Not needed now");
+		Rental rentalUpdated = Rental.builder()
+				.id(rentalId)
+				.status(RentalStatus.LENDED)
+				.name("to Kate")
+				.startDate(LocalDate.of(2020, 5, 9))
+				.endDate(LocalDate.of(2021, 8, 9))
+				.notes("Not needed now")
+				.build();
 		when(rentalService.updateRental(rentalId, rentalUpdated)).thenReturn(rentalUpdated);
 		
 		Gson gson = new GsonBuilder()

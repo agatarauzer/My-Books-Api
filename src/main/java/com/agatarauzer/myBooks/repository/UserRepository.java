@@ -1,8 +1,11 @@
 package com.agatarauzer.myBooks.repository;
 
+
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -11,13 +14,14 @@ import com.agatarauzer.myBooks.domain.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+	List<User> findAll(Pageable pageable);
 	Optional<User> findByUsername(String username);
 	Boolean existsByUsername(String username);
 	Boolean existsByEmail(String email);
 	
 	@Query(value = "SELECT cast(registration_date as CHAR(7)) as Month, count(1) as Sum "
 			+ "FROM (select * from USERS WHERE registration_date IS NOT NULL) U2 GROUP BY Month "
-			+ "order by Month desc", nativeQuery = true)
+			+ "ORDER BY Month desc", nativeQuery = true)
 	Map<String, Long> findByRegistrationMonth();
 
 	@Query(value = "SELECT cast(registration_date as CHAR(7)) as Month, count(1) as Role"

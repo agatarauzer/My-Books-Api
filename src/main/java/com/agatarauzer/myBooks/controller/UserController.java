@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserForAdminDto;
+import com.agatarauzer.myBooks.dto.UserFullInfoDto;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 
@@ -25,24 +26,26 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
-	private final UserMapper userMapper;
 	
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<UserForAdminDto> getUsers() {
-		List<User> users = userService.findAll();
-		return userMapper.mapToUserForAdminDtoList(users);
+	public List<UserFullInfoDto> getUsers(@RequestParam(defaultValue = "0", required = false) int page,
+							@RequestParam(defaultValue = "5", required = false) int size,
+							@RequestParam(defaultValue = "id", required = false) String sortBy,
+							@RequestParam(defaultValue = "asc", required = false) String sortDir) {
+		List<User> users = userService.findAll(page, size, sortBy, sortDir);
+		return UserMapper.mapToUserFullInfoDtoList(users);
 	}
-
+	
 	@GetMapping("/users/{userId}")
 	public UserDto getUserById(@PathVariable Long userId) {
 		User user = userService.findUserById(userId);
-		return userMapper.mapToUserDto(user);
+		return UserMapper.mapToUserDto(user);
 	}
 	
 	@PutMapping("users/{userId}")
 	public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
-		User user = userMapper.mapToUser(userDto);
+		User user = UserMapper.mapToUser(userDto);
 		userService.updateUser(userId, user);
 		return userDto;
 	}

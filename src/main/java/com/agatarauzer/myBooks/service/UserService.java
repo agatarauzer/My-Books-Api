@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.ConfirmationToken;
@@ -22,8 +25,12 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final ConfirmationTokenService confirmationTokenService;
 	
-	public List<User> findAll() {
-		return IterableUtils.toList(userRepository.findAll());
+	public List<User> findAll(int page, int size, String sortBy, String sortDir) {
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+		Pageable pageable = PageRequest.of(page, size, sort);
+		
+		return IterableUtils.toList(userRepository.findAll(pageable));
 	}
 	
 	public User findUserById(Long userId) {

@@ -4,21 +4,22 @@ package com.agatarauzer.myBooks.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
-
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserForAdminDto;
+import com.agatarauzer.myBooks.dto.UserFullInfoDto;
 
-@Service
+
 public class UserMapper {
 	
-	public UserForAdminDto mapToUserForAdminDto(User user) {
+	private UserMapper() {
+	}
+	
+	public static UserFullInfoDto mapToUserFullInfoDto(User user) {
 		String roles = user.getRoles().stream()
 				.map(role -> role.toString())
 				.collect(Collectors.joining(", "));
 		
-		return UserForAdminDto.builder()
+		return UserFullInfoDto.builder()
 				.id(user.getId())
 				.firstName(user.getFirstName())
 				.lastName(user.getLastName())
@@ -29,7 +30,7 @@ public class UserMapper {
 				.build();
 	}
 	
-	public UserDto mapToUserDto(User user) {
+	public static UserDto mapToUserDto(User user) {
 		return UserDto.builder()
 				.firstName(user.getFirstName())
 				.lastName(user.getLastName())
@@ -38,7 +39,7 @@ public class UserMapper {
 				.build();		
 	}
 	
-	public User mapToUser(UserDto userDto) {
+	public static User mapToUser(UserDto userDto) {
 		return User.builder()
 				.firstName(userDto.getFirstName())
 				.lastName(userDto.getLastName())
@@ -47,9 +48,9 @@ public class UserMapper {
 				.build();	
 	}
 	
-	public List<UserForAdminDto> mapToUserForAdminDtoList(List<User> users) {
+	public static List<UserFullInfoDto> mapToUserFullInfoDtoList(List<User> users) {
 		return users.stream()
-				.map(u -> mapToUserForAdminDto(u))
+				.map(u -> mapToUserFullInfoDto(u))
 				.collect(Collectors.toList());
 	}
 }

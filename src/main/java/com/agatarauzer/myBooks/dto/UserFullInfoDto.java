@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class UserForAdminDto {
+public class UserFullInfoDto {
 	private Long id;
 	private String firstName;
 	private String lastName;

@@ -18,6 +18,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
@@ -36,6 +39,7 @@ public class UserServiceTest {
 	
 	private Long userId;
 	private User user;
+	private Pageable pageable;
 	
 	@BeforeEach
 	public void prepareTestData() {
@@ -49,6 +53,12 @@ public class UserServiceTest {
 				.password("tom_mal_password")
 				.roles(Set.of(new Role(ERole.ROLE_ADMIN)))
 				.build();
+		
+		String sortDir = "asc";
+		String sortBy = "id";
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+		pageable = PageRequest.of(0, 5, sort);
 	}
 
 	@Test
@@ -63,9 +73,9 @@ public class UserServiceTest {
 							.password("aga_maj_password")
 							.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
 							.build());
-		when(userRepository.findAll()).thenReturn(userList);
+		when(userRepository.findAll(pageable)).thenReturn(userList);
 		
-		List<User> users = userService.findAll();
+		List<User> users = userService.findAll(0, 5, "id", "asc");
 		
 		assertEquals(2, users.size());
 		assertEquals(userList.get(0), users.get(0)); 

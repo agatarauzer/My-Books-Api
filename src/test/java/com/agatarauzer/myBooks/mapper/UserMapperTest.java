@@ -13,13 +13,13 @@ import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserForAdminDto;
+import com.agatarauzer.myBooks.dto.UserFullInfoDto;
 
 @SpringBootTest
 public class UserMapperTest {
 	
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 	
 	@Test
 	public void shouldMapUserToUserDto() {
@@ -77,7 +77,7 @@ public class UserMapperTest {
 				.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
 				.build());
 		
-		List<UserForAdminDto> userDtoListMapped = userMapper.mapToUserForAdminDtoList(userList);
+		List<UserFullInfoDto> userDtoListMapped = userMapper.mapToUserFullInfoDtoList(userList);
 		
 		assertEquals(userList.get(0).getId(), userDtoListMapped.get(0).getId());
 		assertEquals(userList.get(0).getFirstName(), userDtoListMapped.get(0).getFirstName());

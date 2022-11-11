@@ -52,39 +52,39 @@ public class BookControllerTest {
 	private Long bookId;
 	private Book book;
 	private BookDto bookDto;
-
+	
 	@BeforeEach
 	private void prepareTestData() {
 		userId = 1L; 
 		bookId = 1L;
 		book = Book.builder()
-				.id(bookId)
-				.title("Java. Podstawy. Wydanie IX")
-				.authors("Cay S. Horstmann,Gary Cornell")
-				.isbn("8324677615, 9788324677610")
-				.publisher("Helion")
-				.publishingDate("2013-12-09")
-				.language("pl")
-				.pages(864)
-				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
-				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-				.version(Version.PAPER)
-				.copies(1)
-				.build();
+			.id(bookId)
+			.title("Java. Podstawy. Wydanie IX")
+			.authors("Cay S. Horstmann,Gary Cornell")
+			.isbn("8324677615, 9788324677610")
+			.publisher("Helion")
+			.publishingDate("2013-12-09")
+			.language("pl")
+			.pages(864)
+			.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+			.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+			.version(Version.PAPER)
+			.copies(1)
+			.build();
 		bookDto = BookDto.builder()
-				.id(bookId)
-				.title("Java. Podstawy. Wydanie IX")
-				.authors("Cay S. Horstmann,Gary Cornell")
-				.isbn("8324677615, 9788324677610")
-				.publisher("Helion")
-				.publishingDate("2013-12-09")
-				.language("pl")
-				.pages(864)
-				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
-				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-				.version(Version.PAPER)
-				.copies(1)
-				.build();
+			.id(bookId)
+			.title("Java. Podstawy. Wydanie IX")
+			.authors("Cay S. Horstmann,Gary Cornell")
+			.isbn("8324677615, 9788324677610")
+			.publisher("Helion")
+			.publishingDate("2013-12-09")
+			.language("pl")
+			.pages(864)
+			.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+			.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+			.version(Version.PAPER)
+			.copies(1)
+			.build();
 	}
 	
 	@Test 
@@ -92,7 +92,7 @@ public class BookControllerTest {
 		List<Book> booksList = List.of(book);
 		List<BookDto> booksDtoList = List.of(bookDto);
 		
-		when(bookService.findBooksByUser(userId)).thenReturn(booksList);
+		when(bookService.findBooksByUser(userId, 0, 5, "id", "asc")).thenReturn(booksList);
 		when(bookMapper.mapToBookDtoList(booksList)).thenReturn(booksDtoList);
 		
 		mockMvc.perform(MockMvcRequestBuilders

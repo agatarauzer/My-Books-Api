@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,7 +27,7 @@ import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserForAdminDto;
+import com.agatarauzer.myBooks.dto.UserFullInfoDto;
 import com.agatarauzer.myBooks.mapper.UserMapper;
 import com.agatarauzer.myBooks.service.UserService;
 import com.google.gson.Gson;
@@ -42,55 +43,76 @@ public class UserControllerTest {
 	
 	@MockBean
 	private UserMapper userMapper;
-	
+
 	@MockBean
 	private UserService userService;
-
+	
+	private Long id;
+	private User user;
+	private UserDto userDto;
+	private List<User> userList;
+	private List<UserFullInfoDto> userDtoList;
+	
+	
+	@BeforeEach
+	private void prepareTestData() {
+		id = 1L;
+		user = User.builder()
+			.firstName("Tomasz")
+			.lastName("Malinowski")
+			.email("tomasz.malinowski@gmail.com")
+			.password("tom_mal_password")
+			.build();
+		userDto = UserDto.builder()
+			.firstName("Tomasz")
+			.lastName("Malinowski")
+			.email("tomasz.malinowski@gmail.com")
+			.password("tom_mal_password")
+			.build();
+		userList = List.of(
+			User.builder()
+				.id(1L)
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.username("tommal")
+				.password("tom_mal_password")
+				.roles(Set.of(new Role(ERole.ROLE_ADMIN)))
+				.build(),
+			User.builder()
+				.id(2L)
+				.firstName("Alicja")
+				.lastName("Maj")
+				.email("ala.maj@gmail.com")
+				.username("agamaj")
+				.password("aga_maj_password")
+				.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
+				.build());
+		userDtoList = List.of(
+			UserFullInfoDto.builder()
+				.id(1L)
+				.firstName("Tomasz")
+				.lastName("Malinowski")
+				.email("tomasz.malinowski@gmail.com")
+				.username("tommal")
+				.password("tom_mal_password")
+				.roles("ROLE_ADMIN")
+				.build(),
+			UserFullInfoDto.builder()
+				.id(2L)
+				.firstName("Alicja")
+				.lastName("Maj")
+				.email("ala.maj@gmail.com")
+				.username("agamaj")
+				.password("aga_maj_password")
+				.roles("ROLE_USER_PAID")
+				.build());
+	}
+	
 	@Test
 	public void shouldGetUsers() throws Exception {
-		
-		List<UserForAdminDto> userDtoList = List.of(
-				UserForAdminDto.builder()
-					.id(1L)
-					.firstName("Tomasz")
-					.lastName("Malinowski")
-					.email("tomasz.malinowski@gmail.com")
-					.username("tommal")
-					.password("tom_mal_password")
-					.roles("ROLE_ADMIN")
-					.build(),
-				UserForAdminDto.builder()
-					.id(2L)
-					.firstName("Alicja")
-					.lastName("Maj")
-					.email("ala.maj@gmail.com")
-					.username("agamaj")
-					.password("aga_maj_password")
-					.roles("ROLE_USER_PAID")
-					.build());
-	
-		List<User> userList = List.of(
-				User.builder()
-					.id(1L)
-					.firstName("Tomasz")
-					.lastName("Malinowski")
-					.email("tomasz.malinowski@gmail.com")
-					.username("tommal")
-					.password("tom_mal_password")
-					.roles(Set.of(new Role(ERole.ROLE_ADMIN)))
-					.build(),
-				User.builder()
-					.id(2L)
-					.firstName("Alicja")
-					.lastName("Maj")
-					.email("ala.maj@gmail.com")
-					.username("agamaj")
-					.password("aga_maj_password")
-					.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
-					.build());
-
-		when(userService.findAll()).thenReturn(userList);
-		when(userMapper.mapToUserForAdminDtoList(userList)).thenReturn(userDtoList);
+		when(userService.findAll(0, 5, "id", "asc")).thenReturn(userList);
+		when(userMapper.mapToUserFullInfoDtoList(userList)).thenReturn(userDtoList);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/v1/users")
@@ -103,23 +125,9 @@ public class UserControllerTest {
 	
 	@Test
 	public void shouldGetUserById() throws Exception {
-		Long id = 1L;
-		User user = User.builder()
-				.firstName("Tomasz")
-				.lastName("Malinowski")
-				.email("tomasz.malinowski@gmail.com")
-				.password("tom_mal_password")
-				.build();
-		UserDto userDto = UserDto.builder()
-				.firstName("Tomasz")
-				.lastName("Malinowski")
-				.email("tomasz.malinowski@gmail.com")
-				.password("tom_mal_password")
-				.build();
-		
 		when(userService.findUserById(id)).thenReturn(user);
 		when(userMapper.mapToUserDto(user)).thenReturn(userDto);
-		
+	
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/v1/users/1")
 				.contentType(MediaType.APPLICATION_JSON))
@@ -130,7 +138,6 @@ public class UserControllerTest {
 	
 	@Test
 	public void shouldUpdateUser() throws Exception {
-		Long id = 1L;
 		User userUpdated =  User.builder()
 				.firstName("Tomasz")
 				.lastName("Malinowski")
@@ -156,7 +163,6 @@ public class UserControllerTest {
 	
 	@Test
 	public void sholudDeleteUser() throws Exception {
-		Long id = 1L;
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete("/v1/users/{id}", id)
 				.contentType(MediaType.APPLICATION_JSON))

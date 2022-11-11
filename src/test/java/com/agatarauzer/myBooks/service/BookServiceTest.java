@@ -18,6 +18,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Role;
@@ -44,6 +47,7 @@ public class BookServiceTest {
 	private Long bookId;
 	private Long userId;
 	private Book book;
+	private Pageable pageable;
 	
 	@BeforeEach
 	public void prepareTestData() {
@@ -63,6 +67,12 @@ public class BookServiceTest {
 				.version(Version.PAPER)
 				.copies(1)
 				.build();
+		
+		String sortDir = "asc";
+		String sortBy = "id";
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+		pageable = PageRequest.of(0, 5, sort);
 	}
 	
 	@Test
@@ -89,9 +99,9 @@ public class BookServiceTest {
 	public void shouldFindBooksByUser() {
 		List<Book> bookList = List.of(book);
 		when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
-		when(bookRepository.findByUserId(userId)).thenReturn(bookList);
+		when(bookRepository.findByUserId(userId, pageable)).thenReturn(bookList);
 		
-		List<Book> books = bookService.findBooksByUser(userId);
+		List<Book> books = bookService.findBooksByUser(userId, 0, 5, "id", "asc");
 		
 		assertEquals(1, books.size());
 		assertEquals(bookList, books);
@@ -169,7 +179,7 @@ public class BookServiceTest {
 	public void shouldThrowException_findBooksByUser() {
 		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
 		
-		assertThrows(UserNotFoundException.class, ()-> bookService.findBooksByUser(userId));
+		assertThrows(UserNotFoundException.class, ()-> bookService.findBooksByUser(userId, 0, 5, "id", "asc"));
 		verify(userRepository, times(1)).findById(userId);
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agatarauzer.myBooks.domain.Book;
@@ -27,8 +28,12 @@ public class BookController {
 	private final BookMapper bookMapper;
 	
 	@GetMapping("/books")
-	public List<BookDto> getUserBooks(@PathVariable Long userId) {
-		List<Book> books = bookService.findBooksByUser(userId);
+	public List<BookDto> getUserBooks(@PathVariable Long userId,
+				@RequestParam(defaultValue = "0", required = false) int page,
+				@RequestParam(defaultValue = "5", required = false) int size,
+				@RequestParam(defaultValue = "id", required = false) String sortBy,
+				@RequestParam(defaultValue = "desc", required = false) String sortDir) {
+		List<Book> books = bookService.findBooksByUser(userId, page, size, sortBy, sortDir);
 		return bookMapper.mapToBookDtoList(books);
 	}
 	

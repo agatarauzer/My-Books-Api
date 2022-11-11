@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
@@ -32,11 +35,15 @@ public class BookService {
 		return bookRepository.findById(bookId)
 				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 	}
-	
-	public List<Book> findBooksByUser(Long userId) {
+
+	public List<Book> findBooksByUser(Long userId, int page, int size, String sortBy, String sortDir) {
 		userRepository.findById(userId)
 				.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
-		return bookRepository.findByUserId(userId);		
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+		Pageable pageable = PageRequest.of(page, size, sort);
+		
+		return bookRepository.findByUserId(userId, pageable);		
 	}
 	
 	public Book saveBookForUser(Long userId, Book book) {

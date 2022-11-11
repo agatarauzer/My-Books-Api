@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookBasicDto;
@@ -13,8 +13,7 @@ import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
 
-
-@Service
+@Component
 public class GoogleBookMapper {
 	
 	public Book mapToBook(GoogleBookForUserDto googleBookForUserDto) {

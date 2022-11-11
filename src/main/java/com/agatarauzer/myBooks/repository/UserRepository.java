@@ -20,7 +20,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	Boolean existsByEmail(String email);
 	
 	@Query(value = "SELECT cast(registration_date as CHAR(7)) as Month, count(1) as Sum "
-			+ "FROM (select * from USERS WHERE registration_date IS NOT NULL) U2 GROUP BY Month "
+			+ "FROM (SELECT * FROM users WHERE registration_date IS NOT NULL) U2 GROUP BY Month "
 			+ "ORDER BY Month desc", nativeQuery = true)
 	Map<String, Long> findByRegistrationMonth();
 

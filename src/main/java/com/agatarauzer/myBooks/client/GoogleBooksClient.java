@@ -38,8 +38,7 @@ public class GoogleBooksClient {
 			return Optional.ofNullable(searchResult)
 					.map(s -> googleBookMapper.mapToGoogleBookForUserDtoList(s))
 					.orElseGet(Collections::emptyList);
-		}
-		catch (RestClientException exc) {
+		} catch (RestClientException exc) {
 			log.error(exc.getMessage(), exc);
 			return Collections.emptyList();
 		}

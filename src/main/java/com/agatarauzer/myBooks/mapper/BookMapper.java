@@ -3,12 +3,12 @@ package com.agatarauzer.myBooks.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.dto.BookDto;
 
-@Service
+@Component
 public class BookMapper {
 	
 	public Book mapToBook(BookDto bookDto) {

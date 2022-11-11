@@ -26,26 +26,27 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
+	private final UserMapper userMapper;
 	
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<UserFullInfoDto> getUsers(@RequestParam(defaultValue = "0", required = false) int page,
-							@RequestParam(defaultValue = "5", required = false) int size,
-							@RequestParam(defaultValue = "id", required = false) String sortBy,
-							@RequestParam(defaultValue = "asc", required = false) String sortDir) {
+					@RequestParam(defaultValue = "5", required = false) int size,
+					@RequestParam(defaultValue = "id", required = false) String sortBy,
+					@RequestParam(defaultValue = "asc", required = false) String sortDir) {
 		List<User> users = userService.findAll(page, size, sortBy, sortDir);
-		return UserMapper.mapToUserFullInfoDtoList(users);
+		return userMapper.mapToUserFullInfoDtoList(users);
 	}
 	
 	@GetMapping("/users/{userId}")
 	public UserDto getUserById(@PathVariable Long userId) {
 		User user = userService.findUserById(userId);
-		return UserMapper.mapToUserDto(user);
+		return userMapper.mapToUserDto(user);
 	}
 	
 	@PutMapping("users/{userId}")
 	public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
-		User user = UserMapper.mapToUser(userDto);
+		User user = userMapper.mapToUser(userDto);
 		userService.updateUser(userId, user);
 		return userDto;
 	}

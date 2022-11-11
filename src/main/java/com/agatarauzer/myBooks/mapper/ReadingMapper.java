@@ -1,11 +1,11 @@
 package com.agatarauzer.myBooks.mapper;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.agatarauzer.myBooks.domain.Reading;
 import com.agatarauzer.myBooks.dto.ReadingDto;
 
-@Service
+@Component
 public class ReadingMapper {
 	
 	public ReadingDto mapToReadingDto(Reading reading) {

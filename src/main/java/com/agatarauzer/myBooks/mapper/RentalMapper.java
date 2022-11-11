@@ -1,11 +1,11 @@
 package com.agatarauzer.myBooks.mapper;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.agatarauzer.myBooks.domain.Rental;
 import com.agatarauzer.myBooks.dto.RentalDto;
 
-@Service
+@Component
 public class RentalMapper {
 	
 	public Rental mapToRental(RentalDto rentalDto) {

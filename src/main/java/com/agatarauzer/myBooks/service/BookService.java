@@ -2,6 +2,7 @@ package com.agatarauzer.myBooks.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.dao.DataAccessException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.User;
+import com.agatarauzer.myBooks.exception.BookAlreadyExistsException;
 import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
@@ -50,10 +52,10 @@ public class BookService {
 		User user = userRepository.findById(userId)
 					.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 		
-		//Optional<Book> bookInDb = bookRepository.findByTitle(book.getTitle());
-		//if (bookInDb.isPresent()) {
-			//return new MessageResponse("Title has been already added to your account.");
-		//}
+		Optional<Book> bookInDb = bookRepository.findByTitle(book.getTitle());
+		if (bookInDb.isPresent()) {
+			throw new BookAlreadyExistsException("Book title is already on your list");
+		}
 		book.setUser(user);
 		return bookRepository.save(book);
 	}

@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,28 +29,28 @@ public class RentalController {
 	private final RentalMapper rentalMapper;
 	
 	@GetMapping("/rentals")
-	public RentalDto getRentalForBook(@PathVariable Long bookId) {
+	public ResponseEntity<RentalDto> getRentalForBook(@PathVariable Long bookId) {
 		Rental rental = rentalService.getRentalForBook(bookId);
-		return rentalMapper.mapToRentalDto(rental);
+		return ResponseEntity.ok(rentalMapper.mapToRentalDto(rental));
 	}
 	
 	@PostMapping("/rentals")
-	public RentalDto addRental(@PathVariable Long bookId, @RequestBody RentalDto rentalDto) {
+	public ResponseEntity<RentalDto> addRental(@PathVariable Long bookId, @RequestBody RentalDto rentalDto) {
 		Rental rental = rentalMapper.mapToRental(rentalDto);
 		rentalService.saveRental(bookId, rental);
-		return rentalDto;
+		return new ResponseEntity<RentalDto>(rentalDto, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/rentals/{rentalId}")
-	public RentalDto updateRental(@PathVariable Long rentalId, @RequestBody RentalDto rentalDto) {
+	public ResponseEntity<RentalDto> updateRental(@PathVariable Long rentalId, @RequestBody RentalDto rentalDto) {
 		Rental rental = rentalMapper.mapToRental(rentalDto);
 		rentalService.updateRental(rentalId, rental);
-		return rentalDto;
+		return ResponseEntity.ok(rentalDto);
 	}
 	
 	@DeleteMapping("/rentals/{rentalId}")
-	public String deleteRental(@PathVariable Long bookId, @PathVariable Long rentalId) {
+	public ResponseEntity<String> deleteRental(@PathVariable Long bookId, @PathVariable Long rentalId) {
 		rentalService.deleteRental(bookId, rentalId);
-		return "Deleted reading: " + rentalId;
+		return ResponseEntity.ok().body("Deleted reading: " + rentalId);
 	}
 }

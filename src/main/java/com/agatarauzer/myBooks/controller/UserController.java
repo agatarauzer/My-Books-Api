@@ -2,6 +2,7 @@ package com.agatarauzer.myBooks.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,39 +22,39 @@ import com.agatarauzer.myBooks.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 	
 	private final UserService userService;
 	private final UserMapper userMapper;
 	
-	@GetMapping("/users")
+	@GetMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<UserFullInfoDto> getUsers(@RequestParam(defaultValue = "0", required = false) int page,
+	public ResponseEntity<List<UserFullInfoDto>> getUsers(@RequestParam(defaultValue = "0", required = false) int page,
 					@RequestParam(defaultValue = "5", required = false) int size,
 					@RequestParam(defaultValue = "id", required = false) String sortBy,
 					@RequestParam(defaultValue = "asc", required = false) String sortDir) {
 		List<User> users = userService.findAll(page, size, sortBy, sortDir);
-		return userMapper.mapToUserFullInfoDtoList(users);
+		return ResponseEntity.ok(userMapper.mapToUserFullInfoDtoList(users));
 	}
 	
-	@GetMapping("/users/{userId}")
-	public UserDto getUserById(@PathVariable Long userId) {
+	@GetMapping("/{userId}")
+	public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
 		User user = userService.findUserById(userId);
-		return userMapper.mapToUserDto(user);
+		return  ResponseEntity.ok(userMapper.mapToUserDto(user));
 	}
 	
-	@PutMapping("users/{userId}")
-	public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+	@PutMapping("/{userId}")
+	public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
 		User user = userMapper.mapToUser(userDto);
 		userService.updateUser(userId, user);
-		return userDto;
+		return ResponseEntity.ok(userDto);
 	}
 	
-	@DeleteMapping("users/{userId}")
-	public String deleteUser(@PathVariable Long userId) {
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
 		userService.deleteUser(userId);
-		return "Deleted user with id: " + userId;
+		return ResponseEntity.ok().body("Deleted user with id: " + userId);
 	}
 }

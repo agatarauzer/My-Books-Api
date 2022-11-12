@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,28 +29,28 @@ public class ReadingController {
 	private final ReadingMapper readingMapper;
 	
 	@GetMapping("/readings")
-	public ReadingDto getReadingForBook(@PathVariable Long bookId) {
+	public ResponseEntity<ReadingDto> getReadingForBook(@PathVariable Long bookId) {
 		Reading reading = readingService.getReadingForBook(bookId);
-		return readingMapper.mapToReadingDto(reading);
+		return ResponseEntity.ok(readingMapper.mapToReadingDto(reading));
 	}
 	
 	@PostMapping("/readings")
-	public ReadingDto addReading(@PathVariable Long bookId, @RequestBody ReadingDto readingDto) {
+	public ResponseEntity<ReadingDto> addReading(@PathVariable Long bookId, @RequestBody ReadingDto readingDto) {
 		Reading reading = readingMapper.mapToReading(readingDto);
 		readingService.saveReading(bookId, reading);
-		return readingDto;
+		return new ResponseEntity<ReadingDto>(readingDto, HttpStatus.CREATED);		
 	}
 	
 	@PutMapping("/readings/{readingId}")
-	public ReadingDto updateReading(@PathVariable Long readingId, @RequestBody ReadingDto readingDto) {
+	public ResponseEntity<ReadingDto> updateReading(@PathVariable Long readingId, @RequestBody ReadingDto readingDto) {
 		Reading reading = readingMapper.mapToReading(readingDto);
 		readingService.updateReading(readingId, reading);
-		return readingDto;
+		return ResponseEntity.ok(readingDto);
 	}
 	
 	@DeleteMapping("/readings/{readingId}")
-	public String deleteReading(@PathVariable Long bookId, @PathVariable Long readingId) {
+	public ResponseEntity<String> deleteReading(@PathVariable Long bookId, @PathVariable Long readingId) {
 		readingService.deleteReading(bookId, readingId);
-		return "Deleted reading: " + readingId;
+		return ResponseEntity.ok().body("Deleted reading: " + readingId);
 	}
 }

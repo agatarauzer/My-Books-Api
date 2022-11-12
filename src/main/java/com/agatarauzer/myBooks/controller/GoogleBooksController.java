@@ -2,6 +2,7 @@ package com.agatarauzer.myBooks.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +21,8 @@ public class GoogleBooksController {
 	
 	private final GoogleBooksSearchService searchService;
 	
-	@GetMapping("/search")
-	public List<GoogleBookForUserDto> getSearchResultByPhrase(@RequestParam String phrase) {
-		return  searchService.searchBookByPhrase(phrase);
+	@GetMapping("/outer-search")
+	public ResponseEntity<List<GoogleBookForUserDto>> getSearchResultByPhrase(@RequestParam String phrase) {
+		return ResponseEntity.ok(searchService.searchBookByPhrase(phrase));
 	}
 }

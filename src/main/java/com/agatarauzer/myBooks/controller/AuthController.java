@@ -53,7 +53,6 @@ public class AuthController {
 	public ResponseEntity<String> confirmMail(@RequestParam("token") String token) {
 		Optional<ConfirmationToken> optConfirmationToken = confirmationTokenService.findConfirmationToken(token);
 		optConfirmationToken.ifPresent(userService::confirmUser);
-		
 		return ResponseEntity.ok("Thank you for confirmation");
 	}
 }

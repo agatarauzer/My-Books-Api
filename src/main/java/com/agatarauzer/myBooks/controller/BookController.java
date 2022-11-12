@@ -2,6 +2,8 @@ package com.agatarauzer.myBooks.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,46 +22,49 @@ import com.agatarauzer.myBooks.service.BookService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/v1/users/{userId}")
+@RequestMapping("/v1/users/{userId}/books")
 @RequiredArgsConstructor
 public class BookController {
 	
 	private final BookService bookService;
 	private final BookMapper bookMapper;
 	
-	@GetMapping("/books")
-	public List<BookDto> getUserBooks(@PathVariable Long userId,
+	@GetMapping
+	public ResponseEntity<List<BookDto>> getUserBooks(@PathVariable Long userId,
 				@RequestParam(defaultValue = "0", required = false) int page,
 				@RequestParam(defaultValue = "5", required = false) int size,
 				@RequestParam(defaultValue = "id", required = false) String sortBy,
 				@RequestParam(defaultValue = "desc", required = false) String sortDir) {
 		List<Book> books = bookService.findBooksByUser(userId, page, size, sortBy, sortDir);
-		return bookMapper.mapToBookDtoList(books);
+		return ResponseEntity.ok(bookMapper.mapToBookDtoList(books));
 	}
 	
-	@GetMapping("/books/{bookId}")
-	public BookDto getBookById(@PathVariable Long userId, @PathVariable Long bookId) {
+	@GetMapping("/{bookId}")
+	public ResponseEntity<BookDto> getBookById(@PathVariable Long userId, @PathVariable Long bookId) {
 		Book book = bookService.findBookById(bookId);
-		return bookMapper.mapToBookDto(book);
+		return ResponseEntity.ok(bookMapper.mapToBookDto(book));
 	}
 	
-	@PostMapping("/books")
-	public BookDto addBook (@PathVariable Long userId, @RequestBody BookDto bookDto) {
+	@PostMapping
+	public ResponseEntity<BookDto> addBook (@PathVariable Long userId, @RequestBody BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);
 		bookService.saveBookForUser(userId, book);
-		return bookDto;
+		return new ResponseEntity<BookDto>(bookDto, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/books/{bookId}")
-	public BookDto updateBook(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody BookDto bookDto) {
+	@PutMapping("/{bookId}")
+	public ResponseEntity<BookDto> updateBook(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);
 		bookService.updateBook(bookId, book);
-		return bookDto;
+		return ResponseEntity.ok(bookDto);
 	}
 	
-	@DeleteMapping("/books/{bookId}")
-	public String deleteBook(@PathVariable Long userId, @PathVariable Long bookId) {
+	@DeleteMapping("/{bookId}")
+	public ResponseEntity<String> deleteBook(@PathVariable Long userId, @PathVariable Long bookId) {
 		bookService.deleteBook(bookId);
-		return "Deleted book: " + bookId;
+		return ResponseEntity.ok().body("Deleted book: " + bookId);
 	}
 }
+
+
+

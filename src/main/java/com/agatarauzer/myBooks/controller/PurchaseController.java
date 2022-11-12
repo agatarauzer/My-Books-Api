@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,7 @@ import com.agatarauzer.myBooks.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/v1/users/{userId}/books/{bookId}")
+@RequestMapping("/v1/users/{userId}/books/{bookId}/purchases")
 @PreAuthorize("hasRole('USER_PAID') or hasRole('ADMIN')")
 @RequiredArgsConstructor
 public class PurchaseController {
@@ -26,29 +28,29 @@ public class PurchaseController {
 	private final PurchaseService purchaseService;
 	private final PurchaseMapper purchaseMapper;
 	
-	@GetMapping("/purchases")
-	public PurchaseDto getReadingForBook(@PathVariable Long bookId) {
+	@GetMapping
+	public ResponseEntity<PurchaseDto> getReadingForBook(@PathVariable Long bookId) {
 		Purchase purchase = purchaseService.getPurchaseForBook(bookId);
-		return purchaseMapper.mapToPurchaseDto(purchase);
+		return ResponseEntity.ok(purchaseMapper.mapToPurchaseDto(purchase));
 	}
 	
-	@PostMapping("/purchases")
-	public PurchaseDto addPurchase(@PathVariable Long bookId, @RequestBody PurchaseDto purchaseDto) {
+	@PostMapping
+	public ResponseEntity<PurchaseDto> addPurchase(@PathVariable Long bookId, @RequestBody PurchaseDto purchaseDto) {
 		Purchase purchase = purchaseMapper.mapToPurchase(purchaseDto);
 		purchaseService.savePurchase(bookId, purchase);
-		return purchaseDto;
+		return new ResponseEntity<PurchaseDto>(purchaseDto, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/purchases/{purchaseId}")
-	public PurchaseDto updatePurchase(@PathVariable Long purchaseId, @RequestBody PurchaseDto purchaseDto) {
+	@PutMapping("/{purchaseId}")
+	public ResponseEntity<PurchaseDto> updatePurchase(@PathVariable Long purchaseId, @RequestBody PurchaseDto purchaseDto) {
 		Purchase purchase = purchaseMapper.mapToPurchase(purchaseDto);
 		purchaseService.updatePurchase(purchaseId, purchase);
-		return purchaseDto;
+		return ResponseEntity.ok(purchaseDto);
 	}
 	
-	@DeleteMapping("/purchases/{purchaseId}")
-	public String deletePurchase(@PathVariable Long bookId, @PathVariable Long purchaseId) {
+	@DeleteMapping("/{purchaseId}")
+	public ResponseEntity<String> deletePurchase(@PathVariable Long bookId, @PathVariable Long purchaseId) {
 		purchaseService.deletePurchase(bookId, purchaseId);
-		return "Deleted purchase: " + purchaseId;
+		return ResponseEntity.ok().body("Deleted purchase: " + purchaseId);
 	}
 }

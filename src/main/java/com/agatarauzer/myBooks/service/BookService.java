@@ -78,7 +78,7 @@ public class BookService {
 		bookUpdated.setImageLink(book.getImageLink());
 		bookUpdated.setVersion(book.getVersion());
 		bookUpdated.setCopies(book.getCopies());
-		return saveBook(bookUpdated);
+		return bookRepository.save(book);
 	}
 
 	public void deleteBook(Long bookId) {

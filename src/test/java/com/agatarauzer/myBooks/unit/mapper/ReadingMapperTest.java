@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.mapper;
+package com.agatarauzer.myBooks.unit.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.agatarauzer.myBooks.domain.Reading;
 import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
 import com.agatarauzer.myBooks.dto.ReadingDto;
+import com.agatarauzer.myBooks.mapper.ReadingMapper;
 
 @SpringBootTest
 public class ReadingMapperTest {

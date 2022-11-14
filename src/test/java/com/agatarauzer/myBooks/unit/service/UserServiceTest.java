@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,6 +27,7 @@ import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
+import com.agatarauzer.myBooks.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {

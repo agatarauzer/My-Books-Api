@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,6 +31,7 @@ import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
+import com.agatarauzer.myBooks.service.BookService;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
@@ -64,7 +65,7 @@ public class BookServiceTest {
 				.pages(864)
 				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-				.version(Version.PAPER)
+				.version(Version.BOOK)
 				.copies(1)
 				.build();
 		

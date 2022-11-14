@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.client;
+package com.agatarauzer.myBooks.unit.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
+import com.agatarauzer.myBooks.client.GoogleBooksClient;
 import com.agatarauzer.myBooks.config.GoogleBooksApiConfig;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookBasicDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookDto;

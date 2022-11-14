@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,6 +26,7 @@ import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.ReadingRepository;
+import com.agatarauzer.myBooks.service.ReadingService;
 
 @ExtendWith(MockitoExtension.class)
 public class ReadingServiceTest {

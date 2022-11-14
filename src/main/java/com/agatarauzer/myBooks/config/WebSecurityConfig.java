@@ -56,9 +56,12 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		 http.cors().and().csrf().disable()
-			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/v1/auth/**").permitAll()
+			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+			.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.authorizeRequests()
+			.antMatchers("/v1/auth/**").permitAll()
 			.antMatchers("/v1/**").permitAll()
 			.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html" ).permitAll()
 			.anyRequest().authenticated();

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.controller;
+package com.agatarauzer.myBooks.unit.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.times;
@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.agatarauzer.myBooks.controller.RentalController;
 import com.agatarauzer.myBooks.domain.Rental;
 import com.agatarauzer.myBooks.domain.enums.RentalStatus;
 import com.agatarauzer.myBooks.dto.RentalDto;
@@ -57,7 +58,7 @@ public class RentalControllerTest {
 		rentalId = 1L;
 		rental =Rental.builder()
 				.id(1L)
-				.status(RentalStatus.BORROWED)
+				.status(RentalStatus.BORROWED_FROM)
 				.name("from Kate")
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
@@ -65,7 +66,7 @@ public class RentalControllerTest {
 				.build();
 		rentalDto = RentalDto.builder()
 				.id(1L)
-				.status(RentalStatus.BORROWED)
+				.status(RentalStatus.BORROWED_FROM)
 				.name("from Kate")
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
@@ -82,7 +83,7 @@ public class RentalControllerTest {
 				.get("/v1/users/1/books/{bookId}/rentals", bookId)
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().is(200))
-			.andExpect(jsonPath("$.status", is("BORROWED")))
+			.andExpect(jsonPath("$.status", is("BORROWED_FROM")))
 			.andExpect(jsonPath("$.name", is("from Kate")))
 			.andExpect(jsonPath("$.startDate", is("2022-06-21")))
 			.andExpect(jsonPath("$.endDate", is("2023-01-05")))
@@ -103,8 +104,8 @@ public class RentalControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content(jsonRentalDto))
-			.andExpect(status().is(200))
-			.andExpect(jsonPath("$.status", is("BORROWED")))
+			.andExpect(status().is(201))
+			.andExpect(jsonPath("$.status", is("BORROWED_FROM")))
 			.andExpect(jsonPath("$.name", is("from Kate")))
 			.andExpect(jsonPath("$.startDate", is("2022-06-21")))
 			.andExpect(jsonPath("$.endDate", is("2023-01-05")))
@@ -115,7 +116,7 @@ public class RentalControllerTest {
 	public void shouldUpdateRental() throws Exception {
 		Rental rentalUpdated = Rental.builder()
 				.id(rentalId)
-				.status(RentalStatus.LENDED)
+				.status(RentalStatus.LENDED_TO)
 				.name("to Kate")
 				.startDate(LocalDate.of(2020, 5, 9))
 				.endDate(LocalDate.of(2021, 8, 9))
@@ -134,7 +135,7 @@ public class RentalControllerTest {
 				.characterEncoding("UTF-8")
 				.content(jsonRentalUpdated))
 			.andExpect(status().is(200))
-			.andExpect(jsonPath("$.status", is("LENDED")))
+			.andExpect(jsonPath("$.status", is("LENDED_TO")))
 			.andExpect(jsonPath("$.name", is("to Kate")))
 			.andExpect(jsonPath("$.startDate", is("2020-05-09")))
 			.andExpect(jsonPath("$.endDate", is("2021-08-09")))

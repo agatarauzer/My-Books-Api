@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.mapper;
+package com.agatarauzer.myBooks.unit.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.agatarauzer.myBooks.domain.Purchase;
 import com.agatarauzer.myBooks.dto.PurchaseDto;
+import com.agatarauzer.myBooks.mapper.PurchaseMapper;
 
 @SpringBootTest
 public class PurchaseMapperTest {

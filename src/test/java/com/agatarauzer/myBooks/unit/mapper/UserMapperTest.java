@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.mapper;
+package com.agatarauzer.myBooks.unit.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,6 +14,7 @@ import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.dto.UserDto;
 import com.agatarauzer.myBooks.dto.UserFullInfoDto;
+import com.agatarauzer.myBooks.mapper.UserMapper;
 
 @SpringBootTest
 public class UserMapperTest {

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.unit.service;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.agatarauzer.myBooks.domain.Mail;
+import com.agatarauzer.myBooks.service.MailSenderService;
 
 @ExtendWith(MockitoExtension.class)
 public class MailSenderServiceTest {

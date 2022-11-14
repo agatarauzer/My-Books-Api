@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.mapper;
+package com.agatarauzer.myBooks.unit.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.agatarauzer.myBooks.domain.Rental;
 import com.agatarauzer.myBooks.domain.enums.RentalStatus;
 import com.agatarauzer.myBooks.dto.RentalDto;
+import com.agatarauzer.myBooks.mapper.RentalMapper;
 
 @SpringBootTest
 public class RentalMapperTest {
@@ -26,7 +27,7 @@ public class RentalMapperTest {
 	public void prepareTestData() {
 		rental = Rental.builder()
 					.id(1L)
-					.status(RentalStatus.BORROWED)
+					.status(RentalStatus.BORROWED_FROM)
 					.name("from Kate")
 					.startDate(LocalDate.of(2022, 6, 21))
 					.endDate(LocalDate.of(2023, 1, 5))
@@ -34,7 +35,7 @@ public class RentalMapperTest {
 					.build();
 		rentalDto = RentalDto.builder()
 					.id(1L)
-					.status(RentalStatus.BORROWED)
+					.status(RentalStatus.BORROWED_FROM)
 					.name("from Kate")
 					.startDate(LocalDate.of(2022, 6, 21))
 					.endDate(LocalDate.of(2023, 1, 5))

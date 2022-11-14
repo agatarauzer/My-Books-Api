@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.domain;
 
+import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -71,6 +73,9 @@ public class Book {
 	
 	@Column(name="copies")
 	private Integer copies;
+	
+	@Column(name="creation_date")
+	private LocalDate created;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="reading_id")

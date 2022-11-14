@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.controller;
+package com.agatarauzer.myBooks.unit.controller;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -22,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.agatarauzer.myBooks.controller.BookController;
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.enums.Version;
 import com.agatarauzer.myBooks.dto.BookDto;
@@ -68,7 +69,7 @@ public class BookControllerTest {
 			.pages(864)
 			.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 			.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-			.version(Version.PAPER)
+			.version(Version.BOOK)
 			.copies(1)
 			.build();
 		bookDto = BookDto.builder()
@@ -82,7 +83,7 @@ public class BookControllerTest {
 			.pages(864)
 			.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 			.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-			.version(Version.PAPER)
+			.version(Version.BOOK)
 			.copies(1)
 			.build();
 	}
@@ -109,7 +110,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$[0].pages", is(864)))
 			.andExpect(jsonPath("$[0].description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$[0].imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$[0].version", is("PAPER")))
+			.andExpect(jsonPath("$[0].version", is("BOOK")))
 			.andExpect(jsonPath("$[0].copies", is(1)));
 	}
 	
@@ -131,7 +132,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$.pages", is(864)))
 			.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$.version", is("PAPER")))
+			.andExpect(jsonPath("$.version", is("BOOK")))
 			.andExpect(jsonPath("$.copies", is(1)));
 	}
 	
@@ -150,7 +151,7 @@ public class BookControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content(jsonBookDto))
-			.andExpect(status().is(200))
+			.andExpect(status().is(201))
 			.andExpect(jsonPath("$.title", is("Java. Podstawy. Wydanie IX")))
 			.andExpect(jsonPath("$.authors", is("Cay S. Horstmann,Gary Cornell")))
 			.andExpect(jsonPath("$.isbn", is("8324677615, 9788324677610")))
@@ -160,7 +161,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$.pages", is(864)))
 			.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$.version", is("PAPER")))
+			.andExpect(jsonPath("$.version", is("BOOK")))
 			.andExpect(jsonPath("$.copies", is(1)));
 	}
 	

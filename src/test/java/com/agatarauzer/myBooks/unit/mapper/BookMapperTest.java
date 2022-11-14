@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.mapper;
+package com.agatarauzer.myBooks.unit.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.enums.Version;
 import com.agatarauzer.myBooks.dto.BookDto;
+import com.agatarauzer.myBooks.mapper.BookMapper;
 
 @SpringBootTest
 public class BookMapperTest {
@@ -34,7 +35,7 @@ public class BookMapperTest {
 				.pages(864)
 				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-				.version(Version.PAPER)
+				.version(Version.BOOK)
 				.copies(1)
 				.build();
 		bookDto = BookDto.builder()
@@ -47,7 +48,7 @@ public class BookMapperTest {
 				.pages(864)
 				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
-				.version(Version.PAPER)
+				.version(Version.BOOK)
 				.copies(1)
 				.build();
 	}

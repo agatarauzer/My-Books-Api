@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,6 +26,7 @@ import com.agatarauzer.myBooks.exception.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.RentalNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.RentalRepository;
+import com.agatarauzer.myBooks.service.RentalService;
 
 @ExtendWith(MockitoExtension.class)
 public class RentalServiceTest {
@@ -65,7 +66,7 @@ public class RentalServiceTest {
 		rentalId = 1L;
 		rental = Rental.builder()
 				.id(1L)
-				.status(RentalStatus.BORROWED)
+				.status(RentalStatus.BORROWED_FROM)
 				.name("from Kate")
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
@@ -96,7 +97,7 @@ public class RentalServiceTest {
 	public void shouldUpdateRental() {
 		Rental rentalUpdated = Rental.builder()
 				.id(rentalId)
-				.status(RentalStatus.LENDED)
+				.status(RentalStatus.LENDED_TO)
 				.name("to Kate")
 				.startDate(LocalDate.of(2020, 5, 9))
 				.endDate(LocalDate.of(2021, 8, 9))
@@ -114,7 +115,7 @@ public class RentalServiceTest {
 	public void shouldUpdateOnlyGivenFields() {
 		Rental rentalUpdated = Rental.builder()
 				.id(null)
-				.status(RentalStatus.LENDED)
+				.status(RentalStatus.LENDED_TO)
 				.name(null)
 				.startDate(LocalDate.of(2020, 5, 9))
 				.endDate(null)
@@ -123,7 +124,7 @@ public class RentalServiceTest {
 				
 		Rental rentalExpected = Rental.builder()
 				.id(rentalId)
-				.status(RentalStatus.LENDED)
+				.status(RentalStatus.LENDED_TO)
 				.name("from Kate")
 				.startDate(LocalDate.of(2020, 5, 9))
 				.endDate(LocalDate.of(2023, 1, 5))

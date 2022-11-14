@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.controller;
+package com.agatarauzer.myBooks.unit.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.times;
@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.agatarauzer.myBooks.controller.ReadingController;
 import com.agatarauzer.myBooks.domain.Reading;
 import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
 import com.agatarauzer.myBooks.dto.ReadingDto;
@@ -107,7 +108,7 @@ public class ReadingControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content(jsonReadingDto))
-			.andExpect(status().is(200))
+			.andExpect(status().is(201))
 			.andExpect(jsonPath("$.status", is("READED")))
 			.andExpect(jsonPath("$.startDate", is("2020-05-09")))
 			.andExpect(jsonPath("$.endDate", is("2022-01-24")))

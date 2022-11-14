@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.mapper;
+package com.agatarauzer.myBooks.unit.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,6 +17,7 @@ import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.ImageLinkDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.IsbnDto;
 import com.agatarauzer.myBooks.dto.GoogleBooks.SearchInfo;
+import com.agatarauzer.myBooks.mapper.GoogleBookMapper;
 
 @SpringBootTest
 public class GoogleBookMapperTest {

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.controller;
+package com.agatarauzer.myBooks.unit.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.times;
@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.agatarauzer.myBooks.controller.PurchaseController;
 import com.agatarauzer.myBooks.domain.Purchase;
 import com.agatarauzer.myBooks.dto.PurchaseDto;
 import com.agatarauzer.myBooks.mapper.PurchaseMapper;
@@ -97,7 +98,7 @@ public class PurchaseControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content(jsonPurchaseDto))
-			.andExpect(status().is(200))
+			.andExpect(status().is(201))
 			.andExpect(jsonPath("$.price", is(48.90)))
 			.andExpect(jsonPath("$.purchaseDate", is("2022-07-12")))
 			.andExpect(jsonPath("$.boughtFrom", is("empik.com")));	

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.agatarauzer.myBooks.client.GoogleBooksClient;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
+import com.agatarauzer.myBooks.service.GoogleBooksSearchService;
 
 @ExtendWith(MockitoExtension.class)
 public class GoogleBooksSearchServiceTest {

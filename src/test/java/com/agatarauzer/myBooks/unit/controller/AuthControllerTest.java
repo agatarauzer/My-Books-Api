@@ -1,22 +1,28 @@
 package com.agatarauzer.myBooks.unit.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.controller.AuthController;
+import com.agatarauzer.myBooks.dto.singUpIn.JwtResponse;
+import com.agatarauzer.myBooks.dto.singUpIn.LoginRequest;
+import com.agatarauzer.myBooks.dto.singUpIn.MessageResponse;
+import com.agatarauzer.myBooks.dto.singUpIn.SignupRequest;
+import com.agatarauzer.myBooks.service.AuthService;
+import com.google.gson.Gson;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AuthControllerTest {
@@ -24,23 +30,60 @@ public class AuthControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@Autowired
-	private WebApplicationContext context;
-	
-	@Autowired
-	private AuthController authController;
-	
-	
-	@BeforeEach
-	public void setup() {
-		mockMvc = MockMvcBuilders
-				.webAppContextSetup(context)
-				.apply(springSecurity())
-				.build();
-	}
+	@MockBean
+	private AuthService authService;
 	
 	@Test
-	public void contextLoads() throws Exception {
-		assertThat(authController).isNotNull();
+	public void shouldSignIn() throws Exception {
+		JwtResponse response = JwtResponse.builder()
+				.token("kdk4kkkdkdkkf")
+				.id(1L)
+				.username("test_username")
+				.email("test_email@test.pl")
+				.roles((List.of("USER_PAID")))
+				.build();
+		LoginRequest request = LoginRequest.builder()
+				.username("test_username")
+				.password("12345")
+				.build();
+		
+		when(authService.authenticateUser(request)).thenReturn(response);
+
+		Gson gson = new Gson();
+		String jsonRequest = gson.toJson(request);
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/v1/auth/signin")
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonRequest))
+				.andExpect(status().is(200));		
+	}
+	
+	
+	// not working, giving status 400 
+	@Test
+	public void shouldSignUp() throws Exception {
+		SignupRequest request = SignupRequest.builder()
+			.firstName("test_firstName")
+			.lastName("test_lastName")
+			.username("test_username")
+			.email("test_email@test.pl")
+			.password("test_password")
+			.role((Set.of("USER_PAID")))
+			.build();
+		MessageResponse messageSucess = new MessageResponse("User registred sucessfully!");
+		
+		when(authService.registerUser(request)).thenReturn(messageSucess);
+		
+		Gson gson = new Gson();
+		String jsonRequest = gson.toJson(request);
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/v1/auth/signup")
+				.contentType(MediaType.APPLICATION_JSON)
+				.characterEncoding("UTF-8")
+				.content(jsonRequest))
+				.andExpect(status().is(200));	
 	}
 }

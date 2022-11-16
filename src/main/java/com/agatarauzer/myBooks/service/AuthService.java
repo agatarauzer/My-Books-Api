@@ -48,18 +48,20 @@ public class AuthService {
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
+		String jwtToken = jwtUtils.generateJwtToken(authentication);
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		
-		return new JwtResponse(jwt,
-					userDetails.getId(),
-					userDetails.getUsername(),
-					userDetails.getEmail(),
-					roles);
+		return JwtResponse.builder()
+				.token(jwtToken)
+				.id(userDetails.getId())
+				.username(userDetails.getUsername())
+				.email(userDetails.getEmail())
+				.roles(roles)
+				.build();	
 	}
 	
 	public  MessageResponse registerUser(SignupRequest signUpRequest) {
@@ -108,13 +110,11 @@ public class AuthService {
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 					roles.add(userPaidRole);
 					break;
-				
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 					roles.add(adminRole);
 					break;
-				
 				default: 
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER_LIMITED)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));

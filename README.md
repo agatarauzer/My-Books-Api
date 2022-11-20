@@ -16,7 +16,7 @@
 MyBooks is a learning project, to train and develop my programming skills.
 It gives me a chance to use in practice features of Spring framework (especially Spring Data JPA, Spring Security), Hibernate and build complex REST application.
 
-## Description :book:
+## Description
 MyBooks is a virtual home library. It helps to store book titles with additional informations. 
 So the user can gather data about:
 - basic book information (title, authors, publishing year, description etc),
@@ -27,16 +27,16 @@ So the user can gather data about:
 App gives possibility to search titles via GoogleBooks, and automatically add book's information from this source. 
 In next step, user can fill missing data about book. Main functionalities are concentrated on adding customized data by user.
 
-## Technologies :wrench:
+## Technologies
 Project is created with:
 - Java 17
 - Spring Boot 2.7
 - Spring Data JPA 2.7 
 - Hibernate
-- REST
-- MySQL database
+- MySQL and H2 database
 - Spring Security and JWT
-- JUnit5 and Mockito testing
+- JUnit5 and Mockito
+- Liquibase
 - Maven
 
 

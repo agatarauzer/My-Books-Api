@@ -21,14 +21,11 @@ import lombok.Setter;
 @Entity
 @Table(name="roles")
 public class Role {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="role_id")
 	private Long id;
-	
 	@Enumerated(EnumType.STRING)
-	@Column(name="name")
 	private ERole name;
 	
 	public Role(ERole name) {

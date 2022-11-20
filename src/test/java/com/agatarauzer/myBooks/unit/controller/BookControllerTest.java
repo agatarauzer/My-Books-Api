@@ -88,6 +88,8 @@ public class BookControllerTest {
 			.build();
 	}
 	
+	//not working, gives error: expected: a collection with size <1>, but was <0>
+	
 	@Test 
 	public void shouldGetUserBooks() throws Exception {
 		List<Book> booksList = List.of(book);

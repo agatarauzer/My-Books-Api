@@ -1,4 +1,4 @@
-insert into users (user_id, email, first_name, last_name, password, username, enabled, registration_date) values
+/*insert into users (user_id, email, first_name, last_name, password, username, enabled, registration_date) values
 	(1, 'user1@test.com', 'Adam', 'Monday', '$2a$10$1XCd1hHx4wXf71/2k1SaZu2FdNWDtNJcVm097KAD9zDfBbg2fJB1C', 
 	'adamon', true, '2022-01-23'),
 	(2, 'user2@test.com', 'Barbara', 'Tuesday', '$3g$54$rrrenVoK9h7OadrUtd7wU.dMGf6amRFjiP7X5OKjuhqAAeGyWzRVe', 
@@ -21,6 +21,37 @@ insert into user_roles (user_id, role_id) values
 	(3, 1),
 	(4, 2),
 	(5, 3);
+	
+insert into purchases (purchase_id, price, purchase_date, bought_from) values
+	(1, 79.50, '2022-01-20', 'local bookshop'),
+	(2, 49.90, '2022-03-27', 'dont remember'),
+	(3, 108, '2022-01-22', 'amazon.com'),
+	(4, 158.50, '2022-05-01', 'amazon.com'),
+	(5, 78.50, '2022-05-01', 'amazon.com'),
+	(6, 39.99, '2022-03-10', 'empik.com'),
+	(7, 64.99, '2022-02-06', 'empik.com'),
+	(8, 25.70, '2022-02-12', 'taniaksiazka.pl'),
+	(9, 22.90, '2022-05-18', 'bookshop in warsaw');
+	
+insert into readings (reading_id, status, start_date, end_date, readed_pages, rate, notes) values
+	(1, 'READED', '2022-02-05', '2022-07-10', 700, 4, 'Java bible'),
+    (2, 'READED', '2022-05-20', '2022-07-30', 450, 5, 'really fascinating!'),
+	(3, 'IN_READING', '2022-01-07', null, 213, 4, 'usable in work'),
+	(4, 'READED', '2022-06-08', '2022-07-02', 391, 4, 'classic...'),
+	(5, 'READED', '2022-04-08', '2022-05-26', 432, 4, 'interesting book'),
+	(6, 'READED', '2022-05-19', '2022-07-12', 256, 3, 'nice, but too obviuos'),
+	(7, 'READED', '2022-02-30', '2022-11-09', 180, 5, null),
+	(8, 'READED', '2022-06-03', '2022-07-28', 392, 4, 'nice, fast to read'),
+	(9, 'IN_READING', '2022-05-24', null, 15, 5, 'child book; children really love it and read every single day');
+	(10, 'IN READING', '2022-07-30', null, 15, 5, 'ideal book for children'),
+	(11, 'LEFT', '2022-11-10', null, 160, null, 'maybe I will back to it in future'),
+	(12, 'READED', '2022-08-27', '2022-10-06', 576, 4, 'not bad, but quite predictable');
+	
+insert into rentals (rental_id, status, name, start_date, end_date, notes) values
+	(1, 'BORROWED_FROM', 'Jack gave it to children', '2022-10-01', '2023-03-22', null);
+	(2, 'LENDED_TO', 'to Kate', '2022-07-10', '2023-01-10', 'she will return it after christmas');
+	
+	
 
 insert into books (book_id, title, authors, isbn_numbers, publisher, publishing_date, language, pages, description,
 			image_link, version, copies, creation_date, user_id, reading_id, rental_id, purchase_id) values
@@ -58,36 +89,7 @@ insert into books (book_id, title, authors, isbn_numbers, publisher, publishing_
 	(12, 'Początek', 'Dan Brown', '9788381101462, 8381101468', 'Sonia Draga Sp. z o.o.', '2017-11-09',
 	'pl', 576, 'description_12', 'link_12', 'E_BOOK', 1, '2022-06-03', 4, 12, null, null);
 	
-insert into purchases (purchase_id, price, purchase_date, bought_from) values
-	(1, 79.50, '2022-01-20', 'local bookshop'),
-	(2, 49.90, '2022-03-27', 'dont remember'),
-	(3, 108, '2022-01-22', 'amazon.com'),
-	(4, 158.50, '2022-05-01', 'amazon.com'),
-	(5, 78.50, '2022-05-01', 'amazon.com'),
-	(6, 39.99, '2022-03-10', 'empik.com'),
-	(7, 64.99, '2022-02-06', 'empik.com'),
-	(8, 25.70, '2022-02-12', 'taniaksiazka.pl'),
-	(9, 22.90, '2022-05-18', 'bookshop in warsaw');
-	
-insert into readings (reading_id, status, start_date, end_date, readed_pages, rate, notes) values
-	(1, 'READED', '2022-02-05', '2022-07-10', 700, 4, 'Java bible'),
-    (2, 'READED', '2022-05-20', '2022-07-30', 450, 5, 'really fascinating!'),
-	(3, 'IN_READING', '2022-01-07', null, 213, 4, 'usable in work'),
-	(4, 'READED', '2022-06-08', '2022-07-02', 391, 4, 'classic...'),
-	(5, 'READED', '2022-04-08', '2022-05-26', 432, 4, 'interesting book'),
-	(6, 'READED', '2022-05-19', '2022-07-12', 256, 3, 'nice, but too obviuos'),
-	(7, 'READED', '2022-02-30', '2022-11-09', 180, 5, null),
-	(8, 'READED', '2022-06-03', '2022-07-28', 392, 4, 'nice, fast to read'),
-	(9, 'IN_READING', '2022-05-24', null, 15, 5, 'child book; children really love it and read every single day');
-	(10, 'IN READING', '2022-07-30', null, 15, 5, 'ideal book for children'),
-	(11, 'LEFT', '2022-11-10', null, 160, null, 'maybe I will back to it in future'),
-	(12, 'READED', '2022-08-27', '2022-10-06', 576, 4, 'not bad, but quite predictable');
-	
-insert into rentals (rental_id, status, name, start_date, end_date, notes) values
-	(1, 'BORROWED_FROM', 'Jack gave it to children', '2022-10-01', '2023-03-22', null);
-	(2, 'LENDED_TO', 'to Kate', '2022-07-10', '2023-01-10', 'she will return it after christmas');
-	
-	
 
+*/
 	
 	

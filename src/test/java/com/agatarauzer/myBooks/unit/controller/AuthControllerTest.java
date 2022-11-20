@@ -70,7 +70,7 @@ public class AuthControllerTest {
 			.username("test_username")
 			.email("test_email@test.pl")
 			.password("test_password")
-			.role((Set.of("USER_PAID")))
+			.roles((Set.of("USER_PAID")))
 			.build();
 		MessageResponse messageSucess = new MessageResponse("User registred sucessfully!");
 		

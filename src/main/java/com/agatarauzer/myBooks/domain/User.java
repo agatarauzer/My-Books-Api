@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,33 +35,19 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_id")
 	private Long id;
-	
 	@Column(name="first_name")
 	private String firstName;
-	
 	@Column(name="last_name")
 	private String lastName;
-	
-	@NotNull
-	@Column(name="email")
 	private String email;
-	
-	@NotNull
-	@Column(name="username")
 	private String username;
-	
-	@NotNull
-	@Column(name="password")
 	private String password; 
-	
 	@Column(name="registration_date")
 	private LocalDate registrationDate;
-	
 	@Builder.Default
-	@Column(name="enabled")
 	private Boolean enabled = false;
 	
-	@OneToMany(targetEntity = Book.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = Book.class, mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List<Book> books;
 	
 	@ManyToMany(fetch = FetchType.LAZY)

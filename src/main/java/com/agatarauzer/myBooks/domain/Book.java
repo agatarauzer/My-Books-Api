@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.agatarauzer.myBooks.domain.enums.Version;
 
@@ -33,47 +32,24 @@ import lombok.Setter;
 @Entity
 @Table(name="books")
 public class Book {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="book_id")
 	private Long id;
-	
-	@NotNull
-	@Column(name="title")
 	private String title;
-	
-	@Column(name="authors")
 	private String authors;
-	
-	@Column(name="ISBN_numbers")
 	private String isbn;
-	
-	@Column(name="publisher")
 	private String publisher;
-	
 	@Column(name="publishing_date")
 	private String publishingDate;
-	
-	@Column(name="language")
 	private String language;
-	
-	@Column(name="pages")
 	private int pages;
-	
-	@Column(name="description")
 	private String description;
-	
 	@Column(name="image_link")
 	private String imageLink;
-	
 	@Enumerated(EnumType.STRING)
-	@Column(name="version")
 	private Version version;
-	
-	@Column(name="copies")
 	private Integer copies;
-	
 	@Column(name="creation_date")
 	private LocalDate created;
 	

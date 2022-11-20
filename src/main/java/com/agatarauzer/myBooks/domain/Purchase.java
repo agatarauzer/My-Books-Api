@@ -25,18 +25,13 @@ import lombok.Setter;
 @Entity
 @Table(name="purchases")
 public class Purchase {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="purchase_id")
 	private Long id;
-	
-	@Column(name="price")
 	private Double price;
-	
 	@Column(name="purchase_date")
 	private LocalDate purchaseDate;
-	
 	@Column(name="bought_from")
 	private String boughtFrom;
 	

@@ -1,6 +1,7 @@
 package com.agatarauzer.myBooks.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,7 @@ public class BookService {
 			throw new BookAlreadyExistsException("Book title is already on your list");
 		}
 		book.setUser(user);
+		book.setCreated(LocalDate.now());
 		return bookRepository.save(book);
 	}
 

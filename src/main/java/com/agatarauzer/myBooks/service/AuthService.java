@@ -81,7 +81,7 @@ public class AuthService {
 				.password(encoder.encode(signUpRequest.getPassword()))
 				.build();
 		
-		Set<Role> roles = setupUserRoles(signUpRequest.getRole());
+		Set<Role> roles = setupUserRoles(signUpRequest.getRoles());
 		user.setRoles(roles);
 		user.setRegistrationDate(LocalDate.now());
 		userRepository.save(user);

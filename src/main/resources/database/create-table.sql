@@ -9,7 +9,7 @@ CREATE TABLE users (
 	username VARCHAR(30) NOT NULL, 
 	password VARCHAR(150) NOT NULL, 
 	enabled BOOLEAN, 
-	registration_date TIMESTAMP 
+	registration_date DATE 
 );
 
 -- changeset agatarauzer:2
@@ -31,7 +31,7 @@ CREATE TABLE user_roles (
 CREATE TABLE confirmation_tokens (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	confirmation_token VARCHAR(250),
-	created_date TIMESTAMP,
+	created_date DATE,
 	user_id BIGINT NOT NULL, 
 	FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
@@ -40,8 +40,8 @@ CREATE TABLE confirmation_tokens (
 CREATE TABLE readings (
 	reading_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	status VARCHAR(20),
-	start_date TIMESTAMP,
-	end_date TIMESTAMP,
+	start_date DATE,
+	end_date DATE,
 	readed_pages INT(3),
 	rate INT(1),
 	notes VARCHAR(250)
@@ -52,16 +52,16 @@ CREATE TABLE rentals (
 	rental_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	status VARCHAR(20),
 	name VARCHAR(250),
-	start_date TIMESTAMP,
-	end_date TIMESTAMP,
+	start_date DATE,
+	end_date DATE,
 	notes VARCHAR(250)
 );
 
 -- changeset agatarauzer:7	
 CREATE TABLE purchases (
 	purchase_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	price DECIMAL,
-	purchase_date TIMESTAMP,
+	price DOUBLE,
+	purchase_date DATE,
 	bought_from VARCHAR(100)
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE books (
 	image_link VARCHAR(250),
 	version VARCHAR(20),
 	copies INT(2),
-	creation_date TIMESTAMP,
+	creation_date DATE,
 	reading_id BIGINT,
 	rental_id BIGINT,
 	purchase_id BIGINT,

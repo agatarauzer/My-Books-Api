@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.agatarauzer.myBooks.domain.ConfirmationToken;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.exception.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
@@ -23,8 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 	
 	private final UserRepository userRepository;
-	private final ConfirmationTokenService confirmationTokenService;
-	
+
 	public List<User> findAll(int page, int size, String sortBy, String sortDir) {
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
@@ -40,14 +38,6 @@ public class UserService {
 	
 	public User saveUser(User user) {
 		return userRepository.save(user);
-	}
-	
-	public void confirmUser(ConfirmationToken confirmationToken) {
-		User user = confirmationToken.getUser();
-		user.setEnabled(true);
-		saveUser(user);
-		log.info("User is confirmed and enabled");
-		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
 	}
 	
 	public User updateUser(Long userId, User user) {
@@ -66,6 +56,7 @@ public class UserService {
 	public void deleteUser(Long userId) {
 		try {
 			userRepository.deleteById(userId);
+			log.info("User was deleted");
 		} catch (DataAccessException exc) {
 			throw new UserNotFoundException("User id not found: " + userId);
 		}

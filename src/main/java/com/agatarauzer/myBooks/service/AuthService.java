@@ -95,6 +95,14 @@ public class AuthService {
 		return new MessageResponse("User registred sucessfully!");
 	}
 	
+	public void confirmUser(ConfirmationToken confirmationToken) {
+		User user = confirmationToken.getUser();
+		user.setEnabled(true);
+		userRepository.save(user);
+		log.info("User is confirmed and enabled");
+		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
+	}
+	
 	private Set<Role> setupUserRoles(Set<String> givenRoles) {
 		Set<Role> roles = new HashSet<>();
 		if (givenRoles == null) {

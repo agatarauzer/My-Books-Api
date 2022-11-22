@@ -18,19 +18,17 @@ import com.agatarauzer.myBooks.dto.singUpIn.MessageResponse;
 import com.agatarauzer.myBooks.dto.singUpIn.SignupRequest;
 import com.agatarauzer.myBooks.service.AuthService;
 import com.agatarauzer.myBooks.service.ConfirmationTokenService;
-import com.agatarauzer.myBooks.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("v1/auth")
+@RequestMapping("v1")
 @RequiredArgsConstructor
 public class AuthController {
 	
 	private final AuthService authService;
 	private final ConfirmationTokenService confirmationTokenService;
-	private final UserService userService;
 	
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -52,7 +50,7 @@ public class AuthController {
 	@GetMapping("/signup/confirm")
 	public ResponseEntity<String> confirmUser(@RequestParam("token") String token) {
 		Optional<ConfirmationToken> optConfirmationToken = confirmationTokenService.findConfirmationToken(token);
-		optConfirmationToken.ifPresent(userService::confirmUser);
+		optConfirmationToken.ifPresent(authService::confirmUser);
 		return ResponseEntity.ok("Thank you for confirmation");
 	}
 }

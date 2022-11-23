@@ -21,8 +21,9 @@ import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -80,12 +81,14 @@ public class BookService {
 		bookUpdated.setImageLink(book.getImageLink());
 		bookUpdated.setVersion(book.getVersion());
 		bookUpdated.setCopies(book.getCopies());
-		return bookRepository.save(book);
+		log.info("Book with id: " + bookId + " was updated");
+		return bookRepository.save(bookUpdated);
 	}
 
 	public void deleteBook(Long bookId) {
 		try {
 			bookRepository.deleteById(bookId);
+			log.info("Book with id: " + bookId + " was deleted");
 		} catch (DataAccessException exc) {
 			throw new BookNotFoundException("Book id not found: " + bookId);
 		}

@@ -113,40 +113,6 @@ public class ReadingServiceTest {
 	}
 	
 	@Test
-	public void shouldUpdateOnlyGivenFields() {
-		Reading readingUpdated = Reading.builder()
-				.id(null)
-				.status(ReadingStatus.LEFT)
-				.startDate(null)
-				.endDate(null)
-				.readedPages(null)
-				.rate(2)
-				.notes("Boring!")
-				.build();
-		Reading readingExpected = Reading.builder()
-				.id(readingId)
-				.status(ReadingStatus.LEFT)
-				.startDate(LocalDate.of(2020, 5, 9))
-				.endDate(LocalDate.of(2022, 1, 24))
-				.readedPages(840)
-				.rate(2)
-				.notes("Boring!")
-				.build();
-		when(readingRepository.findById(readingId)).thenReturn(Optional.of(reading));
-		when(readingRepository.save(any(Reading.class))).thenReturn(readingExpected);
-		
-		Reading readingAfterUpdate = readingService.updateReading(readingId, readingUpdated);
-		
-		assertEquals(readingExpected.getId(), readingAfterUpdate.getId());
-		assertEquals(readingExpected.getStatus(), readingAfterUpdate.getStatus());
-		assertEquals(readingExpected.getStartDate(), readingAfterUpdate.getStartDate());
-		assertEquals(readingExpected.getEndDate(), readingAfterUpdate.getEndDate());
-		assertEquals(readingExpected.getReadedPages(), readingAfterUpdate.getReadedPages());
-		assertEquals(readingExpected.getRate(), readingAfterUpdate.getRate());
-		assertEquals(readingExpected.getNotes(), readingAfterUpdate.getNotes());
-	}
-	
-	@Test
 	public void shouldDeleteReading() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		

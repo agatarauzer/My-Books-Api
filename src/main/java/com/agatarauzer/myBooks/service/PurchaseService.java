@@ -1,8 +1,5 @@
 package com.agatarauzer.myBooks.service;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +11,9 @@ import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.PurchaseRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PurchaseService {
@@ -33,21 +32,17 @@ public class PurchaseService {
 				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setPurchase(purchase);
 		bookRepository.save(book);
+		log.info("Purchase for book with id: " + bookId + " was saved in db");
 		return purchase;
 	}
 	
 	public Purchase updatePurchase(Long purchaseId, Purchase purchase) {
 		Purchase purchaseUpdated = purchaseRepository.findById(purchaseId)
 				.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
-	
-		Double priceUpdated = Optional.ofNullable(purchase.getPrice()).orElse(purchaseUpdated.getPrice());
-		LocalDate purchaseDateUpdated = Optional.ofNullable(purchase.getPurchaseDate()).orElse(purchaseUpdated.getPurchaseDate());
-		String boughtFromUpdated = Optional.ofNullable(purchase.getBoughtFrom()).orElse(purchaseUpdated.getBoughtFrom());
-		
-		purchaseUpdated.setPrice(priceUpdated);
-		purchaseUpdated.setPurchaseDate(purchaseDateUpdated);
-		purchaseUpdated.setBoughtFrom(boughtFromUpdated);
-		
+		purchaseUpdated.setPrice(purchase.getPrice());
+		purchaseUpdated.setPurchaseDate(purchase.getPurchaseDate());
+		purchaseUpdated.setBoughtFrom(purchase.getBoughtFrom());
+		log.info("Purchase with id: " + purchaseId + "was updated");
 		return purchaseRepository.save(purchaseUpdated);
 	}
 	
@@ -56,6 +51,7 @@ public class PurchaseService {
 		book.setPurchase(null);
 		try {
 			purchaseRepository.deleteById(purchaseId);
+			log.info("Purchase with id: " + purchaseId + "was updated");
 		} catch (DataAccessException exc) {
 			throw new PurchaseNotFoundException("Purchase id not found: " + purchaseId);
 		}

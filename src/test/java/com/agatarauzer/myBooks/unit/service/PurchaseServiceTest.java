@@ -106,31 +106,6 @@ public class PurchaseServiceTest {
 	}
 	
 	@Test
-	public void shouldUpdateOnlyGivenFields() {
-		Purchase purchaseUpdated = Purchase.builder()
-				.id(null)
-				.price(51.99)
-				.purchaseDate(null)
-				.boughtFrom("taniaksiazka.pl")
-				.build();
-		Purchase purchaseExpected = Purchase.builder()
-				.id(purchaseId)
-				.price(51.99)
-				.purchaseDate(LocalDate.of(2022, 7, 12))
-				.boughtFrom("taniaksiazka.pl")
-				.build();
-		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
-		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchaseExpected);
-		
-		Purchase purchaseAfterUpdate = purchaseService.updatePurchase(purchaseId, purchaseUpdated);
-		
-		assertEquals(purchaseExpected.getId(), purchaseAfterUpdate.getId());
-		assertEquals(purchaseExpected.getPrice(), purchaseAfterUpdate.getPrice());
-		assertEquals(purchaseExpected.getPurchaseDate(), purchaseAfterUpdate.getPurchaseDate());
-		assertEquals(purchaseExpected.getBoughtFrom(), purchaseAfterUpdate.getBoughtFrom());
-	}
-	
-	@Test
 	public void shouldDeletePurchase() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		

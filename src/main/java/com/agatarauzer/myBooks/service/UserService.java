@@ -27,7 +27,6 @@ public class UserService {
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
 		Pageable pageable = PageRequest.of(page, size, sort);
-		
 		return IterableUtils.toList(userRepository.findAll(pageable));
 	}
 	
@@ -48,15 +47,14 @@ public class UserService {
 		userUpdated.setEmail(user.getEmail());
 		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
-		saveUser(userUpdated);
-		log.info("User is updated");
-		return userUpdated;
+		log.info("User with id: " + userId + " was updated");
+		return saveUser(userUpdated);
 	}
 	
 	public void deleteUser(Long userId) {
 		try {
 			userRepository.deleteById(userId);
-			log.info("User was deleted");
+			log.info("User with id: " + userId + " was deleted");
 		} catch (DataAccessException exc) {
 			throw new UserNotFoundException("User id not found: " + userId);
 		}

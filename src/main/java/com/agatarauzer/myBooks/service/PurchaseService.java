@@ -1,12 +1,11 @@
 package com.agatarauzer.myBooks.service;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Purchase;
-import com.agatarauzer.myBooks.exception.BookNotFoundException;
-import com.agatarauzer.myBooks.exception.PurchaseNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.PurchaseNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.PurchaseRepository;
 
@@ -29,7 +28,7 @@ public class PurchaseService {
 	
 	public Purchase savePurchase(Long bookId, Purchase purchase) {
 		Book book = bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setPurchase(purchase);
 		bookRepository.save(book);
 		log.info("Purchase for book with id: " + bookId + " was saved in db");
@@ -38,7 +37,7 @@ public class PurchaseService {
 	
 	public Purchase updatePurchase(Long purchaseId, Purchase purchase) {
 		Purchase purchaseUpdated = purchaseRepository.findById(purchaseId)
-				.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
+			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
 		purchaseUpdated.setPrice(purchase.getPrice());
 		purchaseUpdated.setPurchaseDate(purchase.getPurchaseDate());
 		purchaseUpdated.setBoughtFrom(purchase.getBoughtFrom());
@@ -47,13 +46,12 @@ public class PurchaseService {
 	}
 	
 	public void deletePurchase(Long bookId, Long purchaseId) {
-		Book book = bookRepository.findById(bookId).get();
+		Book book = bookRepository.findById(bookId)
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setPurchase(null);
-		try {
-			purchaseRepository.deleteById(purchaseId);
+		purchaseRepository.findById(purchaseId)
+			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
+		purchaseRepository.deleteById(purchaseId);
 			log.info("Purchase with id: " + purchaseId + "was updated");
-		} catch (DataAccessException exc) {
-			throw new PurchaseNotFoundException("Purchase id not found: " + purchaseId);
-		}
 	}
 }

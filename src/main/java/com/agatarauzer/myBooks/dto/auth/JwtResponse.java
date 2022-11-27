@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.dto.singUpIn;
+package com.agatarauzer.myBooks.dto.auth;
 
 import java.util.List;
 

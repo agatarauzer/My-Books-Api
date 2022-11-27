@@ -3,14 +3,13 @@ package com.agatarauzer.myBooks.service;
 import java.util.List;
 
 import org.apache.commons.collections4.IterableUtils;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.exception.UserNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class UserService {
 	
 	public User findUserById(Long userId) {
 		return userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 	}
 	
 	public User saveUser(User user) {
@@ -41,7 +40,7 @@ public class UserService {
 	
 	public User updateUser(Long userId, User user) {
 		User userUpdated = userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 		userUpdated.setFirstName(user.getFirstName());
 		userUpdated.setLastName(user.getLastName());
 		userUpdated.setEmail(user.getEmail());
@@ -52,12 +51,10 @@ public class UserService {
 	}
 	
 	public void deleteUser(Long userId) {
-		try {
-			userRepository.deleteById(userId);
-			log.info("User with id: " + userId + " was deleted");
-		} catch (DataAccessException exc) {
-			throw new UserNotFoundException("User id not found: " + userId);
-		}
+		userRepository.findById(userId)
+			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+		userRepository.deleteById(userId);
+		log.info("User with id: " + userId + " was deleted");
 	}		
 }
 

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.service.auth;
 
 import java.util.Optional;
 

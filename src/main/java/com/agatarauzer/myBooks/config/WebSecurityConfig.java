@@ -61,14 +61,17 @@ public class WebSecurityConfig {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()
-			.antMatchers("/v1/auth/**").permitAll()
+			.antMatchers("/").permitAll()
 			.antMatchers("/v1/**").permitAll()
 			.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html" ).permitAll()
+			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated();
 		 
 		 http.authenticationProvider(authenticationProvider());
 		 http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		
+		 http.headers().frameOptions().disable();
+		 
 		 return http.build();
 	}
 }

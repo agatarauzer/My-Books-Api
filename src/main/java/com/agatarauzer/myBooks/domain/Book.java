@@ -36,20 +36,27 @@ public class Book {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="book_id")
 	private Long id;
+	
 	private String title;
 	private String authors;
 	private String isbn;
 	private String publisher;
+	
 	@Column(name="publishing_date")
 	private String publishingDate;
+	
 	private String language;
 	private int pages;
 	private String description;
+	
 	@Column(name="image_link")
 	private String imageLink;
+	
 	@Enumerated(EnumType.STRING)
 	private Version version;
+	
 	private Integer copies;
+	
 	@Column(name="creation_date")
 	private LocalDate created;
 	

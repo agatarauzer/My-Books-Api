@@ -26,8 +26,10 @@ public class ConfirmationToken {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(name="confirmation_token")
 	private String confirmationToken;
+	
 	@Column(name="created_date")
 	private LocalDate createdDate;
 	

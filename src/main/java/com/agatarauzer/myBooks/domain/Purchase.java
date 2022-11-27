@@ -29,9 +29,12 @@ public class Purchase {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="purchase_id")
 	private Long id;
+	
 	private Double price;
+	
 	@Column(name="purchase_date")
 	private LocalDate purchaseDate;
+	
 	@Column(name="bought_from")
 	private String boughtFrom;
 	

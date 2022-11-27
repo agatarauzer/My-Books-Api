@@ -15,41 +15,14 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler
 	public ResponseEntity<ErrorResponse> handleException(BookAlreadyExistsException exc) {
 		ErrorResponse error = new ErrorResponse();
-		error.setStatus(HttpStatus.CONFLICT.value());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		error.setMessage(exc.getMessage());
 		error.setTimeStamp(LocalDateTime.now());
-		return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(BookNotFoundException exc) {
-		ErrorResponse error = new ErrorResponse();
-		error.setStatus(HttpStatus.NOT_FOUND.value());
-		error.setMessage(exc.getMessage());
-		error.setTimeStamp(LocalDateTime.now());
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(UserNotFoundException exc) {
-		ErrorResponse error = new ErrorResponse();
-		error.setStatus(HttpStatus.NOT_FOUND.value());
-		error.setMessage(exc.getMessage());
-		error.setTimeStamp(LocalDateTime.now());
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(ReadingNotFoundException exc) {
-		ErrorResponse error = new ErrorResponse();
-		error.setStatus(HttpStatus.NOT_FOUND.value());
-		error.setMessage(exc.getMessage());
-		error.setTimeStamp(LocalDateTime.now());
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(RentalNotFoundException exc) {
+	public ResponseEntity<ErrorResponse> handleException(EntityNotFoundException exc) {
 		ErrorResponse error = new ErrorResponse();
 		error.setStatus(HttpStatus.NOT_FOUND.value());
 		error.setMessage(exc.getMessage());

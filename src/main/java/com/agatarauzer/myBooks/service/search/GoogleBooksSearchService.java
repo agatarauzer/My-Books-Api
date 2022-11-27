@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.service.search;
 
 import java.util.List;
 

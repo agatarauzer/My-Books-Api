@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.service.statictics;
 
 import java.util.List;
 import java.util.Map;

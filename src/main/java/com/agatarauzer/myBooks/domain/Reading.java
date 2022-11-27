@@ -32,14 +32,19 @@ public class Reading {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="reading_id")
 	private Long id;
+	
 	@Enumerated(EnumType.STRING)
 	private ReadingStatus status;
+	
 	@Column(name="start_date")
 	private LocalDate startDate;
+	
 	@Column(name="end_date")
 	private LocalDate endDate;
+	
 	@Column(name="readed_pages")
 	private Integer readedPages;
+	
 	private Integer rate;
 	private String notes;
 	

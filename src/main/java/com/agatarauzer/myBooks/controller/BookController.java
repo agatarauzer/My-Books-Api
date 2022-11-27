@@ -30,7 +30,7 @@ public class BookController {
 	private final BookMapper bookMapper;
 	
 	@GetMapping
-	public ResponseEntity<List<BookDto>> getUserBooks(@PathVariable Long userId,
+	public ResponseEntity<List<BookDto>> getUserBooks(@PathVariable final Long userId,
 				@RequestParam(defaultValue = "0", required = false) int page,
 				@RequestParam(defaultValue = "5", required = false) int size,
 				@RequestParam(defaultValue = "id", required = false) String sortBy,
@@ -40,27 +40,27 @@ public class BookController {
 	}
 	
 	@GetMapping("/{bookId}")
-	public ResponseEntity<BookDto> getBookById(@PathVariable Long userId, @PathVariable Long bookId) {
+	public ResponseEntity<BookDto> getBookById(@PathVariable final Long userId, @PathVariable final Long bookId) {
 		Book book = bookService.findBookById(bookId);
 		return ResponseEntity.ok(bookMapper.mapToBookDto(book));
 	}
 	
 	@PostMapping
-	public ResponseEntity<BookDto> addBook (@PathVariable Long userId, @RequestBody BookDto bookDto) {
+	public ResponseEntity<BookDto> addBook (@PathVariable final Long userId, @RequestBody final BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);
 		bookService.saveBookForUser(userId, book);
 		return new ResponseEntity<BookDto>(bookDto, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{bookId}")
-	public ResponseEntity<BookDto> updateBook(@PathVariable Long userId, @PathVariable Long bookId, @RequestBody BookDto bookDto) {
+	public ResponseEntity<BookDto> updateBook(@PathVariable final Long userId, @PathVariable final Long bookId, @RequestBody final BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);
 		bookService.updateBook(bookId, book);
 		return ResponseEntity.ok(bookDto);
 	}
 	
 	@DeleteMapping("/{bookId}")
-	public ResponseEntity<String> deleteBook(@PathVariable Long userId, @PathVariable Long bookId) {
+	public ResponseEntity<String> deleteBook(@PathVariable final Long userId, @PathVariable final Long bookId) {
 		bookService.deleteBook(bookId);
 		return ResponseEntity.ok().body("Deleted book: " + bookId);
 	}

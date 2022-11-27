@@ -25,7 +25,7 @@ import org.springframework.data.domain.Sort;
 import com.agatarauzer.myBooks.domain.Role;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.domain.enums.ERole;
-import com.agatarauzer.myBooks.exception.UserNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.UserRepository;
 import com.agatarauzer.myBooks.service.UserService;
 

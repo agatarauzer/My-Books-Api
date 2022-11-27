@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.agatarauzer.myBooks.client.GoogleBooksClient;
 import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.service.GoogleBooksSearchService;
+import com.agatarauzer.myBooks.service.search.GoogleBooksSearchService;
 
 @ExtendWith(MockitoExtension.class)
 public class GoogleBooksSearchServiceTest {

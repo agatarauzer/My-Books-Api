@@ -1,13 +1,11 @@
 package com.agatarauzer.myBooks.service;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Rental;
-import com.agatarauzer.myBooks.exception.BookNotFoundException;
-import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
-import com.agatarauzer.myBooks.exception.RentalNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.RentalNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.RentalRepository;
 
@@ -30,7 +28,7 @@ public class RentalService {
 	
 	public Rental saveRental(Long bookId, Rental rental) {
 		Book book = bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setRental(rental);
 		bookRepository.save(book);
 		log.info("Rental for book with id: " + bookId + " was saved in db");
@@ -39,7 +37,7 @@ public class RentalService {
 	
 	public Rental updateRental(Long rentalId, Rental rental) {
 		Rental rentalUpdated = rentalRepository.findById(rentalId)
-				.orElseThrow(() -> new RentalNotFoundException("Rental id not found: " + rentalId));
+			.orElseThrow(() -> new RentalNotFoundException("Rental id not found: " + rentalId));
 		rentalUpdated.setStatus(rental.getStatus());
 		rentalUpdated.setName(rental.getName());
 		rentalUpdated.setStartDate(rental.getStartDate());
@@ -51,13 +49,11 @@ public class RentalService {
 	
 	public void deleteRental(Long bookId, Long rentalId) {
 		Book book = bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setRental(null);
-		try {
-			rentalRepository.deleteById(rentalId);
-			log.info("Rental with id: " + rentalId  + " was deleted");
-		} catch (DataAccessException exc) {
-			throw new ReadingNotFoundException("Rental id not found: " + rentalId);
-		}
+		rentalRepository.findById(rentalId)
+			.orElseThrow(() -> new RentalNotFoundException("Rental id not found: " + rentalId));
+		rentalRepository.deleteById(rentalId);
+		log.info("Rental with id: " + rentalId  + " was deleted");
 	}
 }

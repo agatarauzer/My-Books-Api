@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.collections4.IterableUtils;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,8 +14,8 @@ import org.springframework.stereotype.Service;
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.User;
 import com.agatarauzer.myBooks.exception.BookAlreadyExistsException;
-import com.agatarauzer.myBooks.exception.BookNotFoundException;
-import com.agatarauzer.myBooks.exception.UserNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
 
@@ -37,12 +36,12 @@ public class BookService {
 	
 	public Book findBookById(Long bookId) {
 		return bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 	}
 
 	public List<Book> findBooksByUser(Long userId, int page, int size, String sortBy, String sortDir) {
 		userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
 		Pageable pageable = PageRequest.of(page, size, sort);
@@ -52,7 +51,7 @@ public class BookService {
 	
 	public Book saveBookForUser(Long userId, Book book) {
 		User user = userRepository.findById(userId)
-					.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
+			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 		
 		Optional<Book> bookInDb = bookRepository.findByTitle(book.getTitle());
 		if (bookInDb.isPresent()) {
@@ -69,7 +68,7 @@ public class BookService {
 	
 	public Book updateBook(Long bookId, Book book) {
 		Book bookUpdated = bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		bookUpdated.setTitle(book.getTitle());
 		bookUpdated.setAuthors(book.getAuthors());
 		bookUpdated.setIsbn(book.getIsbn());
@@ -86,11 +85,9 @@ public class BookService {
 	}
 
 	public void deleteBook(Long bookId) {
-		try {
-			bookRepository.deleteById(bookId);
-			log.info("Book with id: " + bookId + " was deleted");
-		} catch (DataAccessException exc) {
-			throw new BookNotFoundException("Book id not found: " + bookId);
-		}
+		bookRepository.findById(bookId)
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+		bookRepository.deleteById(bookId);
+		log.info("Book with id: " + bookId + " was deleted");
 	}
 }

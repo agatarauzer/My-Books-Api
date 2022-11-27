@@ -32,13 +32,18 @@ public class Rental {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="rental_id")
 	private Long id;
+	
 	@Enumerated(EnumType.STRING)
 	private RentalStatus status;
+	
 	private String name;
+	
 	@Column(name="start_date")
 	private LocalDate startDate;
+	
 	@Column(name="end_date")
 	private LocalDate endDate;
+	
 	private String notes;
 	
 	@OneToOne(mappedBy="rental")

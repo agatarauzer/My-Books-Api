@@ -40,20 +40,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
+	public ResponseEntity<UserDto> getUserById(@PathVariable final Long userId) {
 		User user = userService.findUserById(userId);
 		return  ResponseEntity.ok(userMapper.mapToUserDto(user));
 	}
 	
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> updateUser(@PathVariable final Long userId, @RequestBody final UserDto userDto) {
 		User user = userMapper.mapToUser(userDto);
 		userService.updateUser(userId, user);
 		return ResponseEntity.ok(userDto);
 	}
 	
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+	public ResponseEntity<String> deleteUser(@PathVariable final Long userId) {
 		userService.deleteUser(userId);
 		return ResponseEntity.ok().body("Deleted user with id: " + userId);
 	}

@@ -12,7 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.agatarauzer.myBooks.domain.Mail;
-import com.agatarauzer.myBooks.service.MailSenderService;
+import com.agatarauzer.myBooks.service.mail.MailSenderService;
 
 @ExtendWith(MockitoExtension.class)
 public class MailSenderServiceTest {

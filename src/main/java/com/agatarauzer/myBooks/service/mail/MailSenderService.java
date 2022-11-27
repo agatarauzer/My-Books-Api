@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.service;
+package com.agatarauzer.myBooks.service.mail;
 
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;

@@ -1,13 +1,12 @@
 package com.agatarauzer.myBooks.service;
 
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.Reading;
-import com.agatarauzer.myBooks.exception.BookNotFoundException;
-import com.agatarauzer.myBooks.exception.ReadingNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
+import com.agatarauzer.myBooks.exception.notFound.ReadingNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
 import com.agatarauzer.myBooks.repository.ReadingRepository;
 
@@ -30,7 +29,7 @@ public class ReadingService {
 	
 	public Reading saveReading(Long bookId, Reading reading) {
 		Book book = bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setReading(reading);
 		bookRepository.save(book);
 		log.info("Reading for book with id: " + bookId + " was saved in db");
@@ -39,7 +38,7 @@ public class ReadingService {
 	
 	public Reading updateReading(Long readingId, Reading reading) {
 		Reading readingUpdated = readingRepository.findById(readingId)
-				.orElseThrow(() -> new ReadingNotFoundException("Reading id not found: " + readingId));
+			.orElseThrow(() -> new ReadingNotFoundException("Reading id not found: " + readingId));
 		readingUpdated.setStatus(reading.getStatus());
 		readingUpdated.setStartDate(reading.getStartDate());
 		readingUpdated.setEndDate(reading.getEndDate());
@@ -52,13 +51,11 @@ public class ReadingService {
 	
 	public void deleteReading(Long bookId, Long readingId) {
 		Book book = bookRepository.findById(bookId)
-				.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		book.setReading(null);
-		try {
-			readingRepository.deleteById(readingId);
-			log.info("Reading with id: " + readingId  + " was deleted");
-		} catch (DataAccessException exc) {
-			throw new ReadingNotFoundException("Reading id not found: " + readingId);
-		}
+		readingRepository.findById(readingId)
+			.orElseThrow(() -> new ReadingNotFoundException("Reading id not found: " + readingId));
+		readingRepository.deleteById(readingId);
+		log.info("Reading with id: " + readingId  + " was deleted");
 	}
 }

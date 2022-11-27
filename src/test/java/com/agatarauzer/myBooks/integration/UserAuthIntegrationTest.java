@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.agatarauzer.myBooks.dto.auth.JwtResponse;
@@ -27,7 +27,10 @@ public class UserAuthIntegrationTest {
 	private static RestTemplate restTemplate;
 	
 	@Autowired
-	private TestH2Repository h2Repository;
+	private TestH2UserRepository h2UserRepository;
+	
+	@Autowired
+	private TestH2ConfirmationTokenRepository h2ConfirmationTokenRepository;
 	
 	@BeforeAll
 	public static void init() {
@@ -47,11 +50,12 @@ public class UserAuthIntegrationTest {
 							.email("user1@test.pl")
 							.password("user1_password")
 							.build();
+	
+		ResponseEntity<MessageResponse> response = restTemplate.postForEntity(baseUrl, signUpRequest, MessageResponse.class);
 		
-		MessageResponse messageResponse = restTemplate.postForObject(baseUrl, signUpRequest, MessageResponse.class);
-					
-		assertEquals("User registred sucessfully!", messageResponse.getMessage());
-		assertEquals(1, h2Repository.findAll().size());
+		assertEquals("User registred sucessfully!", response.getBody().getMessage());
+		assertEquals(1, h2UserRepository.findAll().size());
+		assertEquals(200, response.getStatusCodeValue());
 	}
 	
 	@Test
@@ -62,10 +66,24 @@ public class UserAuthIntegrationTest {
 				.password("user1_password")
 				.build();
 		
-		JwtResponse jwtResponse = restTemplate.postForObject(baseUrl, loginRequest, JwtResponse.class);
+		ResponseEntity<JwtResponse> response = restTemplate.postForEntity(baseUrl, loginRequest, JwtResponse.class);
 		
-		assertEquals("test_user1", jwtResponse.getUsername());
+		assertEquals("test_user1", response.getBody().getUsername());
+		assertEquals(200, response.getStatusCodeValue());
+	}
+	
+	@Test
+	public void shouldConfirmUser() {
+		String token = h2ConfirmationTokenRepository.findById(1L).get().getConfirmationToken();
+		baseUrl = baseUrl.concat("/signup/confirm?token=").concat(token);
 		
+		ResponseEntity<String> response = restTemplate.getForEntity(baseUrl, String.class);
+		
+		assertEquals("Thank you for confirmation", response.getBody());
+		assertEquals(200, response.getStatusCodeValue());
 	}
 }
+
+
+
 

@@ -21,6 +21,7 @@ import com.agatarauzer.myBooks.dto.auth.JwtResponse;
 import com.agatarauzer.myBooks.dto.auth.LoginRequest;
 import com.agatarauzer.myBooks.dto.auth.MessageResponse;
 import com.agatarauzer.myBooks.dto.auth.SignupRequest;
+import com.agatarauzer.myBooks.exception.alreadyExists.UserAlreadyExistsException;
 import com.agatarauzer.myBooks.exception.notFound.RoleNotFoundException;
 import com.agatarauzer.myBooks.repository.RoleRepository;
 import com.agatarauzer.myBooks.repository.UserRepository;
@@ -66,10 +67,10 @@ public class AuthService {
 	
 	public MessageResponse registerUser(SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return new MessageResponse("Error: Username is already taken!");
+			throw new UserAlreadyExistsException("Error: Username is already taken!");
 		}
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return new MessageResponse("Error: Email is already in use!");
+			throw new UserAlreadyExistsException("Error: Email is already in use!");
 		}
 		
 		User user = User.builder()

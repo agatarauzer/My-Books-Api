@@ -1,15 +1,17 @@
 package com.agatarauzer.myBooks.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import com.agatarauzer.myBooks.dto.auth.JwtResponse;
 import com.agatarauzer.myBooks.dto.auth.LoginRequest;
@@ -24,7 +26,7 @@ public class UserAuthIntegrationTest {
 	
 	private String baseUrl = "http://localhost";
 	
-	private static RestTemplate restTemplate;
+	private static TestRestTemplate testRestTemplate;
 	
 	@Autowired
 	private TestH2UserRepository h2UserRepository;
@@ -34,7 +36,7 @@ public class UserAuthIntegrationTest {
 	
 	@BeforeAll
 	public static void init() {
-		restTemplate = new RestTemplate();
+		testRestTemplate = new TestRestTemplate();
 	}
 	
 	@BeforeEach
@@ -51,10 +53,12 @@ public class UserAuthIntegrationTest {
 							.password("user1_password")
 							.build();
 	
-		ResponseEntity<MessageResponse> response = restTemplate.postForEntity(baseUrl, signUpRequest, MessageResponse.class);
+		ResponseEntity<MessageResponse> response = testRestTemplate.postForEntity(baseUrl, signUpRequest, MessageResponse.class);
+		boolean isUserEnabled = h2UserRepository.findById(1L).get().getEnabled();
 		
 		assertEquals("User registred sucessfully!", response.getBody().getMessage());
 		assertEquals(1, h2UserRepository.findAll().size());
+		assertFalse(isUserEnabled);
 		assertEquals(200, response.getStatusCodeValue());
 	}
 	
@@ -66,7 +70,7 @@ public class UserAuthIntegrationTest {
 				.password("user1_password")
 				.build();
 		
-		ResponseEntity<JwtResponse> response = restTemplate.postForEntity(baseUrl, loginRequest, JwtResponse.class);
+		ResponseEntity<JwtResponse> response = testRestTemplate.postForEntity(baseUrl, loginRequest, JwtResponse.class);
 		
 		assertEquals("test_user1", response.getBody().getUsername());
 		assertEquals(200, response.getStatusCodeValue());
@@ -77,13 +81,45 @@ public class UserAuthIntegrationTest {
 		String token = h2ConfirmationTokenRepository.findById(1L).get().getConfirmationToken();
 		baseUrl = baseUrl.concat("/signup/confirm?token=").concat(token);
 		
-		ResponseEntity<String> response = restTemplate.getForEntity(baseUrl, String.class);
+		ResponseEntity<String> response = testRestTemplate.getForEntity(baseUrl, String.class);
+		boolean isUserEnabled = h2UserRepository.findById(1L).get().getEnabled();
 		
 		assertEquals("Thank you for confirmation", response.getBody());
 		assertEquals(200, response.getStatusCodeValue());
+		assertTrue(isUserEnabled);
+	}
+	
+	@Test
+	public void shouldNotRegisterUserIfUsernameAlreadyExists() {
+		baseUrl = baseUrl.concat("/signup");
+		SignupRequest signUpRequest = SignupRequest.builder()
+							.username("test_user1")
+							.email("user1222@test.pl")
+							.password("user1_password")
+							.build();
+	
+		ResponseEntity<MessageResponse> response = testRestTemplate.postForEntity(baseUrl, signUpRequest, MessageResponse.class);
+		
+		assertEquals("Error: Username is already taken!", response.getBody().getMessage());
+		assertEquals(1, h2UserRepository.findAll().size());
+		assertEquals(400, response.getStatusCodeValue());
+	}
+	
+	@Test
+	public void shouldNotRegisterUserIfEmailAlreadyExists() {
+		baseUrl = baseUrl.concat("/signup");
+		SignupRequest signUpRequest = SignupRequest.builder()
+							.username("test_user2")
+							.email("user1@test.pl")
+							.password("user2_password")
+							.build();
+	
+		ResponseEntity<MessageResponse> response = testRestTemplate.postForEntity(baseUrl, signUpRequest, MessageResponse.class);
+		
+		assertEquals("Error: Email is already in use!", response.getBody().getMessage());
+		assertEquals(1, h2UserRepository.findAll().size());
+		assertEquals(400, response.getStatusCodeValue());
 	}
 }
-
-
 
 

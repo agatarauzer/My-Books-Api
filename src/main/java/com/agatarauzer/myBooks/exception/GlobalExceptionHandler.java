@@ -1,6 +1,5 @@
 package com.agatarauzer.myBooks.exception;
 
-
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(BookAlreadyExistsException exc) {
+	public ResponseEntity<ErrorResponse> handleException(EntityAlreadyExistsException exc) {
 		ErrorResponse error = new ErrorResponse();
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		error.setMessage(exc.getMessage());

@@ -39,11 +39,6 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
 		MessageResponse messageResponse = authService.registerUser(signUpRequest);
-		if (messageResponse.getMessage().contains("Error")) {
-			return ResponseEntity
-					.badRequest()
-					.body(messageResponse);
-		}
 		return ResponseEntity.ok(messageResponse);
 	}
 	

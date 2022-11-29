@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.integration;
+package com.agatarauzer.myBooks.integration.H2Repository;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -46,7 +46,7 @@ public class Book {
 	private String publishingDate;
 	
 	private String language;
-	private int pages;
+	private Integer pages;
 	private String description;
 	
 	@Column(name="image_link")
@@ -60,15 +60,15 @@ public class Book {
 	@Column(name="creation_date")
 	private LocalDate created;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="reading_id")
 	private Reading reading;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="rental_id")
 	private Rental rental;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="purchase_id")
 	private Purchase purchase;
 	

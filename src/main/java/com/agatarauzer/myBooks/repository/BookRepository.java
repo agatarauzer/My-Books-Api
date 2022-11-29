@@ -13,7 +13,7 @@ import com.agatarauzer.myBooks.domain.Book;
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
 	public List<Book> findByUserId(Long userId, Pageable pageable);
-	public Optional<Book> findByTitle(String title);
+	public Optional<Book> findByTitleAndUserId(String title, Long userId);
 	public List<Book>findAllByUserIdIn(List<Long> ids);
 	
 	@Query(value = "SELECT ROUND(COUNT(b.book_id) / COUNT(DISTINCT b.user_id), 2) as Average"

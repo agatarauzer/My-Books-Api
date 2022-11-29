@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.agatarauzer.myBooks.domain.Book;
 import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.exception.BookAlreadyExistsException;
+import com.agatarauzer.myBooks.exception.alreadyExists.BookAlreadyExistsException;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
 import com.agatarauzer.myBooks.repository.BookRepository;
@@ -53,7 +53,7 @@ public class BookService {
 		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 		
-		Optional<Book> bookInDb = bookRepository.findByTitle(book.getTitle());
+		Optional<Book> bookInDb = bookRepository.findByTitleAndUserId(book.getTitle(), userId);
 		if (bookInDb.isPresent()) {
 			throw new BookAlreadyExistsException("Book title is already on your list");
 		}

@@ -2,11 +2,15 @@ package com.agatarauzer.myBooks.dto;
 
 import com.agatarauzer.myBooks.domain.enums.Version;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookDto {
 	private Long id;
 	private String title;
@@ -15,7 +19,7 @@ public class BookDto {
 	private String publisher;
 	private String publishingDate;
 	private String language;
-	private int pages;
+	private Integer pages;
 	private String description;
 	private String imageLink;
 	private Version version;

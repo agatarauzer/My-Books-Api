@@ -17,6 +17,8 @@ import com.agatarauzer.myBooks.dto.auth.JwtResponse;
 import com.agatarauzer.myBooks.dto.auth.LoginRequest;
 import com.agatarauzer.myBooks.dto.auth.MessageResponse;
 import com.agatarauzer.myBooks.dto.auth.SignupRequest;
+import com.agatarauzer.myBooks.integration.H2Repository.TestH2ConfirmationTokenRepository;
+import com.agatarauzer.myBooks.integration.H2Repository.TestH2UserRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserAuthIntegrationTest {

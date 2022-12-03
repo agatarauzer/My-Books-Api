@@ -1,13 +1,13 @@
 INSERT INTO users (first_name, last_name, email, username, password, enabled, registration_date) VALUES
-	('Adam', 'Monday', 'user1@test.com', 'adamon', '$2a$10$1XCd1hHx4wXf71/2k1SaZu2FdNWDtNJcVm097KAD9zDfBbg2fJB1C', 
+	('Adam', 'Monday', 'user1@test.com', 'adamon', '$2a$12$MV7yJL259WBdafqADzWALu/F59kq3iL8h/vnbd99Nkj5K1kAs23dC', 
 	 true, '2022-01-23'),
-	('Barbara', 'Tuesday', 'user2@test.com', 'bartue', '$3g$54$rrrenVoK9h7OadrUtd7wU.dMGf6amRFjiP7X5OKjuhqAAeGyWzRVe', 
+	('Barbara', 'Tuesday', 'user2@test.com', 'bartue', '$2a$12$10ohvqhW9L7y70CbdxGZSeYR.cGHVsiBAbQaXXH6b4TDhAgfIIQoG', 
 	 true, '2022-02-02'),
-	('Connel', 'Wednesday', 'user3@test.com', 'conwed', '$2a$10$R5uEvRzi78IXR8Dif4Klze3fM7N4YizTcdN0NuPfAMsAGyRxCSzr6', 
+	('Connel', 'Wednesday', 'user3@test.com', 'conwed', '$2a$12$44qjIPiNglBh2p6sgwYjA.7nA3s.V91wuEdp2bo8YuRVV7IPk4qO2', 
 	 true, '2022-03-11'),
-	('David', 'Thursday', 'user4@test.com', 'davthu', '$2a$10$7WXJw.k.xVBdEME4su3bluOoQk0GKqilvZ64caErD9kC.OmMBFyGq', 
+	('David', 'Thursday', 'user4@test.com', 'davthu', '$2a$12$J1FzEpk0huq9G50m3le9yePhDOIdsMzQH3peGq3pJjcOep8dP/gEW', 
 	 true, '2022-04-18'),
-	('Anthony', 'Smith', 'admin@test.com', 'admin', '$2a$10$hN7slczAV5QRI6NTEIHyIuqUcWvs9d9se4X2w5e1pr61tpcL3YfrS', 
+	('Anthony', 'Smith', 'admin@test.com', 'admin', '$2a$12$Tx8SM2/HUOabxvZDWyMrUu4hsaG9j6EP6MfG2zoVWQdAhMtBWBb6K', 
 	 true, '2022-01-10');
 	 
 insert into roles(name) values ('ROLE_USER_PAID');

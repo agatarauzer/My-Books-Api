@@ -1,10 +1,17 @@
 package com.agatarauzer.myBooks.dto;
 
+import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserFullInfoDto {
 	private Long id;
 	private String firstName;
@@ -12,5 +19,7 @@ public class UserFullInfoDto {
 	private String email;
 	private String username;
 	private String password;
+	private LocalDate registrationDate;
+	private Boolean enabled;
 	private String roles;
 }

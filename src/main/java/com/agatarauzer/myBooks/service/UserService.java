@@ -44,7 +44,6 @@ public class UserService {
 		userUpdated.setFirstName(user.getFirstName());
 		userUpdated.setLastName(user.getLastName());
 		userUpdated.setEmail(user.getEmail());
-		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
 		log.info("User with id: " + userId + " was updated");
 		return saveUser(userUpdated);
@@ -55,6 +54,6 @@ public class UserService {
 			.orElseThrow(() -> new UserNotFoundException("User id not found: " + userId));
 		userRepository.deleteById(userId);
 		log.info("User with id: " + userId + " was deleted");
-	}		
+	}	
 }
 

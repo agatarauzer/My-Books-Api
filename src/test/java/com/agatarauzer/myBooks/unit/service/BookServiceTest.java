@@ -163,6 +163,7 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldDeleteBook() {
+		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		bookService.deleteBook(bookId);
 		
 		verify(bookRepository, times(1)).deleteById(bookId);
@@ -202,10 +203,10 @@ public class BookServiceTest {
 	
 	@Test
 	public void shouldThrowException_deleteBook() {
-		doThrow(new BookNotFoundException()).when(bookRepository).deleteById(bookId);
+		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
 		
 		assertThrows(BookNotFoundException.class, ()-> bookService.deleteBook(bookId));
-		verify(bookRepository, times(1)).deleteById(bookId);
+		verify(bookRepository, times(0)).deleteById(bookId);
 	}
 }
 	

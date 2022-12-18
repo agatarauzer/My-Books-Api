@@ -108,6 +108,7 @@ public class PurchaseServiceTest {
 	@Test
 	public void shouldDeletePurchase() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
 		
 		purchaseService.deletePurchase(bookId, purchaseId);
 		
@@ -141,9 +142,9 @@ public class PurchaseServiceTest {
 	@Test
 	public void shouldThrowException_deletePurchase() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		doThrow(new PurchaseNotFoundException()).when(purchaseRepository).deleteById(purchaseId);
+		doThrow(new PurchaseNotFoundException()).when(purchaseRepository).findById(purchaseId);
 		
 		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.deletePurchase(bookId, purchaseId));
-		verify(purchaseRepository, times(1)).deleteById(purchaseId);
+		verify(purchaseRepository, times(0)).deleteById(purchaseId);
 	}
 }

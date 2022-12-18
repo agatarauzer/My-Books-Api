@@ -123,6 +123,8 @@ public class UserServiceTest {
 	
 	@Test
 	public void shouldDeleteUser() {
+		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+		
 		userService.deleteUser(userId);
 		
 		verify(userRepository, times(1)).deleteById(userId);
@@ -146,10 +148,10 @@ public class UserServiceTest {
 	
 	@Test
 	public void shouldThrowException_deleteUser() {
-		doThrow(new UserNotFoundException()).when(userRepository).deleteById(userId);
+		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
 		
 		assertThrows(UserNotFoundException.class, ()-> userService.deleteUser(userId));
-		verify(userRepository, times(1)).deleteById(userId);
+		verify(userRepository, times(0)).deleteById(userId);
 	}
 }
 

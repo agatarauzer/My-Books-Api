@@ -115,6 +115,7 @@ public class ReadingServiceTest {
 	@Test
 	public void shouldDeleteReading() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+		when(readingRepository.findById(readingId)).thenReturn(Optional.of(reading));
 		
 		readingService.deleteReading(bookId, readingId);
 		
@@ -148,9 +149,9 @@ public class ReadingServiceTest {
 	@Test
 	public void shouldThrowException_deleteReading() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		doThrow(new ReadingNotFoundException()).when(readingRepository).deleteById(readingId);
+		doThrow(new ReadingNotFoundException()).when(readingRepository).findById(readingId);
 		
 		assertThrows(ReadingNotFoundException.class, ()-> readingService.deleteReading(bookId, readingId));
-		verify(readingRepository, times(1)).deleteById(readingId);
+		verify(readingRepository, times(0)).deleteById(readingId);
 	}
 }

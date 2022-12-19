@@ -73,7 +73,7 @@ public class PurchaseServiceTest {
 	@Test
 	public void shouldGetPurchaseForBook() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(purchaseRepository.findByBookId(bookId)).thenReturn(purchase);
+		when(purchaseRepository.findByBookId(bookId)).thenReturn(Optional.of(purchase));
 		
 		Purchase foundedPurchase = purchaseService.getPurchaseForBook(bookId);
 		

@@ -23,7 +23,7 @@ public class PurchaseService {
 	public Purchase getPurchaseForBook(Long bookId) {
 		bookRepository.findById(bookId)
 			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
-		return purchaseRepository.findByBookId(bookId);
+		return purchaseRepository.findByBookId(bookId).orElseThrow(() -> new PurchaseNotFoundException("Purchase for book: " + bookId + "not found"));	
 	}
 	
 	public Purchase savePurchase(Long bookId, Purchase purchase) {
@@ -41,7 +41,7 @@ public class PurchaseService {
 		purchaseUpdated.setPrice(purchase.getPrice());
 		purchaseUpdated.setPurchaseDate(purchase.getPurchaseDate());
 		purchaseUpdated.setBoughtFrom(purchase.getBoughtFrom());
-		log.info("Purchase with id: " + purchaseId + "was updated");
+		log.info("Purchase with id: " + purchaseId + " was updated");
 		return purchaseRepository.save(purchaseUpdated);
 	}
 	
@@ -52,6 +52,6 @@ public class PurchaseService {
 		purchaseRepository.findById(purchaseId)
 			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
 		purchaseRepository.deleteById(purchaseId);
-			log.info("Purchase with id: " + purchaseId + "was updated");
+			log.info("Purchase with id: " + purchaseId + " was deleted");
 	}
 }

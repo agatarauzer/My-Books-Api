@@ -29,7 +29,7 @@ public class PurchaseController {
 	private final PurchaseMapper purchaseMapper;
 	
 	@GetMapping
-	public ResponseEntity<PurchaseDto> getReadingForBook(@PathVariable final Long bookId) {
+	public ResponseEntity<PurchaseDto> getPurchaseForBook(@PathVariable final Long bookId) {
 		Purchase purchase = purchaseService.getPurchaseForBook(bookId);
 		return ResponseEntity.ok(purchaseMapper.mapToPurchaseDto(purchase));
 	}

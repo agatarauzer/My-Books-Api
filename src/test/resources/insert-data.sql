@@ -1,5 +1,5 @@
 INSERT INTO users (first_name, last_name, email, username, password, enabled, registration_date) VALUES
-	('Adam', 'Monday', 'user1@test.com', 'adamon', '$2a$12$MV7yJL259WBdafqADzWALu/F59kq3iL8h/vnbd99Nkj5K1kAs23dC', 
+	('Adam', 'Monday', 'user1@test.com', 'adamon', '$2a$12$1KkEB3aqbwUrfqWuO3QRFe6f/8aWQDY/ThA6PEXqE8WYxsyA/8VXi', 
 	 true, '2022-01-23'),
 	('Barbara', 'Tuesday', 'user2@test.com', 'bartue', '$2a$12$10ohvqhW9L7y70CbdxGZSeYR.cGHVsiBAbQaXXH6b4TDhAgfIIQoG', 
 	 true, '2022-02-02'),

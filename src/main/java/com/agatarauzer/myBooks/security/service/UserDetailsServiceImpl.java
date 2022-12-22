@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.repository.UserRepository;
+import com.agatarauzer.myBooks.user.User;
+import com.agatarauzer.myBooks.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -11,9 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.client.GoogleBooksClient;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.service.search.GoogleBooksSearchService;
+import com.agatarauzer.myBooks.googleBooksSearch.GoogleBooksClient;
+import com.agatarauzer.myBooks.googleBooksSearch.GoogleBooksSearchService;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookForUserDto;
 
 @ExtendWith(MockitoExtension.class)
 public class GoogleBooksSearchServiceTest {

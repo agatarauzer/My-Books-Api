@@ -15,16 +15,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
-import com.agatarauzer.myBooks.client.GoogleBooksClient;
-import com.agatarauzer.myBooks.config.GoogleBooksApiConfig;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookBasicDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.ImageLinkDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.IsbnDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.SearchInfo;
-import com.agatarauzer.myBooks.mapper.GoogleBookMapper;
+import com.agatarauzer.myBooks.googleBooksSearch.GoogleBookMapper;
+import com.agatarauzer.myBooks.googleBooksSearch.GoogleBooksApiConfig;
+import com.agatarauzer.myBooks.googleBooksSearch.GoogleBooksClient;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookBasicDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookForUserDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBooksSearchResultDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.ImageLinkDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.IsbnDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.SearchInfo;
 
 @ExtendWith(MockitoExtension.class)
 public class GoogleBooksClientTest {

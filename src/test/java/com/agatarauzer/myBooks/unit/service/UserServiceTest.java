@@ -22,12 +22,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.agatarauzer.myBooks.domain.Role;
-import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.domain.enums.ERole;
 import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
-import com.agatarauzer.myBooks.repository.UserRepository;
-import com.agatarauzer.myBooks.service.UserService;
+import com.agatarauzer.myBooks.security.ERole;
+import com.agatarauzer.myBooks.security.Role;
+import com.agatarauzer.myBooks.user.User;
+import com.agatarauzer.myBooks.user.UserRepository;
+import com.agatarauzer.myBooks.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {

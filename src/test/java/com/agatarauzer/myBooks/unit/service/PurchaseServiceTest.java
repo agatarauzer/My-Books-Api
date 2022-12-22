@@ -18,14 +18,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.domain.Book;
-import com.agatarauzer.myBooks.domain.Purchase;
-import com.agatarauzer.myBooks.domain.enums.Version;
+import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.Version;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.PurchaseNotFoundException;
-import com.agatarauzer.myBooks.repository.BookRepository;
-import com.agatarauzer.myBooks.repository.PurchaseRepository;
-import com.agatarauzer.myBooks.service.PurchaseService;
+import com.agatarauzer.myBooks.purchase.Purchase;
+import com.agatarauzer.myBooks.purchase.PurchaseRepository;
+import com.agatarauzer.myBooks.purchase.PurchaseService;
 
 @ExtendWith(MockitoExtension.class)
 public class PurchaseServiceTest {

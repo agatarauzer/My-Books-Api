@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.domain.Purchase;
-import com.agatarauzer.myBooks.dto.PurchaseDto;
-import com.agatarauzer.myBooks.mapper.PurchaseMapper;
+import com.agatarauzer.myBooks.purchase.Purchase;
+import com.agatarauzer.myBooks.purchase.PurchaseDto;
+import com.agatarauzer.myBooks.purchase.PurchaseMapper;
 
 @SpringBootTest
 public class PurchaseMapperTest {

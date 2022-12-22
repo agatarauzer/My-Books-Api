@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.agatarauzer.myBooks.domain.Purchase;
+import com.agatarauzer.myBooks.purchase.Purchase;
 
 public interface TestH2PurchaseRepository extends CrudRepository<Purchase, Long>  {
 	public Purchase findByBookId(Long bookId);

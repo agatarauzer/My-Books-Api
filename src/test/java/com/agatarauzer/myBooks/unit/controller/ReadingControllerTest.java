@@ -20,13 +20,13 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.controller.ReadingController;
-import com.agatarauzer.myBooks.domain.Reading;
-import com.agatarauzer.myBooks.domain.enums.ReadingStatus;
-import com.agatarauzer.myBooks.dto.ReadingDto;
-import com.agatarauzer.myBooks.mapper.ReadingMapper;
-import com.agatarauzer.myBooks.service.BookService;
-import com.agatarauzer.myBooks.service.ReadingService;
+import com.agatarauzer.myBooks.book.BookService;
+import com.agatarauzer.myBooks.reading.Reading;
+import com.agatarauzer.myBooks.reading.ReadingController;
+import com.agatarauzer.myBooks.reading.ReadingDto;
+import com.agatarauzer.myBooks.reading.ReadingMapper;
+import com.agatarauzer.myBooks.reading.ReadingService;
+import com.agatarauzer.myBooks.reading.ReadingStatus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

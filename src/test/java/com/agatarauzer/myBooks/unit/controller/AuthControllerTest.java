@@ -15,11 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.dto.auth.JwtResponse;
-import com.agatarauzer.myBooks.dto.auth.LoginRequest;
-import com.agatarauzer.myBooks.dto.auth.MessageResponse;
-import com.agatarauzer.myBooks.dto.auth.SignupRequest;
-import com.agatarauzer.myBooks.service.auth.AuthService;
+import com.agatarauzer.myBooks.security.dto.JwtResponse;
+import com.agatarauzer.myBooks.security.dto.LoginRequest;
+import com.agatarauzer.myBooks.security.dto.MessageResponse;
+import com.agatarauzer.myBooks.security.dto.SignupRequest;
+import com.agatarauzer.myBooks.security.service.AuthenticationService;
 import com.google.gson.Gson;
 
 
@@ -31,7 +31,7 @@ public class AuthControllerTest {
 	private MockMvc mockMvc;
 	
 	@MockBean
-	private AuthService authService;
+	private AuthenticationService authService;
 	
 	@Test
 	public void shouldSignIn() throws Exception {

@@ -23,14 +23,14 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.controller.UserController;
-import com.agatarauzer.myBooks.domain.Role;
-import com.agatarauzer.myBooks.domain.User;
-import com.agatarauzer.myBooks.domain.enums.ERole;
-import com.agatarauzer.myBooks.dto.UserDto;
-import com.agatarauzer.myBooks.dto.UserFullInfoDto;
-import com.agatarauzer.myBooks.mapper.UserMapper;
-import com.agatarauzer.myBooks.service.UserService;
+import com.agatarauzer.myBooks.security.ERole;
+import com.agatarauzer.myBooks.security.Role;
+import com.agatarauzer.myBooks.user.User;
+import com.agatarauzer.myBooks.user.UserController;
+import com.agatarauzer.myBooks.user.UserDto;
+import com.agatarauzer.myBooks.user.UserFullInfoDto;
+import com.agatarauzer.myBooks.user.UserMapper;
+import com.agatarauzer.myBooks.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

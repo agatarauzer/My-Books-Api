@@ -9,15 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.domain.Book;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookBasicDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBookForUserDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.GoogleBooksSearchResultDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.ImageLinkDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.IsbnDto;
-import com.agatarauzer.myBooks.dto.GoogleBooks.SearchInfo;
-import com.agatarauzer.myBooks.mapper.GoogleBookMapper;
+import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.googleBooksSearch.GoogleBookMapper;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookBasicDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookForUserDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBooksSearchResultDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.ImageLinkDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.IsbnDto;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.SearchInfo;
 
 @SpringBootTest
 public class GoogleBookMapperTest {

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.user;
+package com.agatarauzer.myBooks.user.dto;
 
 import java.time.LocalDate;
 

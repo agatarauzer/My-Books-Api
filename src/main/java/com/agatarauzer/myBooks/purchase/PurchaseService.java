@@ -2,8 +2,8 @@ package com.agatarauzer.myBooks.purchase;
 
 import org.springframework.stereotype.Service;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.PurchaseNotFoundException;
 

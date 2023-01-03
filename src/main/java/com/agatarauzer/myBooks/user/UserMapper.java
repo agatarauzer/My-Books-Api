@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.agatarauzer.myBooks.user.dto.UserDto;
+import com.agatarauzer.myBooks.user.dto.UserFullInfoDto;
+
 @Component
 public class UserMapper {
 	

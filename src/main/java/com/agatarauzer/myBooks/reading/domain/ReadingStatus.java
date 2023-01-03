@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.reading;
+package com.agatarauzer.myBooks.reading.domain;
 
 public enum ReadingStatus {
 	READED,

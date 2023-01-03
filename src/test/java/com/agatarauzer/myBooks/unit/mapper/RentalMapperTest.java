@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.rental.Rental;
 import com.agatarauzer.myBooks.rental.RentalDto;
 import com.agatarauzer.myBooks.rental.RentalMapper;
-import com.agatarauzer.myBooks.rental.RentalStatus;
+import com.agatarauzer.myBooks.rental.domain.Rental;
+import com.agatarauzer.myBooks.rental.domain.RentalStatus;
 
 @SpringBootTest
 public class RentalMapperTest {

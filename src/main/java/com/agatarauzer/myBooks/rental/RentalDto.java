@@ -2,6 +2,8 @@ package com.agatarauzer.myBooks.rental;
 
 import java.time.LocalDate;
 
+import com.agatarauzer.myBooks.rental.domain.RentalStatus;
+
 import lombok.Builder;
 import lombok.Getter;
 

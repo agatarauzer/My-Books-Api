@@ -18,9 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookRepository;
-import com.agatarauzer.myBooks.book.Version;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.PurchaseNotFoundException;
 import com.agatarauzer.myBooks.purchase.Purchase;

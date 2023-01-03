@@ -2,6 +2,8 @@ package com.agatarauzer.myBooks.reading;
 
 import org.springframework.stereotype.Component;
 
+import com.agatarauzer.myBooks.reading.domain.Reading;
+
 @Component
 public class ReadingMapper {
 	

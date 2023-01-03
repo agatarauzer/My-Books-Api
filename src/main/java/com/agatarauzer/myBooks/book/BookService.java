@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.exception.alreadyExists.BookAlreadyExistsException;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;

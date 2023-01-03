@@ -27,10 +27,10 @@ import com.agatarauzer.myBooks.security.ERole;
 import com.agatarauzer.myBooks.security.Role;
 import com.agatarauzer.myBooks.user.User;
 import com.agatarauzer.myBooks.user.UserController;
-import com.agatarauzer.myBooks.user.UserDto;
-import com.agatarauzer.myBooks.user.UserFullInfoDto;
 import com.agatarauzer.myBooks.user.UserMapper;
 import com.agatarauzer.myBooks.user.UserService;
+import com.agatarauzer.myBooks.user.dto.UserDto;
+import com.agatarauzer.myBooks.user.dto.UserFullInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

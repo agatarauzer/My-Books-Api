@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookDto;
 import com.agatarauzer.myBooks.book.BookMapper;
-import com.agatarauzer.myBooks.book.Version;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 
 @SpringBootTest
 public class BookMapperTest {

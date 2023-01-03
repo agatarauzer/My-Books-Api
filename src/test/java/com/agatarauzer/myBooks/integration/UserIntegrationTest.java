@@ -22,8 +22,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2UserRepository;
-import com.agatarauzer.myBooks.user.UserDto;
-import com.agatarauzer.myBooks.user.UserFullInfoDto;
+import com.agatarauzer.myBooks.user.dto.UserDto;
+import com.agatarauzer.myBooks.user.dto.UserFullInfoDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SqlGroup({

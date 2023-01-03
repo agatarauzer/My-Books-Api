@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.book;
 
+import com.agatarauzer.myBooks.book.domain.Version;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

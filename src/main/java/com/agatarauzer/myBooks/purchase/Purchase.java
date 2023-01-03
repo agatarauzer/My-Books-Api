@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.book.domain.Book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.user;
+package com.agatarauzer.myBooks.statistics;
 
 import java.util.List;
 import java.util.Map;
@@ -6,8 +6,9 @@ import java.util.Map;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

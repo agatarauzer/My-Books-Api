@@ -2,6 +2,8 @@ package com.agatarauzer.myBooks.reading;
 
 import java.time.LocalDate;
 
+import com.agatarauzer.myBooks.reading.domain.ReadingStatus;
+
 import lombok.Builder;
 import lombok.Getter;
 

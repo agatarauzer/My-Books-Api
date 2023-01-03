@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookBasicDto;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookDto;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookForUserDto;

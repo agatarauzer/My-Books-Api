@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.agatarauzer.myBooks.book.domain.Book;
+
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
 	public List<Book> findByUserId(Long userId, Pageable pageable);

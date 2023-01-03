@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.reading.Reading;
 import com.agatarauzer.myBooks.reading.ReadingDto;
 import com.agatarauzer.myBooks.reading.ReadingMapper;
-import com.agatarauzer.myBooks.reading.ReadingStatus;
+import com.agatarauzer.myBooks.reading.domain.Reading;
+import com.agatarauzer.myBooks.reading.domain.ReadingStatus;
 
 @SpringBootTest
 public class ReadingMapperTest {

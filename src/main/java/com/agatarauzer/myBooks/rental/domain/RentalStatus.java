@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.rental;
+package com.agatarauzer.myBooks.rental.domain;
 
 
 public enum RentalStatus {

@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.book;
+package com.agatarauzer.myBooks.book.domain;
 
 import java.time.LocalDate;
 
@@ -17,8 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.agatarauzer.myBooks.purchase.Purchase;
-import com.agatarauzer.myBooks.reading.Reading;
-import com.agatarauzer.myBooks.rental.Rental;
+import com.agatarauzer.myBooks.reading.domain.Reading;
+import com.agatarauzer.myBooks.rental.domain.Rental;
 import com.agatarauzer.myBooks.user.User;
 
 import lombok.AllArgsConstructor;

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.googleBooksSearch.GoogleBookMapper;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookBasicDto;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookDto;

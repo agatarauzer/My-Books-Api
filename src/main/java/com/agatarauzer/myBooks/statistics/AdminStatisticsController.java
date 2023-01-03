@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.user;
+package com.agatarauzer.myBooks.statistics;
 
 import java.util.Map;
 

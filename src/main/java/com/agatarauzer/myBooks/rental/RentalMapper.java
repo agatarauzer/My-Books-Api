@@ -2,6 +2,8 @@ package com.agatarauzer.myBooks.rental;
 
 import org.springframework.stereotype.Component;
 
+import com.agatarauzer.myBooks.rental.domain.Rental;
+
 @Component
 public class RentalMapper {
 	

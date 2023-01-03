@@ -17,7 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.security.Role;
 
 import lombok.AllArgsConstructor;

@@ -22,7 +22,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.book.BookDto;
-import com.agatarauzer.myBooks.book.Version;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2BookRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

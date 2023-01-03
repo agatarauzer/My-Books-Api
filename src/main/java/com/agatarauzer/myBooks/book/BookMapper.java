@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.agatarauzer.myBooks.book.domain.Book;
+
 @Component
 public class BookMapper {
 	

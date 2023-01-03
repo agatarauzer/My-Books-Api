@@ -22,12 +22,12 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookController;
 import com.agatarauzer.myBooks.book.BookDto;
 import com.agatarauzer.myBooks.book.BookMapper;
 import com.agatarauzer.myBooks.book.BookService;
-import com.agatarauzer.myBooks.book.Version;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

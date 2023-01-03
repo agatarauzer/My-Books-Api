@@ -18,15 +18,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookRepository;
-import com.agatarauzer.myBooks.book.Version;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.RentalNotFoundException;
-import com.agatarauzer.myBooks.rental.Rental;
 import com.agatarauzer.myBooks.rental.RentalRepository;
 import com.agatarauzer.myBooks.rental.RentalService;
-import com.agatarauzer.myBooks.rental.RentalStatus;
+import com.agatarauzer.myBooks.rental.domain.Rental;
+import com.agatarauzer.myBooks.rental.domain.RentalStatus;
 
 @ExtendWith(MockitoExtension.class)
 public class RentalServiceTest {

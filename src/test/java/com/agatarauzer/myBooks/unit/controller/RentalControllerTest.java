@@ -21,12 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.book.BookService;
-import com.agatarauzer.myBooks.rental.Rental;
 import com.agatarauzer.myBooks.rental.RentalController;
 import com.agatarauzer.myBooks.rental.RentalDto;
 import com.agatarauzer.myBooks.rental.RentalMapper;
 import com.agatarauzer.myBooks.rental.RentalService;
-import com.agatarauzer.myBooks.rental.RentalStatus;
+import com.agatarauzer.myBooks.rental.domain.Rental;
+import com.agatarauzer.myBooks.rental.domain.RentalStatus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -2,10 +2,11 @@ package com.agatarauzer.myBooks.rental;
 
 import org.springframework.stereotype.Service;
 
-import com.agatarauzer.myBooks.book.Book;
 import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.RentalNotFoundException;
+import com.agatarauzer.myBooks.rental.domain.Rental;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

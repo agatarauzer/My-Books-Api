@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.reading;
+package com.agatarauzer.myBooks.rental.domain;
 
 import java.time.LocalDate;
 
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.agatarauzer.myBooks.book.Book;
+import com.agatarauzer.myBooks.book.domain.Book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,15 +26,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="readings")
-public class Reading {
+@Table(name="rentals")
+public class Rental {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="reading_id")
+	@Column(name="rental_id")
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
-	private ReadingStatus status;
+	private RentalStatus status;
+	
+	private String name;
 	
 	@Column(name="start_date")
 	private LocalDate startDate;
@@ -42,12 +44,8 @@ public class Reading {
 	@Column(name="end_date")
 	private LocalDate endDate;
 	
-	@Column(name="readed_pages")
-	private Integer readedPages;
-	
-	private Integer rate;
 	private String notes;
 	
-	@OneToOne(mappedBy="reading")
+	@OneToOne(mappedBy="rental")
 	private Book book;
 }

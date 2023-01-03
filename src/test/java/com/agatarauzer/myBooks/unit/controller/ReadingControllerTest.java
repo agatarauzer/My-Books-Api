@@ -21,12 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.book.BookService;
-import com.agatarauzer.myBooks.reading.Reading;
 import com.agatarauzer.myBooks.reading.ReadingController;
 import com.agatarauzer.myBooks.reading.ReadingDto;
 import com.agatarauzer.myBooks.reading.ReadingMapper;
 import com.agatarauzer.myBooks.reading.ReadingService;
-import com.agatarauzer.myBooks.reading.ReadingStatus;
+import com.agatarauzer.myBooks.reading.domain.Reading;
+import com.agatarauzer.myBooks.reading.domain.ReadingStatus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

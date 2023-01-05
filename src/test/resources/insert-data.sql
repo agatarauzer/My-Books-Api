@@ -8,7 +8,7 @@ INSERT INTO users (first_name, last_name, email, username, password, enabled, re
 	('David', 'Thursday', 'user4@test.com', 'davthu', '$2a$12$J1FzEpk0huq9G50m3le9yePhDOIdsMzQH3peGq3pJjcOep8dP/gEW', 
 	 true, '2022-04-18'),
 	('Anthony', 'Smith', 'admin@test.com', 'admin', '$2a$12$Tx8SM2/HUOabxvZDWyMrUu4hsaG9j6EP6MfG2zoVWQdAhMtBWBb6K', 
-	 true, '2022-01-10');
+	 true, '2022-01-10');  /* password_admin */
 	 
 insert into roles(name) values ('ROLE_USER_PAID');
 insert into roles(name) values ('ROLE_USER_LIMITED');
@@ -43,9 +43,8 @@ INSERT INTO readings (status, start_date, end_date, readed_pages, rate, notes) V
 	('READED', '2022-02-28', '2022-11-09', 180, 5, null),
 	('READED', '2022-06-03', '2022-07-28', 392, 4, 'nice, fast to read'),
 	('IN_READING', '2022-05-24', null, 15, 5, 'child book; children really love it and read every single day'),
-	('IN READING', '2022-07-30', null, 15, 5, 'ideal book for children'),
-	('LEFT', '2022-11-10', null, 160, null, 'maybe I will back to it in future'),
-	('READED', '2022-08-27', '2022-10-06', 576, 4, 'not bad, but quite predictable');
+	('IN_READING', '2022-07-30', null, 15, 5, 'ideal book for children'),
+	('LEFT', '2022-11-10', null, 160, null, 'maybe I will back to it in future');
 	
 INSERT INTO rentals (status, name, start_date, end_date, notes) VALUES
 	('BORROWED_FROM', 'Jack gave it to children', '2022-10-01', '2023-03-22', null),
@@ -85,5 +84,5 @@ INSERT INTO books (title, authors, isbn, publisher, publishing_date, language, p
 	('Czas zdrajców', 'Marek Krajewski', '9788324065486, 8324065482', 'Społeczny Instytut Wydawniczy Znak', '2022',
 	'pl', 400, 'description_11', 'link_11', 'BOOK', 1, '2022-10-02', 11, null, null, 4),
 	('Początek', 'Dan Brown', '9788381101462, 8381101468', 'Sonia Draga Sp. z o.o.', '2017-11-09',
-	'pl', 576, 'description_12', 'link_12', 'E_BOOK', 1, '2022-06-03', 12, null, null, 4);
+	'pl', 576, 'description_12', 'link_12', 'E_BOOK', 1, '2022-06-03', null, null, null, 4);
 	

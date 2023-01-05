@@ -135,8 +135,7 @@ public class PurchaseIntegrationTest {
 		
 		assertEquals(8, h2PurchaseRepository.findAll().size());
 		assertTrue(response.getBody().contains("Deleted purchase"));
-		assertEquals(200, response.getStatusCodeValue());
-		
+		assertEquals(200, response.getStatusCodeValue());	
 	}
 	
 	@Test

@@ -17,5 +17,5 @@ public class GoogleBookBasicDto {
 	private GoogleBookDto googleBookDto;
 	
 	@JsonProperty("searchInfo")
-	private SearchInfo searchInfo;
+	private SearchInfoDto searchInfo;
 }

@@ -14,7 +14,7 @@ public class GoogleBooksSearchService {
 	
 	private final GoogleBooksClient googleBooksClient;
 	
-	public List<GoogleBookForUserDto> searchBookByPhrase(String phrase) {
+	public List<GoogleBookForUserDto> searchBookByPhrase(final String phrase) {
 		return googleBooksClient.getBooksFromSearch(phrase);	
 	}
 }

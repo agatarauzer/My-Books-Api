@@ -4,12 +4,16 @@ import java.time.LocalDate;
 
 import com.agatarauzer.myBooks.reading.domain.ReadingStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReadingDto {
 	private Long id;
 	private ReadingStatus status;

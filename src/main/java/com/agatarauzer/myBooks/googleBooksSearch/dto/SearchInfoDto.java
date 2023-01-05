@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SearchInfo {
+public class SearchInfoDto {
 	
 	@JsonProperty("textSnippet")
 	private String textSnippet;

@@ -77,7 +77,7 @@ public class ReadingServiceTest {
 	@Test
 	public void shouldGetReadingForBook() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(readingRepository.findByBookId(bookId)).thenReturn(reading);
+		when(readingRepository.findByBookId(bookId).get()).thenReturn(reading);
 		
 		Reading foundedReading = readingService.getReadingForBook(bookId);
 		

@@ -21,7 +21,6 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2ReadingRepository;
-import com.agatarauzer.myBooks.purchase.PurchaseDto;
 import com.agatarauzer.myBooks.reading.ReadingDto;
 import com.agatarauzer.myBooks.reading.domain.ReadingStatus;
 
@@ -165,6 +164,4 @@ public class ReadingIntegrationTest {
 	
 		assertEquals(404, response.getStatusCodeValue());
 	}
-	
-	
 }

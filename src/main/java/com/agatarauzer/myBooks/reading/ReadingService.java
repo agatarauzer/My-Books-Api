@@ -23,7 +23,7 @@ public class ReadingService {
 	public Reading getReadingForBook(Long bookId) {
 		bookRepository.findById(bookId)
 			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
-		return readingRepository.findByBookId(bookId);
+		return readingRepository.findByBookId(bookId).orElseThrow(() -> new ReadingNotFoundException("Reading for book: " + bookId + "not found"));
 	}
 	
 	public Reading saveReading(Long bookId, Reading reading) {

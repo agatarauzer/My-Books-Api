@@ -24,7 +24,7 @@ import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBookForUserDto;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.GoogleBooksSearchResultDto;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.ImageLinkDto;
 import com.agatarauzer.myBooks.googleBooksSearch.dto.IsbnDto;
-import com.agatarauzer.myBooks.googleBooksSearch.dto.SearchInfo;
+import com.agatarauzer.myBooks.googleBooksSearch.dto.SearchInfoDto;
 
 @ExtendWith(MockitoExtension.class)
 public class GoogleBooksClientTest {
@@ -51,7 +51,7 @@ public class GoogleBooksClientTest {
 		ImageLinkDto imageLinkDto = new ImageLinkDto("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api");
 		GoogleBookDto googleBookDto = new GoogleBookDto("Java. Podstawy.", "Wydanie IX", List.of("Cay S. Horstmann", "Gary Cornell"), List.of(isbnDto1, isbnDto2), "Helion", "2013-12-09", "pl", 864, 
 				"Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...", imageLinkDto);
-		SearchInfo searchInfo = new SearchInfo("empty");	
+		SearchInfoDto searchInfo = new SearchInfoDto("empty");	
 		GoogleBookBasicDto googleBookBasicDto = new GoogleBookBasicDto(googleBookDto, searchInfo);
 		List<GoogleBookBasicDto> books = List.of(googleBookBasicDto);
 		googleBooksSearchResultDto = new GoogleBooksSearchResultDto(books, 1);

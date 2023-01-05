@@ -20,7 +20,7 @@ public class GoogleBooksController {
 	
 	private final GoogleBooksSearchService searchService;
 	
-	@GetMapping("/outer-search")
+	@GetMapping("/search")
 	public ResponseEntity<List<GoogleBookForUserDto>> getSearchResultByPhrase(@RequestParam String phrase) {
 		return ResponseEntity.ok(searchService.searchBookByPhrase(phrase));
 	}

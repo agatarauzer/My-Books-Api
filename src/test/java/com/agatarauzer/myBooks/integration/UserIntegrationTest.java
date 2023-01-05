@@ -15,6 +15,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
@@ -22,6 +23,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2UserRepository;
+import com.agatarauzer.myBooks.security.dto.JwtResponse;
+import com.agatarauzer.myBooks.security.dto.LoginRequest;
 import com.agatarauzer.myBooks.user.dto.UserDto;
 import com.agatarauzer.myBooks.user.dto.UserFullInfoDto;
 
@@ -55,7 +58,19 @@ public class UserIntegrationTest {
 	// not working, deserialization problem
 	@Test
 	public void shouldGetAllUsers() {
-	
+		//given - admin authorization
+		LoginRequest loginRequest = LoginRequest.builder()
+				.username("admin")
+				.password("password_admin")
+				.build();
+		String loginUrl = baseUrl.concat("/signin");
+		ResponseEntity<JwtResponse> response = testRestTemplate.postForEntity(loginUrl, loginRequest, JwtResponse.class);
+		String token = response.getBody().getType() + " " + response.getBody().getToken();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", token);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users")
 				.queryParam("page", 0)
 				.queryParam("size", 10)
@@ -63,13 +78,13 @@ public class UserIntegrationTest {
 				.queryParam("sortDir", "desc")
 				.build().encode().toUri();
 		
-		ResponseEntity<List<UserFullInfoDto>> result = testRestTemplate.withBasicAuth("admin", "password_admin")
-				.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<UserFullInfoDto>>(){});
+		ResponseEntity<List<UserFullInfoDto>> result = testRestTemplate
+				.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<List<UserFullInfoDto>>(){});
 		
 		assertEquals(5, result.getBody().size());
 		assertEquals(200, result.getStatusCodeValue());
 	}
-
+	
 	@Test
 	public void shouldGetUserById_1() {
 		Long userId = 1L;

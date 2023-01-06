@@ -22,7 +22,7 @@ public class RentalService {
 	public Rental getRentalForBook(Long bookId) {
 		bookRepository.findById(bookId)
 			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
-		return rentalRepository.findByBookId(bookId);
+		return rentalRepository.findByBookId(bookId).orElseThrow(() -> new RentalNotFoundException("Rental for book: " + bookId + "not found"));
 	}
 	
 	public Rental saveRental(Long bookId, Rental rental) {

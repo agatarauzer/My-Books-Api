@@ -77,7 +77,7 @@ public class RentalServiceTest {
 	@Test
 	public void shouldGetRentalForBook() {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(rentalRepository.findByBookId(bookId)).thenReturn(rental);
+		when(rentalRepository.findByBookId(bookId).get()).thenReturn(rental);
 		
 		Rental foundedRental = rentalService.getRentalForBook(bookId);
 		

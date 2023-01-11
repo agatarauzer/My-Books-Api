@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security.service;
+package com.agatarauzer.myBooks.authentication;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -13,17 +13,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.agatarauzer.myBooks.authentication.confirmationToken.ConfirmationToken;
+import com.agatarauzer.myBooks.authentication.confirmationToken.ConfirmationTokenService;
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
+import com.agatarauzer.myBooks.authentication.payload.MessageResponse;
+import com.agatarauzer.myBooks.authentication.payload.SignupRequest;
+import com.agatarauzer.myBooks.authentication.role.ERole;
+import com.agatarauzer.myBooks.authentication.role.Role;
+import com.agatarauzer.myBooks.authentication.role.RoleRepository;
 import com.agatarauzer.myBooks.exception.alreadyExists.UserAlreadyExistsException;
 import com.agatarauzer.myBooks.exception.notFound.RoleNotFoundException;
-import com.agatarauzer.myBooks.security.ConfirmationToken;
-import com.agatarauzer.myBooks.security.ERole;
-import com.agatarauzer.myBooks.security.Role;
-import com.agatarauzer.myBooks.security.dto.JwtResponse;
-import com.agatarauzer.myBooks.security.dto.LoginRequest;
-import com.agatarauzer.myBooks.security.dto.MessageResponse;
-import com.agatarauzer.myBooks.security.dto.SignupRequest;
+import com.agatarauzer.myBooks.mail.confirmationMail.ConfirmationMailService;
 import com.agatarauzer.myBooks.security.jwt.JwtUtils;
-import com.agatarauzer.myBooks.security.repository.RoleRepository;
+import com.agatarauzer.myBooks.security.service.UserDetailsImpl;
 import com.agatarauzer.myBooks.user.User;
 import com.agatarauzer.myBooks.user.UserRepository;
 

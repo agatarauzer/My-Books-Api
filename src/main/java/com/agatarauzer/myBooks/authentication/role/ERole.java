@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security;
+package com.agatarauzer.myBooks.authentication.role;
 
 public enum ERole {
 	ROLE_USER_PAID,

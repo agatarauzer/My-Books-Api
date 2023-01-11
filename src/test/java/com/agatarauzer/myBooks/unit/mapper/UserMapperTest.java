@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.agatarauzer.myBooks.security.ERole;
-import com.agatarauzer.myBooks.security.Role;
+import com.agatarauzer.myBooks.authentication.role.ERole;
+import com.agatarauzer.myBooks.authentication.role.Role;
 import com.agatarauzer.myBooks.user.User;
 import com.agatarauzer.myBooks.user.UserMapper;
 import com.agatarauzer.myBooks.user.dto.UserDto;

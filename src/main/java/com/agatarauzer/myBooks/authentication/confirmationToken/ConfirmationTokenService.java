@@ -1,11 +1,8 @@
-package com.agatarauzer.myBooks.security.service;
+package com.agatarauzer.myBooks.authentication.confirmationToken;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
-import com.agatarauzer.myBooks.security.ConfirmationToken;
-import com.agatarauzer.myBooks.security.repository.ConfirmationTokenRepository;
 
 import lombok.RequiredArgsConstructor;
 

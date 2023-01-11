@@ -21,11 +21,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2RentalRepository;
 import com.agatarauzer.myBooks.rental.RentalDto;
 import com.agatarauzer.myBooks.rental.domain.RentalStatus;
-import com.agatarauzer.myBooks.security.dto.JwtResponse;
-import com.agatarauzer.myBooks.security.dto.LoginRequest;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SqlGroup({

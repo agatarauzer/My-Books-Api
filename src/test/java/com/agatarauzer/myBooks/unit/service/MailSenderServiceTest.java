@@ -11,8 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import com.agatarauzer.myBooks.utils.emailSender.Mail;
-import com.agatarauzer.myBooks.utils.emailSender.MailSenderService;
+import com.agatarauzer.myBooks.mail.Mail;
+import com.agatarauzer.myBooks.mail.MailSenderService;
 
 @ExtendWith(MockitoExtension.class)
 public class MailSenderServiceTest {

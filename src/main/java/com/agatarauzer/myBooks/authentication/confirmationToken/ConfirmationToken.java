@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security;
+package com.agatarauzer.myBooks.authentication.confirmationToken;
 
 import java.time.LocalDate;
 import java.util.UUID;

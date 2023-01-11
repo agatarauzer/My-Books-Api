@@ -22,9 +22,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.agatarauzer.myBooks.authentication.role.ERole;
+import com.agatarauzer.myBooks.authentication.role.Role;
 import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
-import com.agatarauzer.myBooks.security.ERole;
-import com.agatarauzer.myBooks.security.Role;
 import com.agatarauzer.myBooks.user.User;
 import com.agatarauzer.myBooks.user.UserRepository;
 import com.agatarauzer.myBooks.user.UserService;

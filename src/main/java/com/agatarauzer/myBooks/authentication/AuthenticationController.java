@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security;
+package com.agatarauzer.myBooks.authentication;
 
 import java.util.Optional;
 
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agatarauzer.myBooks.security.dto.JwtResponse;
-import com.agatarauzer.myBooks.security.dto.LoginRequest;
-import com.agatarauzer.myBooks.security.dto.MessageResponse;
-import com.agatarauzer.myBooks.security.dto.SignupRequest;
-import com.agatarauzer.myBooks.security.service.AuthenticationService;
-import com.agatarauzer.myBooks.security.service.ConfirmationTokenService;
+import com.agatarauzer.myBooks.authentication.confirmationToken.ConfirmationToken;
+import com.agatarauzer.myBooks.authentication.confirmationToken.ConfirmationTokenService;
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
+import com.agatarauzer.myBooks.authentication.payload.MessageResponse;
+import com.agatarauzer.myBooks.authentication.payload.SignupRequest;
 
 import lombok.RequiredArgsConstructor;
 

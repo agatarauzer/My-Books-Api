@@ -22,9 +22,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2UserRepository;
-import com.agatarauzer.myBooks.security.dto.JwtResponse;
-import com.agatarauzer.myBooks.security.dto.LoginRequest;
 import com.agatarauzer.myBooks.user.dto.UserDto;
 import com.agatarauzer.myBooks.user.dto.UserFullInfoDto;
 

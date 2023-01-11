@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.utils.emailSender;
+package com.agatarauzer.myBooks.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,9 +1,9 @@
-package com.agatarauzer.myBooks.security.service;
+package com.agatarauzer.myBooks.mail.confirmationMail;
 
 import org.springframework.stereotype.Service;
 
-import com.agatarauzer.myBooks.utils.emailSender.Mail;
-import com.agatarauzer.myBooks.utils.emailSender.MailSenderService;
+import com.agatarauzer.myBooks.mail.Mail;
+import com.agatarauzer.myBooks.mail.MailSenderService;
 
 import lombok.RequiredArgsConstructor;
 

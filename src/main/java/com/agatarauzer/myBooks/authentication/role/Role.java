@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security;
+package com.agatarauzer.myBooks.authentication.role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

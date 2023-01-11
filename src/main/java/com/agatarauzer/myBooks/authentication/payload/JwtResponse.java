@@ -1,4 +1,4 @@
-package com.agatarauzer.myBooks.security.dto;
+package com.agatarauzer.myBooks.authentication.payload;
 
 import java.util.List;
 

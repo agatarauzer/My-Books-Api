@@ -23,8 +23,8 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.security.ERole;
-import com.agatarauzer.myBooks.security.Role;
+import com.agatarauzer.myBooks.authentication.role.ERole;
+import com.agatarauzer.myBooks.authentication.role.Role;
 import com.agatarauzer.myBooks.user.User;
 import com.agatarauzer.myBooks.user.UserController;
 import com.agatarauzer.myBooks.user.UserMapper;

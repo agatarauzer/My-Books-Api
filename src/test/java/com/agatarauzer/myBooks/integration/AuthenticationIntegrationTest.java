@@ -14,12 +14,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
+import com.agatarauzer.myBooks.authentication.payload.MessageResponse;
+import com.agatarauzer.myBooks.authentication.payload.SignupRequest;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2ConfirmationTokenRepository;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2UserRepository;
-import com.agatarauzer.myBooks.security.dto.JwtResponse;
-import com.agatarauzer.myBooks.security.dto.LoginRequest;
-import com.agatarauzer.myBooks.security.dto.MessageResponse;
-import com.agatarauzer.myBooks.security.dto.SignupRequest;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AuthenticationIntegrationTest {
@@ -46,6 +46,10 @@ public class AuthenticationIntegrationTest {
 	public void setUp() {
 		baseUrl = baseUrl.concat(":").concat(port + "").concat("/v1");
 	}
+	
+	
+	//TODO: Add tests for exceptions - user not authenticated 
+	
 	
 	@Test
 	@Order(1)

@@ -15,11 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.agatarauzer.myBooks.security.dto.JwtResponse;
-import com.agatarauzer.myBooks.security.dto.LoginRequest;
-import com.agatarauzer.myBooks.security.dto.MessageResponse;
-import com.agatarauzer.myBooks.security.dto.SignupRequest;
-import com.agatarauzer.myBooks.security.service.AuthenticationService;
+import com.agatarauzer.myBooks.authentication.AuthenticationService;
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
+import com.agatarauzer.myBooks.authentication.payload.MessageResponse;
+import com.agatarauzer.myBooks.authentication.payload.SignupRequest;
 import com.google.gson.Gson;
 
 

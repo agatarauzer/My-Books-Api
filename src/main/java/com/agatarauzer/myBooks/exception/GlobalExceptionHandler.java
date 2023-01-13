@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,6 +29,24 @@ public class GlobalExceptionHandler {
 		error.setMessage(exc.getMessage());
 		error.setTimeStamp(LocalDateTime.now());
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(AccessDeniedException exc) {
+		ErrorResponse error = new ErrorResponse();	
+		error.setStatus(HttpStatus.FORBIDDEN.value());
+		error.setMessage(exc.getMessage());
+		error.setTimeStamp(LocalDateTime.now());
+		return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(AuthenticationException exc) {
+		ErrorResponse error = new ErrorResponse();	
+		error.setStatus(HttpStatus.FORBIDDEN.value());
+		error.setMessage(exc.getMessage());
+		error.setTimeStamp(LocalDateTime.now());
+		return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
 	}
 	
 	@ExceptionHandler

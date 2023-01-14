@@ -15,12 +15,15 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
 import com.agatarauzer.myBooks.book.BookDto;
 import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2BookRepository;
@@ -35,12 +38,13 @@ public class BookIntegrationTest {
 	@LocalServerPort
 	private int port;
 	
-	private String baseUrl = "http://localhost";
-	
-	private static TestRestTemplate testRestTemplate;
-	
 	@Autowired
 	private TestH2BookRepository h2BookRepository;
+	
+	private String baseUrl = "http://localhost";
+	private static TestRestTemplate testRestTemplate;
+	private String token;
+	private HttpHeaders headers;
 	
 	@BeforeAll
 	public static void init() {
@@ -50,13 +54,25 @@ public class BookIntegrationTest {
 	@BeforeEach
 	public void setUp() {
 		baseUrl = baseUrl.concat(":").concat(port + "").concat("/v1");
+		
+		LoginRequest loginRequest = LoginRequest.builder()
+				.username("adamon")
+				.password("user1_password")
+				.build();
+		String loginUrl = baseUrl.concat("/signin");
+		ResponseEntity<JwtResponse> response = testRestTemplate.postForEntity(loginUrl, loginRequest, JwtResponse.class);
+		token = response.getBody().getType() + " " + response.getBody().getToken();
+		
+		headers = new HttpHeaders();
+		headers.add("Authorization", token);
 	}
 	
 	@Test
 	public void shouldGetAllBooksForUser() {
 		baseUrl = baseUrl.concat("/users/1/books");
+		HttpEntity<String> request = new HttpEntity<String>(headers);
 		
-		ResponseEntity<List<BookDto>> result = testRestTemplate.exchange(baseUrl, HttpMethod.GET, null, 
+		ResponseEntity<List<BookDto>> result = testRestTemplate.exchange(baseUrl, HttpMethod.GET, request, 
 				new ParameterizedTypeReference<List<BookDto>>(){});
 				
 		assertEquals(5, result.getBody().size());
@@ -68,8 +84,9 @@ public class BookIntegrationTest {
 		Long userId = 1L;
 		Long bookId = 1L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}").build(userId, bookId);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
 		
-		ResponseEntity<BookDto> response = testRestTemplate.getForEntity(uri, BookDto.class);
+		ResponseEntity<BookDto> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, BookDto.class);
 		
 		assertEquals("JavaTM podstawy", response.getBody().getTitle());
 		assertEquals(200, response.getStatusCodeValue());
@@ -80,8 +97,9 @@ public class BookIntegrationTest {
 		Long userId = 3L;
 		Long bookId = 9L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}").build(userId, bookId);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
 		
-		ResponseEntity<BookDto> response = testRestTemplate.getForEntity(uri, BookDto.class);
+		ResponseEntity<BookDto> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, BookDto.class);
 		
 		assertEquals("Kubuś Puchatek", response.getBody().getTitle());
 		assertEquals(200, response.getStatusCodeValue());
@@ -101,7 +119,7 @@ public class BookIntegrationTest {
 				.language("pl")
 				.pages(155)
 				.build();
-		HttpEntity<BookDto> request = new HttpEntity<>(requestBook);
+		HttpEntity<BookDto> request = new HttpEntity<>(requestBook, headers);
 		
 		ResponseEntity<BookDto> response = testRestTemplate.postForEntity(uri, request, BookDto.class);
 		
@@ -130,7 +148,7 @@ public class BookIntegrationTest {
 				.version(Version.E_BOOK)
 				.copies(2)
 				.build();
-		HttpEntity<BookDto> request = new HttpEntity<>(requestBook);
+		HttpEntity<BookDto> request = new HttpEntity<>(requestBook, headers);
 
 		ResponseEntity<BookDto> response = testRestTemplate.exchange(uri, HttpMethod.PUT, request, BookDto.class);
 		
@@ -147,8 +165,9 @@ public class BookIntegrationTest {
 		Long userId = 1L;
 		Long bookId = 3L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}").build(userId, bookId);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
 		
-		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, null, String.class);
+		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, request, String.class);
 		
 		assertEquals(4, h2BookRepository.findByUserId(userId).size());
 		assertTrue(response.getBody().contains("Deleted book"));
@@ -160,8 +179,9 @@ public class BookIntegrationTest {
 		Long userId = 1L;
 		Long bookId = 123L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}").build(userId, bookId);
-		
-		ResponseEntity<BookDto> response = testRestTemplate.getForEntity(uri, BookDto.class);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+	
+		ResponseEntity<BookDto> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, BookDto.class);
 		
 		assertEquals(404, response.getStatusCodeValue());
 	}
@@ -180,7 +200,7 @@ public class BookIntegrationTest {
 				.language("pl")
 				.pages(155)
 				.build();
-		HttpEntity<BookDto> request = new HttpEntity<>(requestBook);
+		HttpEntity<BookDto> request = new HttpEntity<>(requestBook, headers);
 		
 		ResponseEntity<BookDto> response = testRestTemplate.postForEntity(uri, request, BookDto.class);
 		

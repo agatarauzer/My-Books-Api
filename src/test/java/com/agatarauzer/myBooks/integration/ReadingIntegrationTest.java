@@ -14,12 +14,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
+import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2ReadingRepository;
 import com.agatarauzer.myBooks.reading.ReadingDto;
 import com.agatarauzer.myBooks.reading.domain.ReadingStatus;
@@ -39,16 +42,28 @@ public class ReadingIntegrationTest {
 	
 	private static TestRestTemplate testRestTemplate;
 	private String baseUrl = "http://localhost";
+	private String token;
+	private HttpHeaders headers;
 
 	@BeforeAll
 	public static void init() {
 		testRestTemplate = new TestRestTemplate();
-		
 	}
 	
 	@BeforeEach
 	public void setUp() {
 		baseUrl = baseUrl.concat(":").concat(port + "").concat("/v1");
+		
+		LoginRequest loginRequest = LoginRequest.builder()
+				.username("adamon")
+				.password("user1_password")
+				.build();
+		String loginUrl = baseUrl.concat("/signin");
+		ResponseEntity<JwtResponse> response = testRestTemplate.postForEntity(loginUrl, loginRequest, JwtResponse.class);
+		token = response.getBody().getType() + " " + response.getBody().getToken();
+		
+		headers = new HttpHeaders();
+		headers.add("Authorization", token);
 	}
 	
 	@Test
@@ -56,8 +71,9 @@ public class ReadingIntegrationTest {
 		Long userId = 1L;
 		Long bookId = 1L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/readings").build(userId, bookId);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
 	    
-	  	ResponseEntity<ReadingDto> response = testRestTemplate.getForEntity(uri, ReadingDto.class);
+	  	ResponseEntity<ReadingDto> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, ReadingDto.class);
 	  			
 		assertEquals(LocalDate.of(2022, 2, 5), response.getBody().getStartDate());
 		assertEquals(4, response.getBody().getRate());
@@ -79,7 +95,7 @@ public class ReadingIntegrationTest {
 				.notes("not bad, but quite predictable")
 				.build();
 		
-		HttpEntity<ReadingDto> request = new HttpEntity<>(requestReading);
+		HttpEntity<ReadingDto> request = new HttpEntity<>(requestReading, headers);
 	
 		ResponseEntity<ReadingDto> response = testRestTemplate.postForEntity(uri, request, ReadingDto.class);
 		
@@ -105,7 +121,7 @@ public class ReadingIntegrationTest {
 				.notes("good source of knowledge, but little boring")
 				.build();
 		
-		HttpEntity<ReadingDto> request = new HttpEntity<>(requestReading);
+		HttpEntity<ReadingDto> request = new HttpEntity<>(requestReading, headers);
 
 		ResponseEntity<ReadingDto> response = testRestTemplate.exchange(uri, HttpMethod.PUT, request, ReadingDto.class);
 		
@@ -123,8 +139,9 @@ public class ReadingIntegrationTest {
 		Long bookId = 1L;
 		Long readingId = 1L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/readings/{readingId}").build(userId, bookId, readingId);
+		HttpEntity<ReadingDto> request = new HttpEntity<>(headers);
 		
-		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, null, String.class);
+		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, request, String.class);
 		
 		assertEquals(10, h2ReadingRepository.findAll().size());
 		assertTrue(response.getBody().contains("Deleted reading"));
@@ -136,8 +153,9 @@ public class ReadingIntegrationTest {
 		Long userId = 1L;
 		Long bookId = 155L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/readings").build(userId, bookId);
-	    
-	  	ResponseEntity<String> response = testRestTemplate.getForEntity(uri, String.class);
+		HttpEntity<ReadingDto> request = new HttpEntity<>(headers);
+		
+	  	ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, String.class);
 	  			
 		assertEquals(404, response.getStatusCodeValue());
 	}
@@ -147,8 +165,9 @@ public class ReadingIntegrationTest {
 		Long userId = 4L;
 		Long bookId = 12L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/readings").build(userId, bookId);
+		HttpEntity<ReadingDto> request = new HttpEntity<>(headers);
 	    
-	  	ResponseEntity<String> response = testRestTemplate.getForEntity(uri, String.class);
+	  	ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, String.class);
 	  			
 		assertEquals(404, response.getStatusCodeValue());
 	}
@@ -159,8 +178,9 @@ public class ReadingIntegrationTest {
 		Long bookId = 1L;
 		Long readingId = 155L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/readings/{readingId}").build(userId, bookId, readingId);
-			
-		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, null, String.class);
+		HttpEntity<ReadingDto> request = new HttpEntity<>(headers);
+		
+		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, request, String.class);
 	
 		assertEquals(404, response.getStatusCodeValue());
 	}

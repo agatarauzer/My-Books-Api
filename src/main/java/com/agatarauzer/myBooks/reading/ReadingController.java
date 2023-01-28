@@ -30,22 +30,22 @@ public class ReadingController {
 	}
 	
 	@PostMapping("/readings")
-	public ResponseEntity<ReadingDto> addReading(@PathVariable final Long bookId, @RequestBody final ReadingDto readingDto) {
+	public ResponseEntity<ReadingDto> addReading(@RequestBody final ReadingDto readingDto) {
 		Reading reading = readingMapper.mapToReading(readingDto);
-		readingService.saveReading(bookId, reading);
+		readingService.saveReadingForBook(reading);
 		return new ResponseEntity<ReadingDto>(readingDto, HttpStatus.CREATED);		
 	}
 	
 	@PutMapping("/readings/{readingId}")
-	public ResponseEntity<ReadingDto> updateReading(@PathVariable final Long readingId, @RequestBody final ReadingDto readingDto) {
+	public ResponseEntity<ReadingDto> updateReading(@RequestBody final ReadingDto readingDto) {
 		Reading reading = readingMapper.mapToReading(readingDto);
-		readingService.updateReading(readingId, reading);
+		readingService.updateReading(reading);
 		return ResponseEntity.ok(readingDto);
 	}
 	
 	@DeleteMapping("/readings/{readingId}")
-	public ResponseEntity<String> deleteReading(@PathVariable final Long bookId, @PathVariable final Long readingId) {
-		readingService.deleteReading(bookId, readingId);
+	public ResponseEntity<String> deleteReading(@PathVariable final Long readingId) {
+		readingService.deleteReading(readingId);
 		return ResponseEntity.ok().body("Deleted reading: " + readingId);
 	}
 }

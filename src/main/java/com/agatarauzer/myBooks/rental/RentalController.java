@@ -1,5 +1,7 @@
 package com.agatarauzer.myBooks.rental;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,28 +28,28 @@ public class RentalController {
 	private final RentalMapper rentalMapper;
 	
 	@GetMapping("/rentals")
-	public ResponseEntity<RentalDto> getRentalForBook(@PathVariable final Long bookId) {
-		Rental rental = rentalService.getRentalForBook(bookId);
-		return ResponseEntity.ok(rentalMapper.mapToRentalDto(rental));
+	public ResponseEntity<List<RentalDto>> getRentalsForBook(@PathVariable final Long bookId) {
+		List<Rental> rentals = rentalService.getRentalsForBook(bookId);
+		return ResponseEntity.ok(rentalMapper.mapToRentalDtoList(rentals));
 	}
 	
 	@PostMapping("/rentals")
-	public ResponseEntity<RentalDto> addRental(@PathVariable final Long bookId, @RequestBody final RentalDto rentalDto) {
+	public ResponseEntity<RentalDto> addRental(@RequestBody final RentalDto rentalDto) {
 		Rental rental = rentalMapper.mapToRental(rentalDto);
-		rentalService.saveRental(bookId, rental);
+		rentalService.saveRentalForBook(rental);
 		return new ResponseEntity<RentalDto>(rentalDto, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/rentals/{rentalId}")
-	public ResponseEntity<RentalDto> updateRental(@PathVariable final Long rentalId, @RequestBody final RentalDto rentalDto) {
+	public ResponseEntity<RentalDto> updateRental(@RequestBody final RentalDto rentalDto) {
 		Rental rental = rentalMapper.mapToRental(rentalDto);
-		rentalService.updateRental(rentalId, rental);
+		rentalService.updateRental(rental);
 		return ResponseEntity.ok(rentalDto);
 	}
 	
 	@DeleteMapping("/rentals/{rentalId}")
-	public ResponseEntity<String> deleteRental(@PathVariable final Long bookId, @PathVariable final Long rentalId) {
-		rentalService.deleteRental(bookId, rentalId);
+	public ResponseEntity<String> deleteRental(@PathVariable final Long rentalId) {
+		rentalService.deleteRental(rentalId);
 		return ResponseEntity.ok().body("Deleted rental: " + rentalId);
 	}
 }

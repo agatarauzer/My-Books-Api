@@ -21,4 +21,5 @@ public class RentalDto {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String notes;
+	private Long bookId;
 }

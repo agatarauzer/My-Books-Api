@@ -30,22 +30,22 @@ public class PurchaseController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PurchaseDto> addPurchase(@PathVariable final Long bookId, @RequestBody final PurchaseDto purchaseDto) {
+	public ResponseEntity<PurchaseDto> addPurchase(@RequestBody final PurchaseDto purchaseDto) {
 		Purchase purchase = purchaseMapper.mapToPurchase(purchaseDto);
-		purchaseService.savePurchase(bookId, purchase);
+		purchaseService.savePurchaseForBook(purchase);
 		return new ResponseEntity<PurchaseDto>(purchaseDto, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{purchaseId}")
-	public ResponseEntity<PurchaseDto> updatePurchase(@PathVariable final Long purchaseId, @RequestBody final PurchaseDto purchaseDto) {
+	public ResponseEntity<PurchaseDto> updatePurchase(@RequestBody final PurchaseDto purchaseDto) {
 		Purchase purchase = purchaseMapper.mapToPurchase(purchaseDto);
-		purchaseService.updatePurchase(purchaseId, purchase);
+		purchaseService.updatePurchase(purchase);
 		return ResponseEntity.ok(purchaseDto);
 	}
 	
 	@DeleteMapping("/{purchaseId}")
-	public ResponseEntity<String> deletePurchase(@PathVariable final Long bookId, @PathVariable final Long purchaseId) {
-		purchaseService.deletePurchase(bookId, purchaseId);
+	public ResponseEntity<String> deletePurchase(@PathVariable final Long purchaseId) {
+		purchaseService.deletePurchase(purchaseId);
 		return ResponseEntity.ok().body("Deleted purchase: " + purchaseId);
 	}
 }

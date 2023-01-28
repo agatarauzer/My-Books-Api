@@ -22,4 +22,5 @@ public class ReadingDto {
 	private Integer readedPages;
 	private Integer rate;
 	private String notes;
+	private Long bookId;
 }

@@ -9,7 +9,7 @@ CREATE TABLE users (
 	username VARCHAR(30) NOT NULL, 
 	password VARCHAR(150) NOT NULL, 
 	enabled BOOLEAN, 
-	registration_date DATE 
+	registration_date DATE
 );
 
 -- changeset agatarauzer:2
@@ -37,35 +37,6 @@ CREATE TABLE confirmation_tokens (
 );
 
 -- changeset agatarauzer:5
-CREATE TABLE readings (
-	reading_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	status VARCHAR(20),
-	start_date DATE,
-	end_date DATE,
-	readed_pages INT(3),
-	rate INT(1),
-	notes VARCHAR(250)
-);
-
--- changeset agatarauzer:6
-CREATE TABLE rentals (
-	rental_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	status VARCHAR(20),
-	name VARCHAR(250),
-	start_date DATE,
-	end_date DATE,
-	notes VARCHAR(250)
-);
-
--- changeset agatarauzer:7	
-CREATE TABLE purchases (
-	purchase_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	price DOUBLE,
-	purchase_date DATE,
-	bought_from VARCHAR(100)
-);
-
--- changeset agatarauzer:8
 CREATE TABLE books (
 	book_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	title VARCHAR(250) NOT NULL,
@@ -78,17 +49,47 @@ CREATE TABLE books (
 	description LONGTEXT, 
 	image_link VARCHAR(250),
 	version VARCHAR(20),
-	copies INT(2),
 	creation_date DATE,
-	reading_id BIGINT,
-	rental_id BIGINT,
-	purchase_id BIGINT,
-	user_id BIGINT,
-	FOREIGN KEY (reading_id) REFERENCES readings(reading_id),
-	FOREIGN KEY (rental_id) REFERENCES rentals(rental_id),
-	FOREIGN KEY (purchase_id) REFERENCES purchases(purchase_id),
+	user_id BIGINT NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+-- changeset agatarauzer:6
+CREATE TABLE readings (
+	reading_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	status VARCHAR(20),
+	start_date DATE,
+	end_date DATE,
+	readed_pages INT(3),
+	rate INT(1),
+	notes VARCHAR(250),
+	book_id BIGINT NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES books(book_id)
+);
+
+-- changeset agatarauzer:7
+CREATE TABLE rentals (
+	rental_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	status VARCHAR(20),
+	name VARCHAR(250),
+	start_date DATE,
+	end_date DATE,
+	notes VARCHAR(250),
+	book_id BIGINT NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES books(book_id)
+);
+
+-- changeset agatarauzer:8
+CREATE TABLE purchases (
+	purchase_id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	price DOUBLE,
+	purchase_date DATE,
+	bought_from VARCHAR(100),
+	book_id BIGINT NOT NULL,
+	FOREIGN KEY (book_id) REFERENCES books(book_id)
+);
+
+
 
 
 

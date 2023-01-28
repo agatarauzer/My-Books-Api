@@ -2,7 +2,6 @@ package com.agatarauzer.myBooks.book.domain;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,12 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.agatarauzer.myBooks.purchase.Purchase;
-import com.agatarauzer.myBooks.reading.domain.Reading;
-import com.agatarauzer.myBooks.rental.domain.Rental;
 import com.agatarauzer.myBooks.user.User;
 
 import lombok.AllArgsConstructor;
@@ -58,22 +53,8 @@ public class Book {
 	@Enumerated(EnumType.STRING)
 	private Version version;
 	
-	private Integer copies;
-	
 	@Column(name="creation_date")
 	private LocalDate created;
-	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="reading_id")
-	private Reading reading;
-	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="rental_id")
-	private Rental rental;
-	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="purchase_id")
-	private Purchase purchase;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")

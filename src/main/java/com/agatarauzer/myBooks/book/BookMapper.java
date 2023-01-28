@@ -23,7 +23,6 @@ public class BookMapper {
 				.description(bookDto.getDescription())
 				.imageLink(bookDto.getImageLink())
 				.version(bookDto.getVersion())
-				.copies(bookDto.getCopies())
 				.build();			
 	}
 	
@@ -40,7 +39,6 @@ public class BookMapper {
 				.description(book.getDescription())
 				.imageLink(book.getImageLink())
 				.version(book.getVersion())
-				.copies(book.getCopies())
 				.build();
 	}
 	

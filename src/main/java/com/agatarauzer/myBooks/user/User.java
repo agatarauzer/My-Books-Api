@@ -55,7 +55,7 @@ public class User {
 	@Builder.Default
 	private Boolean enabled = false;
 	
-	@OneToMany(targetEntity = Book.class, mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Book> books;
 	
 	@ManyToMany(fetch = FetchType.LAZY)

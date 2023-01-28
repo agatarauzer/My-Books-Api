@@ -2,9 +2,8 @@ package com.agatarauzer.myBooks.purchase;
 
 import org.springframework.stereotype.Service;
 
-import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.BookService;
 import com.agatarauzer.myBooks.book.domain.Book;
-import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.PurchaseNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -16,40 +15,36 @@ import lombok.extern.slf4j.Slf4j;
 public class PurchaseService {
 	
 	private final PurchaseRepository purchaseRepository;
-	private final BookRepository bookRepository;
-	
+	private final BookService bookService;
+
 	public Purchase getPurchaseForBook(Long bookId) {
-		bookRepository.findById(bookId)
-			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
 		return purchaseRepository.findByBookId(bookId).orElseThrow(() -> new PurchaseNotFoundException("Purchase for book: " + bookId + "not found"));	
 	}
 	
-	public Purchase savePurchase(Long bookId, Purchase purchase) {
-		Book book = bookRepository.findById(bookId)
-			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
-		book.setPurchase(purchase);
-		bookRepository.save(book);
-		log.info("Purchase for book with id: " + bookId + " was saved in db");
+	public Purchase savePurchaseForBook(Purchase purchase) {
+		Book book = bookService.findBookById(purchase.getBook().getId());
+		purchase.setBook(book);
+		purchaseRepository.save(purchase);
+		log.info("Purchase for book with id: " + purchase.getBook().getId() + " was saved in db");
 		return purchase;
 	}
 	
-	public Purchase updatePurchase(Long purchaseId, Purchase purchase) {
-		Purchase purchaseUpdated = purchaseRepository.findById(purchaseId)
-			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
+	public Purchase updatePurchase(Purchase purchase) {
+		Purchase purchaseUpdated = purchaseRepository.findById(purchase.getId())
+			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchase.getId()));
 		purchaseUpdated.setPrice(purchase.getPrice());
 		purchaseUpdated.setPurchaseDate(purchase.getPurchaseDate());
 		purchaseUpdated.setBoughtFrom(purchase.getBoughtFrom());
-		log.info("Purchase with id: " + purchaseId + " was updated");
+		log.info("Purchase with id: " + purchase.getId() + " was updated");
 		return purchaseRepository.save(purchaseUpdated);
 	}
 	
-	public void deletePurchase(Long bookId, Long purchaseId) {
-		Book book = bookRepository.findById(bookId)
-			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
-		book.setPurchase(null);
+	public void deletePurchase(Long purchaseId) {
 		purchaseRepository.findById(purchaseId)
 			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchaseId));
 		purchaseRepository.deleteById(purchaseId);
-			log.info("Purchase with id: " + purchaseId + " was deleted");
+		log.info("Purchase with id: " + purchaseId + " was deleted");
 	}
 }
+
+

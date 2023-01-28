@@ -47,9 +47,7 @@ public class AuthenticationService {
 	private final ConfirmationMailService confirmationMailService;
 	
 	public JwtResponse authenticateUser(LoginRequest loginRequest) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-		
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwtToken = jwtUtils.generateJwtToken(authentication);
 		

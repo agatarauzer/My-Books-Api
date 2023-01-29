@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.book.BookService;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.purchase.Purchase;
 import com.agatarauzer.myBooks.purchase.PurchaseController;
 import com.agatarauzer.myBooks.purchase.PurchaseDto;
@@ -50,22 +52,38 @@ public class PurchaseControllerTest {
 	private Purchase purchase; 
 	private PurchaseDto  purchaseDto;
 	private Long bookId;
+	private Book book;
 	
 	@BeforeEach
 	public void prepareTestData() {
 		bookId = 1L;
 		purchaseId = 1L;
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.version(Version.BOOK)
+				.build();
 		purchase = Purchase.builder()
 				.id(purchaseId)
 				.price(48.90)
 				.purchaseDate(LocalDate.of(2022, 7, 12))
 				.boughtFrom("empik.com")
+				.book(book)
 				.build();
 		purchaseDto = PurchaseDto.builder()
 				.id(purchaseId)
 				.price(48.90)
 				.purchaseDate(LocalDate.of(2022, 7, 12))
 				.boughtFrom("empik.com")
+				.bookId(bookId)
 				.build();
 	}
 	
@@ -85,7 +103,7 @@ public class PurchaseControllerTest {
 	
 	@Test 
 	public void shouldAddPurchase() throws Exception {
-		when(purchaseService.savePurchase(bookId, purchase)).thenReturn(purchase);
+		when(purchaseService.savePurchaseForBook(purchase)).thenReturn(purchase);
 		when(purchaseMapper.mapToPurchase(purchaseDto)).thenReturn(purchase);
 		
 		Gson gson = new GsonBuilder()
@@ -112,7 +130,7 @@ public class PurchaseControllerTest {
 				.purchaseDate(LocalDate.of(2022, 8, 15))
 				.boughtFrom("www.empik.com")
 				.build();
-		when(purchaseService.updatePurchase(purchaseId, purchaseUpdated)).thenReturn(purchaseUpdated);
+		when(purchaseService.updatePurchase(purchaseUpdated)).thenReturn(purchaseUpdated);
 		
 		Gson gson = new GsonBuilder()
 			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
@@ -137,6 +155,6 @@ public class PurchaseControllerTest {
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().is(200));
 		
-		verify(purchaseService, times(1)).deletePurchase(bookId, purchaseId);
+		verify(purchaseService, times(1)).deletePurchase(purchaseId);
 	}	
 }

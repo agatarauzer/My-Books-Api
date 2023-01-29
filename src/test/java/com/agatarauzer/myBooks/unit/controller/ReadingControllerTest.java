@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.book.BookService;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.reading.ReadingController;
 import com.agatarauzer.myBooks.reading.ReadingDto;
 import com.agatarauzer.myBooks.reading.ReadingMapper;
@@ -51,11 +53,25 @@ public class ReadingControllerTest {
 	private Reading reading; 
 	private ReadingDto  readingDto;
 	private Long bookId;
+	private Book book;
 	
 	@BeforeEach
 	public void prepareTestData() {
 		bookId = 1L;
 		readingId = 1L;
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.version(Version.BOOK)
+				.build();
 		reading = Reading.builder()
 				.id(readingId)
 				.status(ReadingStatus.READED)
@@ -64,6 +80,7 @@ public class ReadingControllerTest {
 				.readedPages(820)
 				.rate(4)
 				.notes("Java basics...")
+				.book(book)
 				.build();	
 		readingDto = ReadingDto.builder()
 				.id(readingId)
@@ -73,6 +90,7 @@ public class ReadingControllerTest {
 				.readedPages(820)
 				.rate(4)
 				.notes("Java basics...")
+				.bookId(bookId)
 				.build();
 	}
 	
@@ -95,7 +113,7 @@ public class ReadingControllerTest {
 	
 	@Test 
 	public void shouldAddReading() throws Exception {
-		when(readingService.saveReading(bookId, reading)).thenReturn(reading);
+		when(readingService.saveReadingForBook(reading)).thenReturn(reading);
 		when(readingMapper.mapToReading(readingDto)).thenReturn(reading);
 		
 		Gson gson = new GsonBuilder()
@@ -128,7 +146,7 @@ public class ReadingControllerTest {
 				.rate(5)
 				.notes("Java basics")
 				.build();
-		when(readingService.updateReading(readingId, readingUpdated)).thenReturn(readingUpdated);
+		when(readingService.updateReading(readingUpdated)).thenReturn(readingUpdated);
 		
 		Gson gson = new GsonBuilder()
 			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
@@ -156,7 +174,7 @@ public class ReadingControllerTest {
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().is(200));	
 		
-		verify(readingService, times(1)).deleteReading(bookId, readingId);
+		verify(readingService, times(1)).deleteReading(readingId);
 	}	
 }
 

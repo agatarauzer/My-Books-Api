@@ -70,7 +70,6 @@ public class BookControllerTest {
 			.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 			.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
 			.version(Version.BOOK)
-			.copies(1)
 			.build();
 		bookDto = BookDto.builder()
 			.id(bookId)
@@ -84,7 +83,6 @@ public class BookControllerTest {
 			.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 			.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
 			.version(Version.BOOK)
-			.copies(1)
 			.build();
 	}
 	
@@ -112,8 +110,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$[0].pages", is(864)))
 			.andExpect(jsonPath("$[0].description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$[0].imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$[0].version", is("BOOK")))
-			.andExpect(jsonPath("$[0].copies", is(1)));
+			.andExpect(jsonPath("$[0].version", is("BOOK")));
 	}
 	
 	@Test
@@ -134,8 +131,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$.pages", is(864)))
 			.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$.version", is("BOOK")))
-			.andExpect(jsonPath("$.copies", is(1)));
+			.andExpect(jsonPath("$.version", is("BOOK")));
 	}
 	
 	@Test
@@ -163,8 +159,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$.pages", is(864)))
 			.andExpect(jsonPath("$.description", is("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")))
 			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")))
-			.andExpect(jsonPath("$.version", is("BOOK")))
-			.andExpect(jsonPath("$.copies", is(1)));
+			.andExpect(jsonPath("$.version", is("BOOK")));
 	}
 	
 	@Test
@@ -181,7 +176,6 @@ public class BookControllerTest {
 				.description("Kolejne wydanie_changed")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
 				.version(Version.E_BOOK)
-				.copies(2)
 				.build();
 			
 		when(bookService.updateBook(1L, bookUpdated)).thenReturn(bookUpdated);
@@ -205,8 +199,7 @@ public class BookControllerTest {
 			.andExpect(jsonPath("$.pages", is(900)))
 			.andExpect(jsonPath("$.description", is("Kolejne wydanie_changed")))
 			.andExpect(jsonPath("$.imageLink", is("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")))
-			.andExpect(jsonPath("$.version", is("E_BOOK")))
-			.andExpect(jsonPath("$.copies", is(2)));
+			.andExpect(jsonPath("$.version", is("E_BOOK")));
 	}
 	
 	@Test

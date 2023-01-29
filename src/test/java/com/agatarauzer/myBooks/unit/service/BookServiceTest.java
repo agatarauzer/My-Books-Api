@@ -28,10 +28,10 @@ import com.agatarauzer.myBooks.book.BookRepository;
 import com.agatarauzer.myBooks.book.BookService;
 import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.book.domain.Version;
+import com.agatarauzer.myBooks.exception.alreadyExists.BookAlreadyExistsException;
 import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
-import com.agatarauzer.myBooks.exception.notFound.UserNotFoundException;
 import com.agatarauzer.myBooks.user.User;
-import com.agatarauzer.myBooks.user.UserRepository;
+import com.agatarauzer.myBooks.user.UserService;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
@@ -43,7 +43,7 @@ public class BookServiceTest {
 	private BookRepository bookRepository;
 	
 	@Mock
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	private Long bookId;
 	private Long userId;
@@ -66,7 +66,6 @@ public class BookServiceTest {
 				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
 				.version(Version.BOOK)
-				.copies(1)
 				.build();
 		
 		String sortDir = "asc";
@@ -99,7 +98,6 @@ public class BookServiceTest {
 	@Test
 	public void shouldFindBooksByUser() {
 		List<Book> bookList = List.of(book);
-		when(userRepository.findById(userId)).thenReturn(Optional.of(new User()));
 		when(bookRepository.findByUserId(userId, pageable)).thenReturn(bookList);
 		
 		List<Book> books = bookService.findBooksByUser(userId, 0, 5, "id", "asc");
@@ -119,7 +117,8 @@ public class BookServiceTest {
 				.password("tom_mal_password")
 				.roles(Set.of(new Role(ERole.ROLE_USER_PAID)))
 				.build();
-		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+		when(bookRepository.findByTitleAndUserId(book.getTitle(), userId)).thenReturn(Optional.ofNullable(null));
+		when(userService.findUserById(userId)).thenReturn(user);
 		when(bookRepository.save(book)).thenReturn(book);
 		
 		Book savedBook = bookService.saveBookForUser(userId, book);
@@ -127,16 +126,7 @@ public class BookServiceTest {
 		assertEquals(userId, savedBook.getUser().getId());
 		assertEquals(book, savedBook);
 	}
-	
-	@Test
-	public void sholudSaveBook() {
-		when(bookRepository.save(book)).thenReturn(book);
-		
-		Book savedBook = bookService.saveBook(book);
-		
-		assertEquals(book, savedBook);
-	}
-	
+
 	@Test
 	public void shouldUpdateBook() {
 		Book bookUpdated = Book.builder()
@@ -151,7 +141,6 @@ public class BookServiceTest {
 				.description("Kolejne wydanie_changed")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
 				.version(Version.E_BOOK)
-				.copies(2)
 				.build();
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(bookRepository.save(any(Book.class))).thenReturn(bookUpdated);
@@ -178,19 +167,11 @@ public class BookServiceTest {
 	}
 	
 	@Test
-	public void shouldThrowException_findBooksByUser() {
-		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
-		
-		assertThrows(UserNotFoundException.class, ()-> bookService.findBooksByUser(userId, 0, 5, "id", "asc"));
-		verify(userRepository, times(1)).findById(userId);
-	}
-	
-	@Test
 	public void shouldThrowException_saveBookForUser() {
-		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
+		doThrow(new BookAlreadyExistsException()).when(bookRepository).findByTitleAndUserId(book.getTitle(), userId);
 		
-		assertThrows(UserNotFoundException.class, ()-> bookService.saveBookForUser(userId, new Book()));
-		verify(userRepository, times(1)).findById(userId);
+		assertThrows(BookAlreadyExistsException.class, ()-> bookService.saveBookForUser(userId, book));
+		verify(bookRepository, times(1)).findByTitleAndUserId(book.getTitle(), userId);
 	}
 	
 	@Test

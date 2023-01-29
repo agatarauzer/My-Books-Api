@@ -18,10 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.BookService;
 import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.book.domain.Version;
-import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.ReadingNotFoundException;
 import com.agatarauzer.myBooks.reading.ReadingRepository;
 import com.agatarauzer.myBooks.reading.ReadingService;
@@ -38,7 +37,7 @@ public class ReadingServiceTest {
 	private ReadingRepository readingRepository;
 	
 	@Mock
-	private BookRepository bookRepository;
+	private BookService bookService;
 	
 	private Long bookId;
 	private Book book;
@@ -60,7 +59,6 @@ public class ReadingServiceTest {
 				.description("Kolejne wydanie_changed")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
 				.version(Version.E_BOOK)
-				.copies(2)
 				.build();
 		readingId = 1L;
 		reading = Reading.builder()
@@ -71,13 +69,13 @@ public class ReadingServiceTest {
 				.readedPages(820)
 				.rate(4)
 				.notes("Java basics...")
+				.book(book)
 				.build();
 	}
 	
 	@Test
 	public void shouldGetReadingForBook() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(readingRepository.findByBookId(bookId).get()).thenReturn(reading);
+		when(readingRepository.findByBookId(bookId)).thenReturn(Optional.of(reading));
 		
 		Reading foundedReading = readingService.getReadingForBook(bookId);
 		
@@ -86,9 +84,10 @@ public class ReadingServiceTest {
 	
 	@Test
 	public void shouldSaveReading() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+		when(bookService.findBookById(readingId)).thenReturn(book);
+		when(readingRepository.save(reading)).thenReturn(reading);
 		
-		Reading savedReading = readingService.saveReading(bookId, reading);
+		Reading savedReading = readingService.saveReadingForBook(reading);
 		
 		assertEquals(reading, savedReading);
 	}
@@ -107,51 +106,41 @@ public class ReadingServiceTest {
 		when(readingRepository.findById(readingId)).thenReturn(Optional.of(reading));
 		when(readingRepository.save(any(Reading.class))).thenReturn(readingUpdated);
 		
-		Reading readingAfterUpdate = readingService.updateReading(readingId, readingUpdated);
+		Reading readingAfterUpdate = readingService.updateReading(readingUpdated);
 		
 		assertEquals(readingUpdated, readingAfterUpdate);
 	}
 	
 	@Test
 	public void shouldDeleteReading() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(readingRepository.findById(readingId)).thenReturn(Optional.of(reading));
 		
-		readingService.deleteReading(bookId, readingId);
+		readingService.deleteReading(readingId);
 		
 		verify(readingRepository, times(1)).deleteById(readingId);
 	}
 	
 	@Test
 	public void shouldThrowException_getReadingForBook() {
-		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
+		doThrow(new ReadingNotFoundException()).when(readingRepository).findByBookId(bookId);
 		
-		assertThrows(BookNotFoundException.class, ()-> readingService.getReadingForBook(bookId));
-		verify(bookRepository, times(1)).findById(bookId);
-	}
-	
-	@Test
-	public void shouldThrowException_saveReading() {
-		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
-		
-		assertThrows(BookNotFoundException.class, ()-> readingService.saveReading(bookId, reading));
-		verify(bookRepository, times(1)).findById(bookId);
+		assertThrows(ReadingNotFoundException.class, ()-> readingService.getReadingForBook(bookId));
+		verify(readingRepository, times(1)).findByBookId(bookId);
 	}
 	
 	@Test
 	public void shouldThrowException_updateReading() {
 		doThrow(new ReadingNotFoundException()).when(readingRepository).findById(readingId);
 		
-		assertThrows(ReadingNotFoundException.class, ()-> readingService.updateReading(readingId, new Reading()));
+		assertThrows(ReadingNotFoundException.class, ()-> readingService.updateReading(reading));
 		verify(readingRepository, times(1)).findById(readingId);
 	}
 	
 	@Test
 	public void shouldThrowException_deleteReading() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doThrow(new ReadingNotFoundException()).when(readingRepository).findById(readingId);
 		
-		assertThrows(ReadingNotFoundException.class, ()-> readingService.deleteReading(bookId, readingId));
+		assertThrows(ReadingNotFoundException.class, ()-> readingService.deleteReading(readingId));
 		verify(readingRepository, times(0)).deleteById(readingId);
 	}
 }

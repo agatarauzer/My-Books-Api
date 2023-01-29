@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.agatarauzer.myBooks.book.BookService;
+import com.agatarauzer.myBooks.book.domain.Book;
+import com.agatarauzer.myBooks.book.domain.Version;
 import com.agatarauzer.myBooks.rental.RentalController;
 import com.agatarauzer.myBooks.rental.RentalDto;
 import com.agatarauzer.myBooks.rental.RentalMapper;
@@ -51,11 +54,25 @@ public class RentalControllerTest {
 	private Rental rental; 
 	private RentalDto  rentalDto;
 	private Long bookId;
+	private Book book;
 	
 	@BeforeEach
 	public void prepareTestData() {
 		bookId = 1L;
 		rentalId = 1L;
+		book = Book.builder()
+				.id(bookId)
+				.title("Java. Podstawy. Wydanie IX")
+				.authors("Cay S. Horstmann,Gary Cornell")
+				.isbn("8324677615, 9788324677610")
+				.publisher("Helion")
+				.publishingDate("2013-12-09")
+				.language("pl")
+				.pages(864)
+				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
+				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
+				.version(Version.BOOK)
+				.build();
 		rental =Rental.builder()
 				.id(1L)
 				.status(RentalStatus.BORROWED_FROM)
@@ -63,6 +80,7 @@ public class RentalControllerTest {
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
 				.notes("Kate will need it in January!")
+				.book(book)
 				.build();
 		rentalDto = RentalDto.builder()
 				.id(1L)
@@ -71,28 +89,29 @@ public class RentalControllerTest {
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
 				.notes("Kate will need it in January!")
+				.bookId(bookId)
 				.build();
 	}
 	
 	@Test
-	public void shouldGetRentalForBook() throws Exception {
-		when(rentalService.getRentalForBook(bookId)).thenReturn(rental);
-		when(rentalMapper.mapToRentalDto(rental)).thenReturn(rentalDto);
+	public void shouldGetRentalsForBook() throws Exception {
+		when(rentalService.getRentalsForBook(bookId)).thenReturn(List.of(rental));
+		when(rentalMapper.mapToRentalDtoList(List.of(rental))).thenReturn(List.of(rentalDto));
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/v1/users/1/books/{bookId}/rentals", bookId)
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().is(200))
-			.andExpect(jsonPath("$.status", is("BORROWED_FROM")))
-			.andExpect(jsonPath("$.name", is("from Kate")))
-			.andExpect(jsonPath("$.startDate", is("2022-06-21")))
-			.andExpect(jsonPath("$.endDate", is("2023-01-05")))
-			.andExpect(jsonPath("$.notes", is("Kate will need it in January!")));	
+			.andExpect(jsonPath("$[0].status", is("BORROWED_FROM")))
+			.andExpect(jsonPath("$[0].name", is("from Kate")))
+			.andExpect(jsonPath("$[0].startDate", is("2022-06-21")))
+			.andExpect(jsonPath("$[0].endDate", is("2023-01-05")))
+			.andExpect(jsonPath("$[0].notes", is("Kate will need it in January!")));	
 	}
 	
 	@Test 
 	public void shouldAddRental() throws Exception {
-		when(rentalService.saveRental(bookId, rental)).thenReturn(rental);
+		when(rentalService.saveRentalForBook(rental)).thenReturn(rental);
 		when(rentalMapper.mapToRental(rentalDto)).thenReturn(rental);
 		
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
@@ -122,7 +141,7 @@ public class RentalControllerTest {
 				.endDate(LocalDate.of(2021, 8, 9))
 				.notes("Not needed now")
 				.build();
-		when(rentalService.updateRental(rentalId, rentalUpdated)).thenReturn(rentalUpdated);
+		when(rentalService.updateRental(rentalUpdated)).thenReturn(rentalUpdated);
 		
 		Gson gson = new GsonBuilder()
 			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
@@ -149,6 +168,6 @@ public class RentalControllerTest {
 				.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().is(200));
 		
-		verify(rentalService, times(1)).deleteRental(bookId, rentalId);
+		verify(rentalService, times(1)).deleteRental(rentalId);
 	}	
 }

@@ -115,7 +115,7 @@ public class UserServiceTest {
 		when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 		when(userRepository.save(any(User.class))).thenReturn(userUpdated);
 		
-		User userAfterUpdate = userService.updateUser(userId, userUpdated);
+		User userAfterUpdate = userService.updateUser(userUpdated);
 		
 		assertEquals(userUpdated.getEmail(), userAfterUpdate.getEmail());
 		assertEquals(userUpdated.getLastName(), userAfterUpdate.getLastName());
@@ -142,7 +142,7 @@ public class UserServiceTest {
 	public void shouldThrowException_updateUser() {
 		doThrow(new UserNotFoundException()).when(userRepository).findById(userId);
 		
-		assertThrows(UserNotFoundException.class, ()-> userService.updateUser(userId, new User()));
+		assertThrows(UserNotFoundException.class, ()-> userService.updateUser(user));
 		verify(userRepository, times(1)).findById(userId);
 	}
 	

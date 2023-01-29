@@ -18,10 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.BookService;
 import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.book.domain.Version;
-import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.PurchaseNotFoundException;
 import com.agatarauzer.myBooks.purchase.Purchase;
 import com.agatarauzer.myBooks.purchase.PurchaseRepository;
@@ -37,7 +36,7 @@ public class PurchaseServiceTest {
 	private PurchaseRepository purchaseRepository;
 	
 	@Mock
-	private BookRepository bookRepository;
+	private BookService bookService;
 	
 	private Long bookId;
 	private Book book;
@@ -59,7 +58,6 @@ public class PurchaseServiceTest {
 				.description("Kolejne wydanie_changed")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
 				.version(Version.E_BOOK)
-				.copies(2)
 				.build();
 		purchaseId = 1L;
 		purchase =  Purchase.builder()
@@ -67,12 +65,12 @@ public class PurchaseServiceTest {
 				.price(48.90)
 				.purchaseDate(LocalDate.of(2022, 7, 12))
 				.boughtFrom("empik.com")
+				.book(book)
 				.build();
 	}
 	
 	@Test
 	public void shouldGetPurchaseForBook() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(purchaseRepository.findByBookId(bookId)).thenReturn(Optional.of(purchase));
 		
 		Purchase foundedPurchase = purchaseService.getPurchaseForBook(bookId);
@@ -82,9 +80,10 @@ public class PurchaseServiceTest {
 	
 	@Test
 	public void shouldSavePurchase() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+		when(bookService.findBookById(bookId)).thenReturn(book);
+		when(purchaseRepository.save(purchase)).thenReturn(purchase);
 		
-		Purchase savedPurchase = purchaseService.savePurchase(bookId, purchase);
+		Purchase savedPurchase = purchaseService.savePurchaseForBook(purchase);
 		
 		assertEquals(purchase, savedPurchase);
 	}
@@ -100,51 +99,41 @@ public class PurchaseServiceTest {
 		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
 		when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchaseUpdated);
 		
-		Purchase purchaseAfterUpdate = purchaseService.updatePurchase(purchaseId, purchaseUpdated);
+		Purchase purchaseAfterUpdate = purchaseService.updatePurchase(purchaseUpdated);
 		
 		assertEquals(purchaseUpdated, purchaseAfterUpdate);
 	}
 	
 	@Test
 	public void shouldDeletePurchase() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(purchaseRepository.findById(purchaseId)).thenReturn(Optional.of(purchase));
 		
-		purchaseService.deletePurchase(bookId, purchaseId);
+		purchaseService.deletePurchase(purchaseId);
 		
 		verify(purchaseRepository, times(1)).deleteById(purchaseId);
 	}
 	
 	@Test
 	public void shouldThrowException_getPurchaseForBook() {
-		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
+		doThrow(new PurchaseNotFoundException()).when(purchaseRepository).findByBookId(bookId);
 		
-		assertThrows(BookNotFoundException.class, ()-> purchaseService.getPurchaseForBook(bookId));
-		verify(bookRepository, times(1)).findById(bookId);
-	}
-	
-	@Test
-	public void shouldThrowException_savePurchase() {
-		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
-		
-		assertThrows(BookNotFoundException.class, ()-> purchaseService.savePurchase(bookId, purchase));
-		verify(bookRepository, times(1)).findById(bookId);
+		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.getPurchaseForBook(bookId));
+		verify(purchaseRepository, times(1)).findByBookId(bookId);
 	}
 	
 	@Test
 	public void shouldThrowException_updatePurchase() {
 		doThrow(new PurchaseNotFoundException()).when(purchaseRepository).findById(purchaseId);
 		
-		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.updatePurchase(purchaseId, new Purchase()));
+		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.updatePurchase(purchase));
 		verify(purchaseRepository, times(1)).findById(purchaseId);
 	}
 	
 	@Test
 	public void shouldThrowException_deletePurchase() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doThrow(new PurchaseNotFoundException()).when(purchaseRepository).findById(purchaseId);
 		
-		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.deletePurchase(bookId, purchaseId));
+		assertThrows(PurchaseNotFoundException.class, ()-> purchaseService.deletePurchase(purchaseId));
 		verify(purchaseRepository, times(0)).deleteById(purchaseId);
 	}
 }

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.agatarauzer.myBooks.book.BookRepository;
+import com.agatarauzer.myBooks.book.BookService;
 import com.agatarauzer.myBooks.book.domain.Book;
 import com.agatarauzer.myBooks.book.domain.Version;
-import com.agatarauzer.myBooks.exception.notFound.BookNotFoundException;
 import com.agatarauzer.myBooks.exception.notFound.RentalNotFoundException;
 import com.agatarauzer.myBooks.rental.RentalRepository;
 import com.agatarauzer.myBooks.rental.RentalService;
@@ -38,7 +38,7 @@ public class RentalServiceTest {
 	private RentalRepository rentalRepository;
 	
 	@Mock
-	private BookRepository bookRepository;
+	private BookService bookService;
 	
 	private Long bookId;
 	private Book book;
@@ -60,9 +60,7 @@ public class RentalServiceTest {
 				.description("Kolejne wydanie_changed")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api_changed")
 				.version(Version.E_BOOK)
-				.copies(2)
 				.build();
-		
 		rentalId = 1L;
 		rental = Rental.builder()
 				.id(1L)
@@ -71,24 +69,26 @@ public class RentalServiceTest {
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
 				.notes("Kate will need it in January!")
+				.book(book)
 				.build();
 	}
 	
 	@Test
-	public void shouldGetRentalForBook() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-		when(rentalRepository.findByBookId(bookId).get()).thenReturn(rental);
+	public void shouldGetRentalsForBook() {
+		when(rentalRepository.findByBookId(bookId)).thenReturn(Optional.of(List.of(rental)));
 		
-		Rental foundedRental = rentalService.getRentalForBook(bookId);
+		List<Rental> foundedRentals = rentalService.getRentalsForBook(bookId);
 		
-		assertEquals(rental, foundedRental);
+		assertEquals(List.of(rental), foundedRentals);
+		assertEquals(1, foundedRentals.size());
 	}
 	
 	@Test
 	public void shouldSaveRental() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+		when(bookService.findBookById(bookId)).thenReturn(book);
+		when(rentalRepository.save(rental)).thenReturn(rental);
 		
-		Rental savedRental = rentalService.saveRental(bookId, rental);
+		Rental savedRental = rentalService.saveRentalForBook(rental);
 		
 		assertEquals(rental, savedRental);
 	}
@@ -106,51 +106,41 @@ public class RentalServiceTest {
 		when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
 		when(rentalRepository.save(any(Rental.class))).thenReturn(rentalUpdated);
 		
-		Rental rentalAfterUpdate = rentalService.updateRental(rentalId, rentalUpdated);
+		Rental rentalAfterUpdate = rentalService.updateRental(rentalUpdated);
 		
 		assertEquals(rentalUpdated, rentalAfterUpdate);
 	}
 	
 	@Test
 	public void shouldDeleteRental() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(rentalRepository.findById(rentalId)).thenReturn(Optional.of(rental));
 		
-		rentalService.deleteRental(bookId, rentalId);
+		rentalService.deleteRental(rentalId);
 		
 		verify(rentalRepository, times(1)).deleteById(rentalId);
 	}
 	
 	@Test
 	public void shouldThrowException_getRentalForBook() {
-		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
+		doThrow(new RentalNotFoundException()).when(rentalRepository).findByBookId(bookId);
 		
-		assertThrows(BookNotFoundException.class, ()-> rentalService.getRentalForBook(bookId));
-		verify(bookRepository, times(1)).findById(bookId);
-	}
-	
-	@Test
-	public void shouldThrowException_saveRental() {
-		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
-		
-		assertThrows(BookNotFoundException.class, ()-> rentalService.saveRental(bookId, rental));
-		verify(bookRepository, times(1)).findById(bookId);
+		assertThrows(RentalNotFoundException.class, ()-> rentalService.getRentalsForBook(bookId));
+		verify(rentalRepository, times(1)).findByBookId(bookId);
 	}
 	
 	@Test
 	public void shouldThrowException_updateRental() {
 		doThrow(new RentalNotFoundException()).when(rentalRepository).findById(rentalId);
 		
-		assertThrows(RentalNotFoundException.class, ()-> rentalService.updateRental(rentalId, new Rental()));
+		assertThrows(RentalNotFoundException.class, ()-> rentalService.updateRental(rental));
 		verify(rentalRepository, times(1)).findById(rentalId);
 	}
 	
 	@Test
 	public void shouldThrowException_deleteRental() {
-		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		doThrow(new RentalNotFoundException()).when(rentalRepository).findById(rentalId);
 		
-		assertThrows(RentalNotFoundException.class, ()-> rentalService.deleteRental(bookId, rentalId));
+		assertThrows(RentalNotFoundException.class, ()-> rentalService.deleteRental(rentalId));
 		verify(rentalRepository, times(0)).deleteById(rentalId);
 	}
 }

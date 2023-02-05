@@ -178,7 +178,7 @@ public class BookControllerTest {
 				.version(Version.E_BOOK)
 				.build();
 			
-		when(bookService.updateBook(1L, bookUpdated)).thenReturn(bookUpdated);
+		when(bookService.updateBook(bookUpdated)).thenReturn(bookUpdated);
 
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())
 				.create();

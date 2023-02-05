@@ -89,7 +89,6 @@ public class RentalControllerTest {
 				.startDate(LocalDate.of(2022, 6, 21))
 				.endDate(LocalDate.of(2023, 1, 5))
 				.notes("Kate will need it in January!")
-				.bookId(bookId)
 				.build();
 	}
 	
@@ -111,7 +110,7 @@ public class RentalControllerTest {
 	
 	@Test 
 	public void shouldAddRental() throws Exception {
-		when(rentalService.saveRentalForBook(rental)).thenReturn(rental);
+		when(rentalService.saveRentalForBook(bookId, rental)).thenReturn(rental);
 		when(rentalMapper.mapToRental(rentalDto)).thenReturn(rental);
 		
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe())

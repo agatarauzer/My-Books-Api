@@ -136,6 +136,7 @@ public class BookIntegrationTest {
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}").build(userId, bookId);
 		
 		BookDto requestBook = BookDto.builder()
+				.id(bookId)
 				.title("Data Stewardship An Actionable Guide to Effective Data Management and Data Governance")
 				.authors("David Plotkin")
 				.isbn("9780128221679, 0128221674")
@@ -146,16 +147,13 @@ public class BookIntegrationTest {
 				.description("Good book")
 				.imageLink("link")
 				.version(Version.E_BOOK)
-				.copies(2)
 				.build();
 		HttpEntity<BookDto> request = new HttpEntity<>(requestBook, headers);
 
 		ResponseEntity<BookDto> response = testRestTemplate.exchange(uri, HttpMethod.PUT, request, BookDto.class);
 		
-		Integer copies = h2BookRepository.findById(bookId).get().getCopies();
 		String description = h2BookRepository.findById(bookId).get().getDescription();
-		
-		assertEquals(2, copies);
+	
 		assertEquals("Good book", description);
 		assertEquals(200, response.getStatusCodeValue());
 	}

@@ -56,9 +56,9 @@ public class BookService {
 		return bookRepository.save(book);
 	}
 
-	public Book updateBook(Long bookId, Book book) {
-		Book bookUpdated = bookRepository.findById(bookId)
-			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + bookId));
+	public Book updateBook(Book book) {
+		Book bookUpdated = bookRepository.findById(book.getId())
+			.orElseThrow(() -> new BookNotFoundException("Book id not found: " + book.getId()));
 		bookUpdated.setTitle(book.getTitle());
 		bookUpdated.setAuthors(book.getAuthors());
 		bookUpdated.setIsbn(book.getIsbn());
@@ -69,7 +69,7 @@ public class BookService {
 		bookUpdated.setDescription(book.getDescription());
 		bookUpdated.setImageLink(book.getImageLink());
 		bookUpdated.setVersion(book.getVersion());
-		log.info("Book with id: " + bookId + " was updated");
+		log.info("Book with id: " + book.getId() + " was updated");
 		return bookRepository.save(bookUpdated);
 	}
 

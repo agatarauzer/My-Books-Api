@@ -40,7 +40,6 @@ public class PurchaseIntegrationTest {
 	private TestH2PurchaseRepository h2PurchaseRepository;
 	
 	private static TestRestTemplate testRestTemplate;
-	
 	private String baseUrl = "http://localhost";
 	private String token;
 	private HttpHeaders headers;

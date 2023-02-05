@@ -83,7 +83,6 @@ public class PurchaseControllerTest {
 				.price(48.90)
 				.purchaseDate(LocalDate.of(2022, 7, 12))
 				.boughtFrom("empik.com")
-				.bookId(bookId)
 				.build();
 	}
 	
@@ -103,7 +102,7 @@ public class PurchaseControllerTest {
 	
 	@Test 
 	public void shouldAddPurchase() throws Exception {
-		when(purchaseService.savePurchaseForBook(purchase)).thenReturn(purchase);
+		when(purchaseService.savePurchaseForBook(bookId, purchase)).thenReturn(purchase);
 		when(purchaseMapper.mapToPurchase(purchaseDto)).thenReturn(purchase);
 		
 		Gson gson = new GsonBuilder()

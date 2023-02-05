@@ -24,8 +24,8 @@ public class RentalService {
 		return rentalRepository.findByBookId(bookId).orElseThrow(() -> new RentalNotFoundException("Rental for book: " + bookId + "not found"));
 	}
 	
-	public Rental saveRentalForBook(Rental rental) {
-		Book book = bookService.findBookById(rental.getBook().getId());
+	public Rental saveRentalForBook(Long bookId, Rental rental) {
+		Book book = bookService.findBookById(bookId);
 		rental.setBook(book);
 		rentalRepository.save(rental);
 		log.info("Rental for book with id: " + rental.getBook().getId() + " was saved in db");

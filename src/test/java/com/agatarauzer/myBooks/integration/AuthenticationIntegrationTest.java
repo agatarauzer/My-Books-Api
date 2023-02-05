@@ -48,7 +48,8 @@ public class AuthenticationIntegrationTest {
 	}
 	
 	
-	//TODO: Add tests for exceptions - user not authenticated 
+	//TO DO: Add tests for exceptions - user not authenticated 
+	//TO DO: Fix tests - add sql scripts...
 	
 	
 	@Test

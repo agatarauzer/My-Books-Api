@@ -88,7 +88,7 @@ public class RentalServiceTest {
 		when(bookService.findBookById(bookId)).thenReturn(book);
 		when(rentalRepository.save(rental)).thenReturn(rental);
 		
-		Rental savedRental = rentalService.saveRentalForBook(rental);
+		Rental savedRental = rentalService.saveRentalForBook(bookId, rental);
 		
 		assertEquals(rental, savedRental);
 	}

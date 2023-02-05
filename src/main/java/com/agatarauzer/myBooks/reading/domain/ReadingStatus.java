@@ -5,3 +5,6 @@ public enum ReadingStatus {
 	IN_READING,
 	LEFT
 }
+	
+	
+	

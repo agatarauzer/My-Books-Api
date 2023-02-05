@@ -87,7 +87,7 @@ public class ReadingServiceTest {
 		when(bookService.findBookById(readingId)).thenReturn(book);
 		when(readingRepository.save(reading)).thenReturn(reading);
 		
-		Reading savedReading = readingService.saveReadingForBook(reading);
+		Reading savedReading = readingService.saveReadingForBook(bookId, reading);
 		
 		assertEquals(reading, savedReading);
 	}

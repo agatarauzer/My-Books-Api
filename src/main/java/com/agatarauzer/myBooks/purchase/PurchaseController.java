@@ -30,9 +30,9 @@ public class PurchaseController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PurchaseDto> addPurchase(@RequestBody final PurchaseDto purchaseDto) {
+	public ResponseEntity<PurchaseDto> addPurchase(@PathVariable final Long bookId, @RequestBody final PurchaseDto purchaseDto) {
 		Purchase purchase = purchaseMapper.mapToPurchase(purchaseDto);
-		purchaseService.savePurchaseForBook(purchase);
+		purchaseService.savePurchaseForBook(bookId, purchase);
 		return new ResponseEntity<PurchaseDto>(purchaseDto, HttpStatus.CREATED);
 	}
 	

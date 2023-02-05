@@ -50,14 +50,14 @@ public class BookController {
 	}
 	
 	@PutMapping("/{bookId}")
-	public ResponseEntity<BookDto> updateBook(@PathVariable final Long userId, @PathVariable final Long bookId, @RequestBody final BookDto bookDto) {
+	public ResponseEntity<BookDto> updateBook(@RequestBody final BookDto bookDto) {
 		Book book = bookMapper.mapToBook(bookDto);
-		bookService.updateBook(bookId, book);
+		bookService.updateBook(book);
 		return ResponseEntity.ok(bookDto);
 	}
 	
 	@DeleteMapping("/{bookId}")
-	public ResponseEntity<String> deleteBook(@PathVariable final Long userId, @PathVariable final Long bookId) {
+	public ResponseEntity<String> deleteBook(@PathVariable final Long bookId) {
 		bookService.deleteBook(bookId);
 		return ResponseEntity.ok().body("Deleted book: " + bookId);
 	}

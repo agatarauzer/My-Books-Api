@@ -90,7 +90,6 @@ public class ReadingControllerTest {
 				.readedPages(820)
 				.rate(4)
 				.notes("Java basics...")
-				.bookId(bookId)
 				.build();
 	}
 	
@@ -113,7 +112,7 @@ public class ReadingControllerTest {
 	
 	@Test 
 	public void shouldAddReading() throws Exception {
-		when(readingService.saveReadingForBook(reading)).thenReturn(reading);
+		when(readingService.saveReadingForBook(bookId, reading)).thenReturn(reading);
 		when(readingMapper.mapToReading(readingDto)).thenReturn(reading);
 		
 		Gson gson = new GsonBuilder()

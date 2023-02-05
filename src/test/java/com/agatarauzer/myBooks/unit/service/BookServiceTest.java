@@ -145,7 +145,7 @@ public class BookServiceTest {
 		when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 		when(bookRepository.save(any(Book.class))).thenReturn(bookUpdated);
 		
-		Book bookAfterUpdate = bookService.updateBook(bookId, bookUpdated);
+		Book bookAfterUpdate = bookService.updateBook(bookUpdated);
 		
 		assertEquals(bookUpdated, bookAfterUpdate);
 	}
@@ -178,7 +178,7 @@ public class BookServiceTest {
 	public void shouldThrowException_updateBook() {
 		doThrow(new BookNotFoundException()).when(bookRepository).findById(bookId);
 		
-		assertThrows(BookNotFoundException.class, ()-> bookService.updateBook(bookId, new Book()));
+		assertThrows(BookNotFoundException.class, ()-> bookService.updateBook(new Book()));
 		verify(bookRepository, times(1)).findById(bookId);
 	}
 	

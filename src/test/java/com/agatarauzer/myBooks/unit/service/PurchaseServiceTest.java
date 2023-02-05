@@ -83,7 +83,7 @@ public class PurchaseServiceTest {
 		when(bookService.findBookById(bookId)).thenReturn(book);
 		when(purchaseRepository.save(purchase)).thenReturn(purchase);
 		
-		Purchase savedPurchase = purchaseService.savePurchaseForBook(purchase);
+		Purchase savedPurchase = purchaseService.savePurchaseForBook(bookId, purchase);
 		
 		assertEquals(purchase, savedPurchase);
 	}

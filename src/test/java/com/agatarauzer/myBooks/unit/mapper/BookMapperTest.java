@@ -36,7 +36,6 @@ public class BookMapperTest {
 				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
 				.version(Version.BOOK)
-				.copies(1)
 				.build();
 		bookDto = BookDto.builder()
 				.title("Java. Podstawy. Wydanie IX")
@@ -49,7 +48,6 @@ public class BookMapperTest {
 				.description("Kolejne wydanie tej cenionej książki zostało zaktualizowane o wszystkie nowości...")
 				.imageLink("http://books.google.com/books/content?id=UEdjAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api")
 				.version(Version.BOOK)
-				.copies(1)
 				.build();
 	}
 	
@@ -66,7 +64,6 @@ public class BookMapperTest {
 		assertEquals(bookDto.getPages(), bookMapped.getPages());
 		assertEquals(bookDto.getDescription(), bookMapped.getDescription());
 		assertEquals(bookDto.getVersion(), bookMapped.getVersion());
-		assertEquals(bookDto.getCopies(), bookMapped.getCopies());
 	}
 	
 	@Test
@@ -82,7 +79,6 @@ public class BookMapperTest {
 		assertEquals(book.getPages(), bookDtoMapped.getPages());
 		assertEquals(book.getDescription(), bookDtoMapped.getDescription());
 		assertEquals(book.getVersion(), bookDtoMapped.getVersion());
-		assertEquals(book.getCopies(), bookDtoMapped.getCopies());
 	}
 	
 	@Test
@@ -100,6 +96,5 @@ public class BookMapperTest {
 		assertEquals(books.get(0).getPages(), booksDtoMapped.get(0).getPages());
 		assertEquals(books.get(0).getDescription(), booksDtoMapped.get(0).getDescription());
 		assertEquals(books.get(0).getVersion(), booksDtoMapped.get(0).getVersion());
-		assertEquals(books.get(0).getCopies(), booksDtoMapped.get(0).getCopies());
 	}
 }

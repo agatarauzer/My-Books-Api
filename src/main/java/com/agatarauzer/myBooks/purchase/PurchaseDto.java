@@ -17,5 +17,4 @@ public class PurchaseDto {
 	private Double price;
 	private LocalDate purchaseDate;
 	private String boughtFrom;
-	private Long bookId;
 }

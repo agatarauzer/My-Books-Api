@@ -83,6 +83,7 @@ public class UserIntegrationTest {
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}").build(userId);
 		
 		UserDto requestUser = UserDto.builder()
+				.id(userId)
 				.firstName("Adamos")
 				.lastName("Mondayas")
 				.email("user_adamos@test.pl")

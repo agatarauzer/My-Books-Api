@@ -6,11 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,7 +29,7 @@ import lombok.Setter;
 @Table(name="readings")
 public class Reading {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="reading_id")
 	private Long id;
 	
@@ -50,7 +48,8 @@ public class Reading {
 	private Integer rate;
 	private String notes;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
+	@OneToOne
+	@MapsId
+	@JoinColumn(name="book_id")
 	private Book book;
 }

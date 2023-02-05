@@ -30,9 +30,9 @@ public class ReadingController {
 	}
 	
 	@PostMapping("/readings")
-	public ResponseEntity<ReadingDto> addReading(@RequestBody final ReadingDto readingDto) {
+	public ResponseEntity<ReadingDto> addReading(@PathVariable final Long bookId, @RequestBody final ReadingDto readingDto) {
 		Reading reading = readingMapper.mapToReading(readingDto);
-		readingService.saveReadingForBook(reading);
+		readingService.saveReadingForBook(bookId, reading);
 		return new ResponseEntity<ReadingDto>(readingDto, HttpStatus.CREATED);		
 	}
 	

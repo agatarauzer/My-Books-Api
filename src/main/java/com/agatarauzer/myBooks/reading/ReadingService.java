@@ -23,8 +23,8 @@ public class ReadingService {
 		return readingRepository.findByBookId(bookId).orElseThrow(() -> new ReadingNotFoundException("Reading for book: " + bookId + "not found"));
 	}
 	
-	public Reading saveReadingForBook(Reading reading) {
-		Book book = bookService.findBookById(reading.getBook().getId());
+	public Reading saveReadingForBook(Long bookId, Reading reading) {
+		Book book = bookService.findBookById(bookId);
 		reading.setBook(book);
 		readingRepository.save(reading);
 		log.info("Reading for book with id: " + reading.getBook().getId() + " was saved in db");

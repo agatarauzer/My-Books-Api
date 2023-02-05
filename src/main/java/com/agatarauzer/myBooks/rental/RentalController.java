@@ -34,9 +34,9 @@ public class RentalController {
 	}
 	
 	@PostMapping("/rentals")
-	public ResponseEntity<RentalDto> addRental(@RequestBody final RentalDto rentalDto) {
+	public ResponseEntity<RentalDto> addRental(@PathVariable final Long bookId, @RequestBody final RentalDto rentalDto) {
 		Rental rental = rentalMapper.mapToRental(rentalDto);
-		rentalService.saveRentalForBook(rental);
+		rentalService.saveRentalForBook(bookId, rental);
 		return new ResponseEntity<RentalDto>(rentalDto, HttpStatus.CREATED);
 	}
 	

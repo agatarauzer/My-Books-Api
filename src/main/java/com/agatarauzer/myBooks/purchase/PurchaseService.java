@@ -21,8 +21,8 @@ public class PurchaseService {
 		return purchaseRepository.findByBookId(bookId).orElseThrow(() -> new PurchaseNotFoundException("Purchase for book: " + bookId + "not found"));	
 	}
 	
-	public Purchase savePurchaseForBook(Purchase purchase) {
-		Book book = bookService.findBookById(purchase.getBook().getId());
+	public Purchase savePurchaseForBook(Long bookId, Purchase purchase) {
+		Book book = bookService.findBookById(bookId);
 		purchase.setBook(book);
 		purchaseRepository.save(purchase);
 		log.info("Purchase for book with id: " + purchase.getBook().getId() + " was saved in db");

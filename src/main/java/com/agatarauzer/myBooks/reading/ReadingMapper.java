@@ -2,7 +2,6 @@ package com.agatarauzer.myBooks.reading;
 
 import org.springframework.stereotype.Component;
 
-import com.agatarauzer.myBooks.book.BookService;
 import com.agatarauzer.myBooks.reading.domain.Reading;
 
 import lombok.RequiredArgsConstructor;
@@ -10,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class ReadingMapper {
-	
-	private final BookService bookService;
 	
 	public Reading mapToReading(ReadingDto readingDto) {
 		return Reading.builder()
@@ -22,7 +19,6 @@ public class ReadingMapper {
 				.readedPages(readingDto.getReadedPages())
 				.rate(readingDto.getRate())
 				.notes(readingDto.getNotes())
-				.book(bookService.findBookById(readingDto.getBookId()))
 				.build();	
 	}
 	
@@ -35,7 +31,6 @@ public class ReadingMapper {
 				.readedPages(reading.getReadedPages())
 				.rate(reading.getRate())
 				.notes(reading.getNotes())
-				.bookId(reading.getBook().getId())
 				.build();		
 	}
 }

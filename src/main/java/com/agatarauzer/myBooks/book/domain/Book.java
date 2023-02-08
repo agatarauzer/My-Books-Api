@@ -1,6 +1,7 @@
 package com.agatarauzer.myBooks.book.domain;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -73,9 +75,7 @@ public class Book {
 	@PrimaryKeyJoinColumn
 	private Purchase purchase;
 	
-	@OneToOne(mappedBy="book", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private Rental rental;
+	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)
+	private List<Rental> rentals;
 }
-
 

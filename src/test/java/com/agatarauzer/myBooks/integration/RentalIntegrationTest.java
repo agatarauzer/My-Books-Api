@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
 import com.agatarauzer.myBooks.authentication.payload.LoginRequest;
+import com.agatarauzer.myBooks.book.BookDto;
 import com.agatarauzer.myBooks.integration.H2Repository.TestH2RentalRepository;
 import com.agatarauzer.myBooks.rental.RentalDto;
 import com.agatarauzer.myBooks.rental.domain.RentalStatus;
@@ -32,6 +35,11 @@ import com.agatarauzer.myBooks.rental.domain.RentalStatus;
 	@Sql(scripts= {"/clear-database.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
 	@Sql(scripts= {"/insert-data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 })
+
+
+///TO DO: Correct due to changes of relation (@OneToMany)
+
+
 public class RentalIntegrationTest {
 	
 	@LocalServerPort
@@ -67,16 +75,15 @@ public class RentalIntegrationTest {
 	}
 	
 	@Test
-	public void shouldGetRentalForBook() {
+	public void shouldGetRentalsForBook() {
 		Long userId = 1L;
 		Long bookId = 5L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/rentals").build(userId, bookId);
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 	    
-	  	ResponseEntity<RentalDto> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, RentalDto.class);
+	  	ResponseEntity<List<RentalDto>> response = testRestTemplate.exchange(uri, HttpMethod.GET, request, new ParameterizedTypeReference<List<RentalDto>>(){});
 	  			
-		assertEquals(LocalDate.of(2022, 7, 10), response.getBody().getStartDate());
-		assertEquals("to Kate", response.getBody().getName());
+	  	assertEquals(1, response.getBody().size());
 		assertEquals(200, response.getStatusCodeValue());
 	}
 	

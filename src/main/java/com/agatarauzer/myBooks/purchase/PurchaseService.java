@@ -30,13 +30,11 @@ public class PurchaseService {
 	}
 	
 	public Purchase updatePurchase(Purchase purchase) {
-		Purchase purchaseUpdated = purchaseRepository.findById(purchase.getId())
+		purchaseRepository.findById(purchase.getId())
 			.orElseThrow(() -> new PurchaseNotFoundException("Purchase id not found: " + purchase.getId()));
-		purchaseUpdated.setPrice(purchase.getPrice());
-		purchaseUpdated.setPurchaseDate(purchase.getPurchaseDate());
-		purchaseUpdated.setBoughtFrom(purchase.getBoughtFrom());
+		purchaseRepository.save(purchase);
 		log.info("Purchase with id: " + purchase.getId() + " was updated");
-		return purchaseRepository.save(purchaseUpdated);
+		return purchase;
 	}
 	
 	public void deletePurchase(Long purchaseId) {

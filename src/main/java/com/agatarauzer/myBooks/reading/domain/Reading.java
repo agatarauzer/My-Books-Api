@@ -29,7 +29,6 @@ import lombok.Setter;
 @Table(name="readings")
 public class Reading {
 	@Id
-	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="reading_id")
 	private Long id;
 	

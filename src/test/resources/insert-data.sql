@@ -31,7 +31,7 @@ INSERT INTO books (book_id, title, authors, isbn, publisher, publishing_date, la
 	'description_1','link_1', 'BOOK', '2022-02-05', 1), /*1, null, 1,   */
 	(2, 'Skazanie', 'Remigiusz Mróz', '836717626X, 9788367176262', 'Czwarta strona', '2022', 'pl', null,
 	'description_2', 'link_2', 'E_BOOK', '2022-03-30', 1), /*2, null, 2,    */
-	(3L, 'Data Stewardship An Actionable Guide to Effective Data Management and Data Governance', 'David Plotkin', 
+	(3, 'Data Stewardship An Actionable Guide to Effective Data Management and Data Governance', 'David Plotkin', 
 	'9780128221679, 0128221674', 'Academic Press', '2020-10-31', 'en', 322, 
 	'description_3', 'link_3', 'BOOK', '2022-01-23', 1), /*3, null, 3, ,   */
 	(4, 'The 7 Habits of Highly Effective People Powerful Lessons in Personal Change', 'Stephen R. Covey', '1471131823, 9781471131820', 'Gardners', '2021',

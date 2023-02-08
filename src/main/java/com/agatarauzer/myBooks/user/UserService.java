@@ -37,14 +37,15 @@ public class UserService {
 	}
 	
 	public User updateUser(User user) {
-		User userUpdated = userRepository.findById(user.getId())
+		userRepository.findById(user.getId())
 			.orElseThrow(() -> new UserNotFoundException("User id not found: " + user.getId()));
-		userUpdated.setFirstName(user.getFirstName());
-		userUpdated.setLastName(user.getLastName());
-		userUpdated.setEmail(user.getEmail());
-		userUpdated.setPassword(user.getPassword());
+		//userUpdated.setFirstName(user.getFirstName());
+		//userUpdated.setLastName(user.getLastName());
+		//userUpdated.setEmail(user.getEmail());
+		//userUpdated.setPassword(user.getPassword());
+		saveUser(user);
 		log.info("User with id: " + user.getId() + " was updated");
-		return saveUser(userUpdated);
+		return user;
 	}
 	
 	public void deleteUser(Long userId) {

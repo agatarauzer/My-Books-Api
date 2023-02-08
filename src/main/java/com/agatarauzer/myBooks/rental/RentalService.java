@@ -33,15 +33,11 @@ public class RentalService {
 	}
 	
 	public Rental updateRental(Rental rental) {
-		Rental rentalUpdated = rentalRepository.findById(rental.getId())
+		rentalRepository.findById(rental.getId())
 			.orElseThrow(() -> new RentalNotFoundException("Rental id not found: " + rental.getId()));
-		rentalUpdated.setStatus(rental.getStatus());
-		rentalUpdated.setName(rental.getName());
-		rentalUpdated.setStartDate(rental.getStartDate());
-		rentalUpdated.setEndDate(rental.getEndDate());
-		rentalUpdated.setNotes(rental.getNotes());
+		rentalRepository.save(rental);
 		log.info("Rental with id: " + rental.getId() + "was updated");
-		return rentalRepository.save(rentalUpdated);
+		return rental;
 	}
 	
 	public void deleteRental(Long rentalId) {

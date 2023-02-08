@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.agatarauzer.myBooks.rental.domain.Rental;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class RentalMapper {
 	
 	public Rental mapToRental(RentalDto rentalDto) {

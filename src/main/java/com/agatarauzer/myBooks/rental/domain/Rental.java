@@ -6,10 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.agatarauzer.myBooks.book.domain.Book;
@@ -29,6 +30,7 @@ import lombok.Setter;
 @Table(name="rentals")
 public class Rental {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="rental_id")
 	private Long id;
 	
@@ -45,8 +47,7 @@ public class Rental {
 	
 	private String notes;
 	
-	@OneToOne
-	@MapsId
+	@ManyToOne
 	@JoinColumn(name="book_id")
 	private Book book;
 }

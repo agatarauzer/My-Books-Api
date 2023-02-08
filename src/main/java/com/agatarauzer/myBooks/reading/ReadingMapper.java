@@ -4,10 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.agatarauzer.myBooks.reading.domain.Reading;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class ReadingMapper {
 	
 	public Reading mapToReading(ReadingDto readingDto) {

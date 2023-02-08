@@ -32,16 +32,11 @@ public class ReadingService {
 	}
 	
 	public Reading updateReading(Reading reading) {
-		Reading readingUpdated = readingRepository.findById(reading.getId())
+		readingRepository.findById(reading.getId())
 			.orElseThrow(() -> new ReadingNotFoundException("Reading id not found: " + reading.getId()));
-		readingUpdated.setStatus(reading.getStatus());
-		readingUpdated.setStartDate(reading.getStartDate());
-		readingUpdated.setEndDate(reading.getEndDate());
-		readingUpdated.setReadedPages(reading.getReadedPages());
-		readingUpdated.setRate(reading.getRate());
-		readingUpdated.setNotes(reading.getNotes());
+		readingRepository.save(reading);
 		log.info("Reading with id: " + reading.getId() + "was updated");
-		return readingRepository.save(readingUpdated);
+		return reading;
 	}
 	
 	public void deleteReading(Long readingId) {

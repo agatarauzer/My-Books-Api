@@ -106,6 +106,7 @@ public class PurchaseIntegrationTest {
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/purchases/{purchaseId}").build(userId, bookId, purchaseId);
 		
 		PurchaseDto requestPurchase = PurchaseDto.builder()
+			.id(purchaseId)
 			.price(60.80)
 			.purchaseDate(LocalDate.of(2022, 8, 23))
 			.boughtFrom("empik.com")
@@ -128,7 +129,7 @@ public class PurchaseIntegrationTest {
 		Long bookId = 1L;
 		Long purchaseId = 1L;
 		URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/users/{userId}/books/{bookId}/purchases/{purchaseId}").build(userId, bookId, purchaseId);
-		HttpEntity<String> request = new HttpEntity<>(headers);
+		HttpEntity<String> request = new HttpEntity<String>(headers);
 		
 		ResponseEntity<String> response = testRestTemplate.exchange(uri, HttpMethod.DELETE, request, String.class);
 		

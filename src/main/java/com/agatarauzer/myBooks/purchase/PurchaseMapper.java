@@ -2,10 +2,7 @@ package com.agatarauzer.myBooks.purchase;
 
 import org.springframework.stereotype.Component;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class PurchaseMapper {
 	
 	public Purchase mapToPurchase(PurchaseDto purchaseDto) {

@@ -21,9 +21,7 @@ import lombok.Setter;
 public class Role {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="role_id")
 	private Long id;
-	
 	@Enumerated(EnumType.STRING)
 	private ERole name;
 	

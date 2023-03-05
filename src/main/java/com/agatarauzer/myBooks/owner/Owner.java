@@ -17,15 +17,15 @@ import java.util.List;
 public class Owner {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="owner_id")
 	private Long id;
 	@Column(name="name")
 	private String name;
 	@Column(name="owner_type")
 	@Enumerated(EnumType.STRING)
 	private OwnerType type;
-	@OneToOne
+
+	@OneToOne(mappedBy = "owner")
 	private User user;
-	@OneToMany(mappedBy="owner", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
 	private List<Book> book;
 }

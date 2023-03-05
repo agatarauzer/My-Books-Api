@@ -1,18 +1,5 @@
 package com.agatarauzer.myBooks.authentication;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.agatarauzer.myBooks.authentication.confirmationToken.ConfirmationToken;
 import com.agatarauzer.myBooks.authentication.confirmationToken.ConfirmationTokenService;
 import com.agatarauzer.myBooks.authentication.payload.JwtResponse;
@@ -28,23 +15,34 @@ import com.agatarauzer.myBooks.mail.confirmationMail.ConfirmationMailService;
 import com.agatarauzer.myBooks.security.jwt.JwtUtils;
 import com.agatarauzer.myBooks.security.service.UserDetailsImpl;
 import com.agatarauzer.myBooks.user.User;
-import com.agatarauzer.myBooks.user.UserRepository;
-
+import com.agatarauzer.myBooks.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-	
+
 	private final AuthenticationManager authenticationManager;
-	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
 	private final PasswordEncoder encoder;
 	private final JwtUtils jwtUtils;
 	private final ConfirmationTokenService confirmationTokenService;
 	private final ConfirmationMailService confirmationMailService;
+	private final UserService userService;
 	
 	public JwtResponse authenticateUser(LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -66,16 +64,14 @@ public class AuthenticationService {
 	}
 	
 	public MessageResponse registerUser(SignupRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+		if (userService.checkIfUsernameExists(signUpRequest.getUsername())) {
 			throw new UserAlreadyExistsException("Error: Username is already taken!");
 		}
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if (userService.checkIfEmailExists(signUpRequest.getEmail())) {
 			throw new UserAlreadyExistsException("Error: Email is already in use!");
 		}
 		
 		User user = User.builder()
-				.firstName(signUpRequest.getFirstName())
-				.lastName(signUpRequest.getLastName())
 				.username(signUpRequest.getUsername())
 				.email(signUpRequest.getEmail())
 				.password(encoder.encode(signUpRequest.getPassword()))
@@ -84,54 +80,48 @@ public class AuthenticationService {
 		Set<Role> roles = setupUserRoles(signUpRequest.getRoles());
 		user.setRoles(roles);
 		user.setRegistrationDate(LocalDate.now());
-		userRepository.save(user);
-		log.info("User is saved in DB (but not confirmed yet)");
-		
+		userService.createUser(user);
+		log.info("New user is saved in DB (but not confirmed yet)");
+		createConfirmationTokenAndSendToUser(user);
+		return new MessageResponse("User registered: waiting for confirmation!");
+	}
+
+	public void confirmUser(ConfirmationToken confirmationToken) {
+		User user = confirmationToken.getUser();
+		userService.enableUser(user);
+		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
+		log.info("Confirmation token was deleted");
+	}
+
+	private void createConfirmationTokenAndSendToUser(User user) {
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
 		confirmationTokenService.saveConfirmationToken(confirmationToken);
 		log.info("Confirmation token saved in db");
-		
 		confirmationMailService.sendConfirmationMail(user.getEmail(), confirmationToken.getConfirmationToken());
 		log.info("Confirmation mail has been send to user");
-		
-		return new MessageResponse("User registred sucessfully!");
-	}
-	
-	public void confirmUser(ConfirmationToken confirmationToken) {
-		User user = confirmationToken.getUser();
-		user.setEnabled(true);
-		userRepository.save(user);
-		log.info("User is confirmed and enabled");
-		
-		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
-		log.info("Confirmation token was deleted");
 	}
 	
 	private Set<Role> setupUserRoles(Set<String> givenRoles) {
 		Set<Role> roles = new HashSet<>();
 		if (givenRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER_LIMITED)
-				.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.ROLE_USER_LIMITED.toString() + " is not found"));
+			Role userRole = roleRepository.findByName(ERole.USER)
+				.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.USER + " is not found"));
 			roles.add(userRole);
 		}
 		else {
 			givenRoles.forEach(role -> {
 				switch (role) {
-				case "userPaid":
-					Role userPaidRole = roleRepository.findByName(ERole.ROLE_USER_PAID)
-						.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.ROLE_USER_PAID.toString() + " is not found"));	
-					roles.add(userPaidRole);
-					break;
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-						.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.ROLE_ADMIN.toString() + " is not found"));
-					roles.add(adminRole);
-					break;
-				default: 
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER_LIMITED)
-						.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.ROLE_USER_LIMITED.toString() + " is not found"));
-					roles.add(userRole);
-					break;
+					case "user":
+						Role userRole = roleRepository.findByName(ERole.USER)
+							.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.USER + " is not found"));
+						roles.add(userRole);
+						break;
+
+					case "admin":
+						Role adminRole = roleRepository.findByName(ERole.ADMIN)
+							.orElseThrow(() -> new RoleNotFoundException("Error: Role: " + ERole.ADMIN + " is not found"));
+						roles.add(adminRole);
+						break;
 				}
 			});
 		}

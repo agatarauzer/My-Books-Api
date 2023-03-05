@@ -18,7 +18,6 @@ import java.util.Set;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_id")
 	private Long id;
 	private String email;
 	private String username;
@@ -34,7 +33,7 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 }

@@ -1,22 +1,18 @@
 package com.agatarauzer.myBooks.authentication.payload;
 
-import java.util.Set;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Set;
 
 @Builder
 @Getter
 @Setter
 public class SignupRequest {
-	private String firstName;
-	private String lastName;
-	
 	@NotBlank
 	@Size(min = 3, max = 20)
 	private String username;

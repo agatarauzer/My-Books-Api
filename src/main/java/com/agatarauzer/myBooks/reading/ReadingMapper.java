@@ -1,19 +1,15 @@
 package com.agatarauzer.myBooks.reading;
 
-import org.springframework.stereotype.Component;
-
 import com.agatarauzer.myBooks.reading.domain.Reading;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ReadingMapper {
 	
 	public Reading mapToReading(ReadingDto readingDto) {
 		return Reading.builder()
-				.id(readingDto.getId())
 				.status(readingDto.getStatus())
-				.startDate(readingDto.getStartDate())
-				.endDate(readingDto.getEndDate())
-				.readedPages(readingDto.getReadedPages())
+				.progress(readingDto.getProgress())
 				.rate(readingDto.getRate())
 				.notes(readingDto.getNotes())
 				.build();	
@@ -21,11 +17,8 @@ public class ReadingMapper {
 	
 	public ReadingDto mapToReadingDto(Reading reading) {
 		return ReadingDto.builder()
-				.id(reading.getId())
 				.status(reading.getStatus())
-				.startDate(reading.getStartDate())
-				.endDate(reading.getEndDate())
-				.readedPages(reading.getReadedPages())
+				.progress(reading.getProgress())
 				.rate(reading.getRate())
 				.notes(reading.getNotes())
 				.build();		

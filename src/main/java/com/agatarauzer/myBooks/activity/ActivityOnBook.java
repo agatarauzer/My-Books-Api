@@ -11,10 +11,10 @@ import java.util.List;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "activities_on_book")
 public abstract class ActivityOnBook {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @OneToMany(mappedBy="activityOnBook", cascade = CascadeType.PERSIST)

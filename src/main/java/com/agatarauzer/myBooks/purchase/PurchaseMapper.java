@@ -7,19 +7,15 @@ public class PurchaseMapper {
 	
 	public Purchase mapToPurchase(PurchaseDto purchaseDto) {
 		return Purchase.builder()
-				.id(purchaseDto.getId())
 				.price(purchaseDto.getPrice())
-				.purchaseDate(purchaseDto.getPurchaseDate())
-				.boughtFrom(purchaseDto.getBoughtFrom())
+				.bookstore(purchaseDto.getBookstore())
 				.build();
 	}
 	
 	public PurchaseDto mapToPurchaseDto(Purchase purchase) {
 		return PurchaseDto.builder()
-				.id(purchase.getId())
 				.price(purchase.getPrice())
-				.purchaseDate(purchase.getPurchaseDate())
-				.boughtFrom(purchase.getBoughtFrom())
+				.bookstore(purchase.getBookstore())
 				.build();
 	}
 }

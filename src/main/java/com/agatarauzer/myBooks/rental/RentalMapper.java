@@ -1,33 +1,28 @@
 package com.agatarauzer.myBooks.rental;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.agatarauzer.myBooks.rental.domain.Rental;
 import org.springframework.stereotype.Component;
 
-import com.agatarauzer.myBooks.rental.domain.Rental;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class RentalMapper {
 	
 	public Rental mapToRental(RentalDto rentalDto) {
 		return Rental.builder()
-				.id(rentalDto.getId())
 				.status(rentalDto.getStatus())
 				.name(rentalDto.getName())
-				.startDate(rentalDto.getStartDate())
-				.endDate(rentalDto.getEndDate())
+				.predictedReturnDate(rentalDto.getPredictedReturnDate())
 				.notes(rentalDto.getNotes())
 				.build();
 	}
 	
 	public RentalDto mapToRentalDto(Rental rental) {
 		return RentalDto.builder()
-				.id(rental.getId())
 				.status(rental.getStatus())
 				.name(rental.getName())
-				.startDate(rental.getStartDate())
-				.endDate(rental.getEndDate())
+				.predictedReturnDate(rental.getPredictedReturnDate())
 				.notes(rental.getNotes())
 				.build();
 	}

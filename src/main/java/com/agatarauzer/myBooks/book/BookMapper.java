@@ -1,18 +1,16 @@
 package com.agatarauzer.myBooks.book;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.agatarauzer.myBooks.book.domain.Book;
 import org.springframework.stereotype.Component;
 
-import com.agatarauzer.myBooks.book.domain.Book;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BookMapper {
 	
 	public Book mapToBook(BookDto bookDto) {
 		return Book.builder()
-				.id(bookDto.getId())
 				.title(bookDto.getTitle())
 				.authors(bookDto.getAuthors())
 				.isbn(bookDto.getIsbn())
@@ -28,7 +26,6 @@ public class BookMapper {
 	
 	public BookDto mapToBookDto(Book book) {
 		return BookDto.builder()
-				.id(book.getId())
 				.title(book.getTitle())
 				.authors(book.getAuthors())
 				.isbn(book.getIsbn())
